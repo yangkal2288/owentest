@@ -3,7 +3,7 @@ import { AbsoluteFill, Easing, Img, staticFile } from "remotion";
 
 import { C } from "../../../brand";
 import { clamp01, useTime } from "../../../kit/time";
-import { accent, Bit, Card, DemoLabel, eyebrow, FloorShadow, giant } from "../parts";
+import { accent, Bit, Card, eyebrow, FloorShadow, giant } from "../parts";
 
 /**
  * Shot 4 · Channels (VO line 4, 4.5 s).
@@ -25,9 +25,12 @@ const CHANNELS = [
 ] as const;
 const SWAP = 0.22; // the outgoing word leaves in this long; the next arrives over the same span
 const TYPE = 104;
-const CARD_W = 700;
-const CARD_H = (CARD_W * 86) / 343 + 3;
-const GAP = 26;
+export const CARD_W = 700;
+export const CARD_H = (CARD_W * 86) / 343 + 3;
+export const GAP = 26;
+export const STACK_X = 1070;
+/** Where the three cards rest, flat, on the last frame: shot 5 picks them up from here. */
+export const STACK_TOP = 540 - (3 * (CARD_H + GAP) - GAP) / 2;
 
 /** Rise + blur-in (the product's `blurIn`), and the mirror on the way out. */
 function swapStyle(t: number, inAt: number, outAt: number | null, travel = 0.42): CSSProperties {
@@ -49,10 +52,13 @@ export function S04Channels() {
   const stackTop = 540 - (arrived * (CARD_H + GAP) - GAP) / 2;
   // A slow, held camera drift across the whole shot (critically damped feel, no linear move).
   const drift = ease(clamp01(t / S04_LENGTH));
+  // Hand-off to shot 5: the stack turns face-on and the words clear.
+  const flat = tween(t, 3.85, 0.55);
+  const clear = tween(t, 4.0, 0.4);
 
   return (
     <AbsoluteFill style={{ background: "#FFFFFF", perspective: 1800, overflow: "hidden" }}>
-      <div style={{ position: "absolute", left: 150, top: 318, transform: `translateX(${-14 * drift}px)` }}>
+      <div style={{ position: "absolute", left: 150, top: 318, transform: `translateX(${-14 * drift - 30 * clear}px)`, opacity: 1 - clear, filter: clear > 0 ? `blur(${clear * 10}px)` : undefined }}>
         <div style={{ ...eyebrow, opacity: intro, transform: `translateY(${(1 - intro) * 8}px)` }}>Your channels</div>
         <div style={{ ...giant(TYPE), marginTop: 30, ...swapStyle(t, 0, null, 0.2) }}>Answers on</div>
         {/* Every channel keeps the same slot, so the line never re-centres. */}
@@ -78,14 +84,14 @@ export function S04Channels() {
         </div>
       </div>
 
-      <FloorShadow x={1110} y={stackTop + arrived * (CARD_H + GAP) + 30} w={640} h={44} height={90} style={{ opacity: Math.min(1, arrived) * 0.3 }} />
+      <FloorShadow style={{ opacity: Math.min(1, arrived) * 0.3 * (1 - clear) }} x={1110} y={stackTop + arrived * (CARD_H + GAP) + 30} w={640} h={44} height={90} />
       <div
         style={{
           position: "absolute",
-          left: 1070,
+          left: STACK_X,
           top: 0,
           transformStyle: "preserve-3d",
-          transform: `rotateY(${-15 + 3 * drift}deg) rotateX(5deg) translateX(${-10 * drift}px)`,
+          transform: `rotateY(${(-15 + 3 * drift) * (1 - flat)}deg) rotateX(${5 * (1 - flat)}deg) translateX(${-10 * drift * (1 - flat)}px)`,
           transformOrigin: "0 540px",
         }}
       >
@@ -111,7 +117,7 @@ export function S04Channels() {
           );
         })}
       </div>
-      <DemoLabel />
+      {/* Demo label is drawn once by the film. */}
     </AbsoluteFill>
   );
 }

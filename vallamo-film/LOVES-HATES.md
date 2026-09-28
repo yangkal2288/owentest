@@ -2,6 +2,9 @@
 
 Re-read before every render. Newest notes at the top.
 
+## 2026-09-28: shot 4 v2
+- **Loved:** "much better" (the 4.5 s pace).
+
 ## 2026-09-28: shot 4 v1
 - **Loved:** the channel swap with the messages stacking. **Note:** "it can be quicker."
   - Fix: shot 4 cut from 7 s to 4.5 s; a new channel about every 0.85 s; faster pop-ins. Keep this pace as the default for energetic beats.
