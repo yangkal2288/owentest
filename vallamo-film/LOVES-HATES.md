@@ -2,6 +2,11 @@
 
 Re-read before every render. Newest notes at the top.
 
+## 2026-09-28: v11 notes → v12
+- **Opening "needs to be way more poppy… grab your ATTENTION"; the thin circle "isn't cutting it".** Fix: words slam in; "unanswered" gets a solid clay block and turns white; eight real enquiries fly in on the music's beats and pile up at angles over a blurred haze of more; slow push-in; the pile bursts into depth on the way out. No ring.
+- **Wants a cover image, "basically the same as the first scene but static".** Fix: `deliverables/cover.png` (3840×2160) and `cover.jpg`, a still of shot 0 with everything landed.
+- **Wants a cool transition into the logo again (not the old line).** Fix: shot 1's enquiries rush into the centre and are absorbed where the mark opens; the mark pops open with two clay rings.
+
 ## 2026-09-28: new opening (v11)
 - **Add a question before "You're with a client"**, from Owen's mockup ("How many enquiries go unanswered while you're with a client?"). The mockup is a layout only: redesign and animate it.
   - Fix: shot 0 (4.2 s, no VO) in the film's world. White, Inter bold, words rise in, a clay highlighter swipes under "unanswered", and real enquiries (not "New enquiry" placeholders) stack up in 3D in front of a slow clay ring, with the Vallamo wordmark between hairlines. Out: the type blurs and the enquiries sink into shot 1's blurred depth.

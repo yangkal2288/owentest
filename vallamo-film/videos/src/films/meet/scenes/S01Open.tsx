@@ -1,16 +1,18 @@
 import { AbsoluteFill } from "remotion";
 
 import { useTime } from "../../../kit/time";
-import { blurIn, tween } from "../motion";
+import { blurIn, mix, tween } from "../motion";
 import { Bit, Card, giant } from "../parts";
 
 /**
  * Shots 1 + 2 · Hook (0:00–0:06).
  * Real enquiries drift in at depth from the first frame and multiply while
  * the giant type lands. Owen: no clay dot or line at the start.
- * Out: the enquiries blur away and the Vallamo mark opens in shot 3.
+ * Out: every enquiry rushes into the centre and is absorbed where the Vallamo mark opens in shot 3.
  */
 export const S01_LENGTH = 6;
+/** Where the Vallamo mark opens in shot 3 (its centre, screen px). */
+const MARK = { x: 960, y: 340 };
 
 const ROWS = [
   { bit: "row-1", x: 90, y: 110, z: -700, r: -4, at: 0.1 },
@@ -45,7 +47,10 @@ function Words({ t, lines, at, out }: { t: number; lines: string[]; at: number; 
 
 export function S01Open() {
   const t = useTime();
-  const rowsOut = tween(t, 5.3, 0.5);
+  // Out: every enquiry accelerates into the centre of frame, where the Vallamo mark opens in shot 3.
+  const conv = tween(t, 5.15, 0.7);
+  const e = conv * conv;
+  const gone = tween(t, 5.7, 0.15);
 
   return (
     <AbsoluteFill style={{ background: "#FFFFFF", perspective: 1400, overflow: "hidden" }}>
@@ -58,11 +63,11 @@ export function S01Open() {
             key={d.bit}
             style={{
               position: "absolute",
-              left: d.x + Math.sin(t * 0.6 + d.r) * 16,
-              top: d.y - t * 6,
-              transform: `translateZ(${z}px) rotateZ(${d.r}deg) rotateX(8deg)`,
-              filter: `blur(${Math.round(-z / 90 + rowsOut * 10)}px)`,
-              opacity: 0.9 * u * (1 - rowsOut),
+              left: 0,
+              top: 0,
+              transform: `translate3d(${mix(d.x + Math.sin(t * 0.6 + d.r) * 16, MARK.x - ((d.w ?? 343) * 1.5) / 2, e)}px, ${mix(d.y - t * 6, MARK.y - 65, e)}px, ${mix(z, 0, e)}px) rotateZ(${d.r * (1 - e)}deg) rotateX(${8 * (1 - e)}deg) scale(${1 - 0.88 * e})`,
+              filter: `blur(${mix(-z / 90, 3, e).toFixed(1)}px)`,
+              opacity: 0.9 * u * (1 - gone),
             }}
           >
             <Card radius={16}>
