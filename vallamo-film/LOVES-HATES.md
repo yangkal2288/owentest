@@ -2,6 +2,11 @@
 
 Re-read before every render. Newest notes at the top.
 
+## 2026-09-28: style frames approved
+- **Loves:** the style frames (approved). "Meet Vallamo… your new front desk" (shot 3): keep it.
+- **Shot 4 note:** keep "Answers on" fixed; the channel word swaps WhatsApp → Instagram → your website, and each channel's real message pops in as its word lands, so all three are on screen at the end.
+  - Fix: `scenes/S04Channels.tsx`. Priya (WhatsApp), Sarah (Instagram) and Grace (web chat) stack on the right; ends on *One inbox.*
+
 ## 2026-09-28: gate 1 answers
 - VO script approved as written.
 - Phone answering is **out** (the optional voice line and shot 10 stay out).
