@@ -2,6 +2,10 @@
 
 Re-read before every render. Newest notes at the top.
 
+## 2026-09-28: shot 4 v1
+- **Loved:** the channel swap with the messages stacking. **Note:** "it can be quicker."
+  - Fix: shot 4 cut from 7 s to 4.5 s; a new channel about every 0.85 s; faster pop-ins. Keep this pace as the default for energetic beats.
+
 ## 2026-09-28: style frames approved
 - **Loves:** the style frames (approved). "Meet Vallamo… your new front desk" (shot 3): keep it.
 - **Shot 4 note:** keep "Answers on" fixed; the channel word swaps WhatsApp → Instagram → your website, and each channel's real message pops in as its word lands, so all three are on screen at the end.

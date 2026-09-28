@@ -6,23 +6,24 @@ import { clamp01, useTime } from "../../../kit/time";
 import { accent, Bit, Card, DemoLabel, eyebrow, FloorShadow, giant } from "../parts";
 
 /**
- * Shot 4 · Channels (VO line 4, about 7 s).
+ * Shot 4 · Channels (VO line 4, 4.5 s).
  * "Answers on WhatsApp… Instagram… and your website… all in one inbox."
+ * Beats land about every 0.85 s (Owen: "it can be quicker").
  * The channel word and badge swap in place; each channel's real enquiry
  * pops in on the right as its word lands, so all three are on screen at the end.
  */
-export const S04_LENGTH = 7;
+export const S04_LENGTH = 4.5;
 
 // The product's easing (tailwind.config.mjs).
 const ease = Easing.bezier(0.2, 0.7, 0.2, 1);
 const tween = (t: number, start: number, length: number) => ease(clamp01((t - start) / length));
 
 const CHANNELS = [
-  { at: 0.35, badge: "badge-wa", word: "WhatsApp", row: "row-1" }, // Priya Shah
-  { at: 2.1, badge: "badge-ig", word: "Instagram", row: "row-0" }, // Sarah Mitchell
-  { at: 3.8, badge: "badge-web", word: "your website", row: "row-5" }, // Grace Morgan
+  { at: 0.2, badge: "badge-wa", word: "WhatsApp", row: "row-1" }, // Priya Shah
+  { at: 1.05, badge: "badge-ig", word: "Instagram", row: "row-0" }, // Sarah Mitchell
+  { at: 1.9, badge: "badge-web", word: "your website", row: "row-5" }, // Grace Morgan
 ] as const;
-const SWAP = 0.34; // the outgoing word leaves in this long; the next arrives over the same span
+const SWAP = 0.22; // the outgoing word leaves in this long; the next arrives over the same span
 const TYPE = 104;
 const CARD_W = 700;
 const CARD_H = (CARD_W * 86) / 343 + 3;
@@ -30,7 +31,7 @@ const GAP = 26;
 
 /** Rise + blur-in (the product's `blurIn`), and the mirror on the way out. */
 function swapStyle(t: number, inAt: number, outAt: number | null, travel = 0.42): CSSProperties {
-  const enter = tween(t, inAt, 0.42);
+  const enter = tween(t, inAt, 0.3);
   const leave = outAt === null ? 0 : tween(t, outAt, SWAP);
   const y = (1 - enter) * travel * 100 - leave * travel * 100;
   const opacity = enter * (1 - leave);
@@ -40,9 +41,9 @@ function swapStyle(t: number, inAt: number, outAt: number | null, travel = 0.42)
 
 export function S04Channels() {
   const t = useTime();
-  const intro = tween(t, 0, 0.5);
-  const sub = tween(t, 5.1, 0.5);
-  const cardsIn = CHANNELS.map((c) => tween(t, c.at + 0.12, 0.55));
+  const intro = tween(t, 0, 0.35);
+  const sub = tween(t, 2.75, 0.35);
+  const cardsIn = CHANNELS.map((c) => tween(t, c.at + 0.06, 0.36));
   const arrived = cardsIn.reduce((a, b) => a + b, 0);
   // The stack drifts up as it grows, keeping it centred on the frame.
   const stackTop = 540 - (arrived * (CARD_H + GAP) - GAP) / 2;
