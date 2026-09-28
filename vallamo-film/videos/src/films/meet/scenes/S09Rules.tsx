@@ -15,8 +15,8 @@ import { Piece, pieceSize, type PieceName } from "../Piece";
  * Deposits and › Reminders, the abandoned-enquiry follow-up being switched on,
  * and a real handover (unhappy customer, Instagram) being picked up.
  */
-// Each beat starts on its phrase in the VO (take 2, line 8 placed at +0.15 s).
-export const S09_LENGTH = 7.9;
+// Each beat starts on its phrase in the VO (line 8 placed at +0.15 s).
+export const S09_LENGTH = 9.4;
 
 type Beat = {
   plain: string;
@@ -33,11 +33,11 @@ type Beat = {
 };
 const BEATS: Beat[] = [
   { plain: "Your hours.", accent: "Your rules.", piece: "hours", at: 0, w: 900, surface: true },
-  { plain: "Deposits", accent: "taken.", piece: "deposits", at: 1.72, w: 1000, surface: true, clip: 214 },
-  { plain: "Reminders", accent: "sent.", piece: "reminders", at: 2.72, w: 1000, surface: true },
-  { plain: "Quiet leads", accent: "followed up.", piece: "followup-off", after: "followup-on", at: 3.74, w: 1000, surface: true, click: { x: 0.942, y: 0.276 } },
+  { plain: "Deposits", accent: "taken.", piece: "deposits", at: 2.3, w: 1000, surface: true, clip: 214 },
+  { plain: "Reminders", accent: "sent.", piece: "reminders", at: 3.5, w: 1000, surface: true },
+  { plain: "Quiet leads", accent: "followed up.", piece: "followup-off", after: "followup-on", at: 4.72, w: 1000, surface: true, click: { x: 0.942, y: 0.276 } },
   // Captured at a 1100px window so the card reads at film size. Cursor clicks "I'm on it" on "hands".
-  { plain: "Hands over", accent: "when it matters.", piece: "handover", at: 5.24, clickAt: 6.41, w: 1000, surface: false, click: { x: 0.8, y: 0.313 } },
+  { plain: "Hands over", accent: "when it matters.", piece: "handover", at: 6.25, clickAt: 7.9, w: 1000, surface: false, click: { x: 0.8, y: 0.313 } },
 ];
 const PAD = 22;
 

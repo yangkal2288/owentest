@@ -40,8 +40,9 @@ function Drift({ id, length, children }: { id: string; length: number; children:
 }
 
 // The music sits under the voice: it ducks while a line plays (0.2 s ramps) and comes back between lines.
-const MUSIC = 0.7;
-const DUCKED = 0.32;
+// Owen: "make the music quieter".
+const MUSIC = 0.45;
+const DUCKED = 0.16;
 function musicVolume(t: number, vo: boolean) {
   if (!vo) return MUSIC;
   let d = 0;
@@ -55,11 +56,11 @@ const SFX = [
   { shot: "S05", at: 1.05, file: "thud", volume: 0.22 }, // Sarah lands first
   { shot: "S05", at: 3.85, file: "click", volume: 0.35 }, // cursor on Sarah
   { shot: "S06", at: 1.45, file: "click", volume: 0.2 }, // Sarah sends
-  { shot: "S06", at: 3.95, file: "chime", volume: 0.32 }, // booked: confetti
+  { shot: "S06", at: 3.95, file: "chime", volume: 0.32 }, // booked: the pop
   { shot: "S06", at: 4.8, file: "whoosh", volume: 0.2 }, // circle wipe
   { shot: "S07", at: 3.6, file: "whoosh", volume: 0.24 }, // whip to the diary
-  { shot: "S09", at: 3.74 + 0.55, file: "click", volume: 0.3 }, // follow-ups switched on
-  { shot: "S09", at: 6.41, file: "click", volume: 0.3 }, // "I'm on it"
+  { shot: "S09", at: 4.72 + 0.55, file: "click", volume: 0.3 }, // follow-ups switched on
+  { shot: "S09", at: 7.9, file: "click", volume: 0.3 }, // "I'm on it"
 ].map((c) => ({ ...c, at: START[c.shot] + c.at / shotSpeed(SHOTS.find((s) => s.id === c.shot)!) }));
 
 const SCENES: Record<string, ComponentType> = {

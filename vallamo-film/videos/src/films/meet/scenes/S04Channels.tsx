@@ -7,22 +7,22 @@ import { accent, Card, eyebrow, FloorShadow, giant } from "../parts";
 import { Piece, pieceSize } from "../Piece";
 
 /**
- * Shot 4 · Channels (VO line 4, 4.8 s).
+ * Shot 4 · Channels (VO line 4, 5.8 s).
  * "Answers on WhatsApp… Instagram… and your website… all in one inbox."
- * Each channel lands on its word in the VO (take 2), about every 0.8 s.
+ * Each channel lands on its word in the VO.
  * The channel word and badge swap in place; each channel's real enquiry
  * pops in on the right as its word lands, so all three are on screen at the end.
  */
-export const S04_LENGTH = 4.8;
+export const S04_LENGTH = 5.8;
 
 // The product's easing (tailwind.config.mjs).
 const ease = Easing.bezier(0.2, 0.7, 0.2, 1);
 const tween = (t: number, start: number, length: number) => ease(clamp01((t - start) / length));
 
 const CHANNELS = [
-  { at: 0.62, badge: "badge-wa", word: "WhatsApp", row: "row-1" as const }, // Priya Shah
-  { at: 1.34, badge: "badge-ig", word: "Instagram", row: "row-0" as const }, // Sarah Mitchell
-  { at: 2.28, badge: "badge-web", word: "your website", row: "row-5" as const }, // Grace Morgan
+  { at: 0.95, badge: "badge-wa", word: "WhatsApp", row: "row-1" as const }, // Priya Shah
+  { at: 1.65, badge: "badge-ig", word: "Instagram", row: "row-0" as const }, // Sarah Mitchell
+  { at: 2.75, badge: "badge-web", word: "your website", row: "row-5" as const }, // Grace Morgan
 ] as const;
 const SWAP = 0.22; // the outgoing word leaves in this long; the next arrives over the same span
 const TYPE = 104;
@@ -46,7 +46,7 @@ function swapStyle(t: number, inAt: number, outAt: number | null, travel = 0.42)
 export function S04Channels() {
   const t = useTime();
   const intro = tween(t, 0, 0.35);
-  const sub = tween(t, 3.5, 0.35); // on "one inbox"
+  const sub = tween(t, 4.5, 0.35); // on "one inbox"
   const cardsIn = CHANNELS.map((c) => tween(t, c.at + 0.06, 0.36));
   const arrived = cardsIn.reduce((a, b) => a + b, 0);
   // The stack drifts up as it grows, keeping it centred on the frame.

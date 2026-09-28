@@ -2,7 +2,7 @@
 
 | File | What |
 |---|---|
-| `Vallamo-Meet-X-1920x1080.mp4` | **The film.** 50.0 s, 1920×1080, 60 fps, H.264, BT.709. Voiceover, music and a few soft SFX, mixed to −14 LUFS. |
+| `Vallamo-Meet-X-1920x1080.mp4` | **The film.** 53.3 s, 1920×1080, 60 fps, H.264, BT.709. Voiceover, music and a few soft SFX, mixed to −14 LUFS. |
 | `Vallamo-Meet-X-1920x1080-music-only.mp4` | The same picture with music and SFX, no voice. |
 | `Vallamo-Meet-X-1920x1080-silent.mp4` | Picture only. |
 | `Vallamo-Meet-X.srt` | Captions timed to the recorded voiceover (the script's wording). |
@@ -12,7 +12,7 @@
 
 - **Every piece of product UI is the real Vallamo app** (the North House Aesthetics demo tenant, fictional data, labelled "Demo clinic · illustrative figures"). Pieces are the app's own HTML and CSS, captured from `videos/public/ui/source.html`. Nothing is redrawn, mocked or AI-generated.
 - **Logo, colours and type** come from the brand package (`brand/`).
-- **Voiceover:** recorded take 2 (`vo/real2/`), cut on its own pauses into the script's lines, with rumble removed and the level evened out. Timings come from Whisper word timestamps.
+- **Voiceover:** the final read (`vo/final/`, from the WhatsApp video of 28 Sep), cut on its own pauses into the script's lines, with rumble removed and the level evened out. Word timings come from Whisper, and each visual beat is placed on its word.
 - **Music:** Soundsurfer, "Product Video" (Pixabay, free for commercial use, no attribution required). Joined on downbeats to fit, ending on its real ending, and ducked under the voice.
 
 ## What's staged (presentation only)
@@ -38,4 +38,4 @@ npx tsx scripts/srt.ts out/meet/Vallamo-Meet-X.srt
 ```
 
 - Timing lives in `videos/src/films/meet/timeline.ts`. Each VO line is placed there, and shots that play sped up have a `speed`.
-- To swap in a new VO read: cut it with `vo/real2/vo_edit.py`, write `vo-lines.json`, and adjust the placements.
+- To swap in a new VO read: cut it with `vo/final/vo_edit.py`, write `vo-lines.json`, and adjust the placements.

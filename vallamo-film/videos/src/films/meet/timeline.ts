@@ -11,14 +11,14 @@ import { S12_LENGTH } from "./scenes/S12End";
 import VO_REC from "./vo-lines.json";
 
 /**
- * The master timeline (seconds), timed to the real VO read (take 2, vo-lines.json).
+ * The master timeline (seconds), timed to the final VO read (vo/final, vo-lines.json).
  * `speed` plays a shot faster than it was built, to fit the read; every cut names its transition.
  */
 export const SHOTS = [
-  { id: "S01", length: S01_LENGTH, name: "Dot + hook", out: "line retracts into the dot" },
+  { id: "S01", speed: 1.07, length: S01_LENGTH, name: "Dot + hook", out: "line retracts into the dot" },
   { id: "S03", length: S03_LENGTH, name: "Meet", out: "blur dissolve up" },
   { id: "S04", length: S04_LENGTH, name: "Channels", out: "cards turn face-on (picked up by S05)" },
-  { id: "S05", speed: 1.125, length: S05_LENGTH, name: "Into one inbox", out: "click + push-in to Sarah" },
+  { id: "S05", speed: 1.2, length: S05_LENGTH, name: "Into one inbox", out: "click + push-in to Sarah" },
   { id: "S06", length: S06_LENGTH, name: "Booked", out: "THU 24 card lifts to camera" },
   { id: "S07", speed: 1.111, length: S07_LENGTH, name: "Connect your calendar", out: "whip left" },
   { id: "S08", speed: 1.136, length: S08_LENGTH, name: "Watch it fill up", out: "push into Sarah's block" },
@@ -56,7 +56,7 @@ const SCRIPT = [
 ];
 /** Where each recorded line starts: [shot, seconds into the shot on the film]. */
 const PLACE: [string, number][] = [
-  ["S01", 2.0], ["S01", 3.9], ["S03", 0.15], ["S04", 0.1], ["S06", 0.3],
+  ["S01", 1.87], ["S01", 3.7], ["S03", 0.15], ["S04", 0.1], ["S06", 0.3],
   ["S07", 0.25], ["S08", 0.3], ["S09", 0.15], ["S11", 0.0], ["S12", 0.35],
 ];
 /** The recorded VO, placed: file, film time, length, and the words' film times. */

@@ -1,39 +1,39 @@
 1
-00:00:02,000 --> 00:00:03,260
+00:00:01,870 --> 00:00:03,060
 You're with a client.
 
 2
-00:00:03,900 --> 00:00:05,190
+00:00:03,700 --> 00:00:05,020
 Enquiries don't wait.
 
 3
-00:00:06,150 --> 00:00:08,370
+00:00:05,757 --> 00:00:08,137
 Meet Vallamo… your new front desk.
 
 4
-00:00:09,100 --> 00:00:13,490
+00:00:08,707 --> 00:00:13,967
 It answers on WhatsApp… Instagram… and your website… all in one inbox.
 
 5
-00:00:18,100 --> 00:00:22,190
+00:00:18,457 --> 00:00:22,787
 It replies from your own information, checks your diary… and books the appointment.
 
 6
-00:00:25,550 --> 00:00:26,600
+00:00:25,907 --> 00:00:26,977
 Connect your calendar…
 
 7
-00:00:29,200 --> 00:00:30,170
+00:00:29,558 --> 00:00:30,848
 …and watch it fill up.
 
 8
-00:00:33,452 --> 00:00:40,732
+00:00:33,809 --> 00:00:42,629
 Your hours. Your rules. Deposits taken, reminders sent, quiet leads followed up… and when it matters, it hands over to you.
 
 9
-00:00:41,202 --> 00:00:43,362
+00:00:43,059 --> 00:00:45,789
 Your entire front desk… Handled.
 
 10
-00:00:44,552 --> 00:00:48,732
+00:00:47,009 --> 00:00:52,029
 See yours in ten minutes, built from your website. vallamo.com

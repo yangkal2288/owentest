@@ -30,7 +30,7 @@ export function S03Meet() {
         <div style={{ position: "absolute", left: 960 - 200, top: 488, clipPath: `inset(-10% ${(1 - write) * 100}% -10% 0)` }}>
           <Logo file="vallamo-wordmark" w={400} h={130} />
         </div>
-        <div style={{ position: "absolute", left: 0, right: 0, top: 690, textAlign: "center", ...accent(76), ...blurIn(t, 1.2) }}>
+        <div style={{ position: "absolute", left: 0, right: 0, top: 690, textAlign: "center", ...accent(76), ...blurIn(t, 1.35) }}>
           Your new front desk.
         </div>
       </div>
