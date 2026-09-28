@@ -45,7 +45,10 @@ function Floating({ t, at, out, w, h, children }: { t: number; at: number; out: 
   return (
     <>
       <FloorShadow x={left + 40} y={Math.min(1000, top + h + 40)} w={w - 80} h={46} height={100} style={{ opacity: 0.28 * tween(t, at, 0.3) * (out === null ? 1 : 1 - tween(t, out, 0.22)) }} />
-      <div style={{ position: "absolute", left, top: top - (t - at) * 10, ...blurIn(t, at + 0.05, out, 30) }}>{children}</div>
+      {/* Moves are transforms only: a layout offset snaps the live UI to whole pixels and it hitches. */}
+      <div style={{ position: "absolute", left, top, transform: `translate3d(0, ${-(t - at) * 10}px, 0)` }}>
+        <div style={blurIn(t, at + 0.05, out, 30)}>{children}</div>
+      </div>
     </>
   );
 }

@@ -15,13 +15,13 @@ import { S08Fill } from "./scenes/S08Fill";
 import { S09Rules } from "./scenes/S09Rules";
 import { S11Handled } from "./scenes/S11Handled";
 import { S12End } from "./scenes/S12End";
-import { SHOTS, START, VO } from "./timeline";
+import { FILM_LENGTH, SHOTS, START, VO } from "./timeline";
 
 export type MeetProps = {
   fps?: number;
   /** Animatic aid: the VO script line under the picture and the shot name. Off for delivery. */
   guide?: boolean;
-  /** TEMP music bed (public/audio/temp-bed.wav). Off for delivery. */
+  /** The music bed: Soundsurfer "Product Video" (Pixabay licence), fitted on downbeats to the film. */
   music?: boolean;
   /** The few subtle SFX (send, land, clicks, booked chime). */
   sfx?: boolean;
@@ -100,7 +100,7 @@ export function MeetFilm({ guide = false, music = false, sfx = false }: MeetProp
         })}
         {ui && <DemoLabel />}
         {guide && <Guide />}
-        {music && <Audio src={staticFile("audio/temp-bed.wav")} volume={0.8} />}
+        {music && <Audio src={staticFile("audio/music.wav")} volume={(f) => 0.72 * Math.min(1, Math.max(0, (FILM_LENGTH - 0.1 - f / fps) / 1.4))} />}
         {sfx &&
           SFX.map((c, i) => (
             <Sequence key={i} from={Math.round(c.at * fps)} durationInFrames={Math.round(1.5 * fps)} layout="none">

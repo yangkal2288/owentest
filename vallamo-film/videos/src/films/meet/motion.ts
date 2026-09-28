@@ -31,9 +31,10 @@ export const live = (t: number, from: number, to: number) => t >= from - 0.001 &
 /** Film time (seconds from the film's first frame), for anything locked to the music. */
 export const FilmClock = createContext(0);
 export const useFilmTime = () => useContext(FilmClock);
-/** TEMP bed: 100 BPM, first beat at 2.0 s. Seconds since the latest beat. */
-export const BEAT = 0.6;
+/** The music: Soundsurfer "Product Video" (Pixabay), 89.1 BPM, first beat at 2.79 s. Seconds since the latest beat. */
+export const BEAT = 60 / 89.1;
+const FIRST_BEAT = 2.79;
 export const sinceBeat = (filmT: number, every = 1) => {
   const period = BEAT * every;
-  return (((filmT - 2.0) % period) + period) % period;
+  return (((filmT - FIRST_BEAT) % period) + period) % period;
 };

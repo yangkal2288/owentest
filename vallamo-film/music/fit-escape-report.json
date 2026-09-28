@@ -1,0 +1,66 @@
+{
+ "mode": "fit",
+ "output": "fit-escape.wav",
+ "sources": [
+  "fassounds-escape-your-love.wav"
+ ],
+ "sr": 48000,
+ "duration": 48.95,
+ "target": 48.8,
+ "joins": [
+  {
+   "a_time": 39.947,
+   "b_time_tracked": 129.068,
+   "b_time": 129.0281,
+   "lag_ms": -40.0,
+   "transient_corr": 0.289,
+   "out_time": 39.947,
+   "fade": [
+    39.483,
+    39.947
+   ],
+   "grid_drift_ms_after_1_bar": -4.0,
+   "tempo_a": 129.2,
+   "tempo_b": 129.2,
+   "level_diff_db": 0.1,
+   "similarity": {
+    "chroma": 0.951,
+    "bass": 0.954,
+    "rhythm": 0.53,
+    "total": 0.868,
+    "beats_compared": 16
+   },
+   "alternatives": [
+    {
+     "a_time": 38.139,
+     "b_time": 127.211,
+     "total": 0.866
+    },
+    {
+     "a_time": 36.293,
+     "b_time": 125.365,
+     "total": 0.867
+    },
+    {
+     "a_time": 32.601,
+     "b_time": 121.673,
+     "total": 0.874
+    },
+    {
+     "a_time": 34.447,
+     "b_time": 123.519,
+     "total": 0.864
+    },
+    {
+     "a_time": 30.755,
+     "b_time": 119.827,
+     "total": 0.864
+    }
+   ],
+   "warnings": [
+    "whole bars only: the result is 48.95 s, +0.15 s from the target. Fade the tail, or end the picture on the last downbeat"
+   ],
+   "label": "remove 89.08 s (48 bars) 39.98-129.07"
+  }
+ ]
+}

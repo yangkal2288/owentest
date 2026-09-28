@@ -92,7 +92,7 @@ export function S05Inbox() {
             return (
               <div key={c.bit}>
                 <FloorShadow x={to.x + 12} y={to.y + to.h * 0.2} w={to.w - 24} h={to.h * 0.6} height={z} style={{ transform: "translateZ(1px)", opacity: landed ? 0 : 0.3 * u }} />
-                <div style={{ position: "absolute", left: mix(from.x, to.x, u), top: mix(from.y, to.y, u), transform: `translateZ(${z}px)` }}>
+                <div style={{ position: "absolute", left: 0, top: 0, transform: `translate3d(${mix(from.x, to.x, u)}px, ${mix(from.y, to.y, u)}px, ${z}px)` }}>
                   <Card radius={mix(22, 0, u)} style={{ borderColor: landed ? "transparent" : C.line }}>
                     <div style={{ position: "relative" }}>
                       <Piece name={c.bit} w={mix(from.w, to.w, u)} style={{ visibility: selected ? "hidden" : "visible" }} />

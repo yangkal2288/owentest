@@ -2,7 +2,6 @@ import { AbsoluteFill, Img, staticFile } from "remotion";
 
 import { C, FONT } from "../../../brand";
 import { useTime } from "../../../kit/time";
-import { Confetti } from "../Confetti";
 import { blurIn, mix, tween } from "../motion";
 import { accent, FloorShadow, giant } from "../parts";
 import { Piece, pieceSize, type PieceName } from "../Piece";
@@ -12,8 +11,8 @@ import { Piece, pieceSize, type PieceName } from "../Piece";
  * diary… and books the appointment."
  * Sarah's real conversation, as live app DOM, plays in focus over her blurred
  * thread: her message types in, Isla replies, the back half runs at 2×
- * (labelled). On Isla's confirmation the camera holds and confetti bursts from
- * the message's edges. Then a clay circle wipe from it opens onto the outcome
+ * (labelled). On Isla's confirmation the camera holds, the message pops and
+ * two clay rings pulse out from its edges (Owen: "tone it down… make it pop or pulse"). Then a clay circle wipe from it opens onto the outcome
  * at poster size: In progress → Booked, and the THU 24 card, which lifts out.
  */
 export const S06_LENGTH = 7.9;
@@ -31,7 +30,7 @@ const MSGS: { name: PieceName; at: number }[] = [
 ];
 const GAPPX = 16;
 const BOTTOM = 860;
-const CONFIRMED = 3.95; // msg-6 has landed: hold, confetti
+const CONFIRMED = 3.95; // msg-6 has landed: hold, pop, pulse
 const WIPE = 5.25;
 
 // Sarah's first message types into her real bubble: her own text is uncovered
@@ -96,14 +95,37 @@ export function S06Booked() {
         src={staticFile("ui/bits/screen-sarah.png")}
         style={{ position: "absolute", left: -300, top: -260, width: 2400, filter: `blur(${bgBlur * 18}px)`, opacity: mix(1, 0.5, bgBlur) }}
       />
-      {/* The hold: the camera leans in on the confirmation while the confetti flies. */}
+      {/* The hold: the camera leans in on the confirmation while it pops and pulses. */}
       <div style={{ position: "absolute", inset: 0, transform: `scale(${1 + 0.07 * hold})`, transformOrigin: `${centre.x}px ${centre.y}px` }}>
-        <Confetti t={t - CONFIRMED} rect={m6} />
-        <div style={{ position: "absolute", left: COL_X, top: BOTTOM - total, width: COL_W }}>
+        {[0, 0.38].map((d) => {
+          const u = Math.min(1, Math.max(0, (t - CONFIRMED - d) / 0.95));
+          if (u <= 0 || u >= 1) return null;
+          const grow = 1 - Math.pow(1 - u, 3);
+          return (
+            <div
+              key={d}
+              style={{
+                position: "absolute",
+                left: m6.x - grow * 46,
+                // Mostly sideways: the bottom edge stays behind the bubble and the top stops short of
+                // Sarah's line above, so a ring never crosses the "9:20pm" timestamps.
+                top: m6.y - grow * 22,
+                width: m6.w + grow * 92,
+                height: m6.h + grow * 22,
+                borderRadius: 38 + grow * 46,
+                border: `${4 - 2 * u}px solid ${C.clay}`,
+                opacity: 0.55 * (1 - u),
+              }}
+            />
+          );
+        })}
+        <div style={{ position: "absolute", left: COL_X, top: 0, width: COL_W, transform: `translate3d(0, ${BOTTOM - total}px, 0)` }}>
           {MSGS.map((m, i) =>
             shown[i] > 0 ? (
               <div key={m.name} style={{ marginBottom: GAPPX, ...blurIn(t, m.at, null, 24) }}>
-                {i === 0 ? <Typed t={t} w={COL_W} /> : <Piece name={m.name} w={COL_W} />}
+                <div style={i === 5 ? { transform: `scale(${1 + 0.05 * (tween(t, CONFIRMED, 0.14) - tween(t, CONFIRMED + 0.14, 0.4))})`, transformOrigin: "60% 42%" } : undefined}>
+                  {i === 0 ? <Typed t={t} w={COL_W} /> : <Piece name={m.name} w={COL_W} />}
+                </div>
               </div>
             ) : null,
           )}

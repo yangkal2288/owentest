@@ -75,9 +75,9 @@ export function S08Fill() {
             <div
               style={{
                 position: "absolute",
-                left: mix(from.x, sr.x, fly),
-                top: mix(from.y, sr.y, fly),
-                transform: `translateZ(${300 * (1 - fly)}px) rotateX(${-40 * (1 - fly)}deg)`,
+                left: 0,
+                top: 0,
+                transform: `translate3d(${mix(from.x, sr.x, fly)}px, ${mix(from.y, sr.y, fly)}px, ${300 * (1 - fly)}px) rotateX(${-40 * (1 - fly)}deg)`,
                 transformOrigin: "50% 100%",
                 opacity: 1 - morph,
               }}

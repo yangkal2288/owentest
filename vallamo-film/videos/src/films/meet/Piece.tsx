@@ -1,5 +1,5 @@
 import { useLayoutEffect, useRef, useState, type CSSProperties } from "react";
-import { continueRender, delayRender, staticFile } from "remotion";
+import { continueRender, delayRender, Img, staticFile } from "remotion";
 
 import PIECES from "../../pieces.json";
 
@@ -7,12 +7,21 @@ export type PieceName = keyof typeof PIECES;
 export const pieceSize = (name: PieceName) => PIECES[name] as { w: number; h: number };
 
 /**
- * One real Vallamo UI element as live DOM (scripts/pieces.mjs): the app's own
- * markup and CSS in a transparent iframe, sized with CSS zoom so text and
- * edges are vector-crisp at any scale. `w` is the on-screen width; `css` is
- * written per frame into the piece's <style id="film-dyn"> (pure function of time).
+ * One real Vallamo UI element (scripts/pieces.mjs): the app's own markup and CSS.
+ * By default it is shown as its 4x transparent render (scripts/pieces-png.mjs),
+ * which moves at sub-pixel precision. With `css` it is the live DOM in an
+ * iframe (CSS zoom, vector-crisp) and `css` is written per frame into its
+ * <style id="film-dyn">; live pieces snap to whole pixels, so never glide them slowly.
  */
-export function Piece({ name, w, css = "", style }: { name: PieceName; w: number; css?: string; style?: CSSProperties }) {
+export function Piece({ name, w, css, style }: { name: PieceName; w: number; css?: string; style?: CSSProperties }) {
+  if (css === undefined) {
+    const size = pieceSize(name);
+    return <Img src={staticFile(`ui/pieces/png/${name}.png`)} style={{ display: "block", width: w, height: (w * size.h) / size.w, ...style }} />;
+  }
+  return <LivePiece name={name} w={w} css={css} style={style} />;
+}
+
+function LivePiece({ name, w, css, style }: { name: PieceName; w: number; css: string; style?: CSSProperties }) {
   const size = pieceSize(name);
   const zoom = w / size.w;
   const ref = useRef<HTMLIFrameElement>(null);
