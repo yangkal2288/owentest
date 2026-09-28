@@ -2,11 +2,12 @@
 
 | File | What |
 |---|---|
-| `Vallamo-Meet-X-FINAL-v11.mp4` | **The film** (final WhatsApp voiceover, cleaned; opens on the question). 56.5 s, 1920×1080, 60 fps, H.264, BT.709. Voiceover, music and a few soft SFX, mixed to −14 LUFS. |
+| `Vallamo-Meet-X-FINAL-v12.mp4` | **The film** (final WhatsApp voiceover, cleaned; opens on the question). 56.5 s, 1920×1080, 60 fps, H.264, BT.709. Voiceover, music and a few soft SFX, mixed to −14 LUFS. |
 | `Vallamo-Meet-X-1920x1080-music-only.mp4` | The same picture with music and SFX, no voice. |
 | `Vallamo-Meet-X-1920x1080-silent.mp4` | Picture only. |
 | `Vallamo-Meet-X.srt` | Captions timed to the recorded voiceover (the script's wording). |
-| `poster.png` | Preview frame for the X post ("Answers. Checks your diary. Books it."). |
+| `cover.png` / `cover.jpg` | **Cover image** for the X post (3840×2160): the opening question as a still. |
+| `poster.png` | An alternative frame ("Answers. Checks your diary. Books it."). |
 
 ## What's real
 
