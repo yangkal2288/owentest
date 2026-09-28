@@ -65,13 +65,18 @@ await p.evaluate(({ x, y, width, height }) => {
 await p.waitForTimeout(500);
 await shoot("b-followup-on", abandoned);
 await p.locator("button, [role=tab]", { hasText: "Deposits" }).first().click(); await p.waitForTimeout(600);
-await shoot("b-deposits", await boxOf("Deposits", 560, 700).then(async (r) => {
+// From the "Deposits" heading (not the tab of the same name) down to the amount's help text.
+await shoot("b-deposits", await boxOf("Optional. Take a deposit on higher-value treatments to protect against no-shows.", 300, 700).then(async (r) => {
   const end = await boxOf("Applies to every booking that takes a deposit.", 100, 700);
-  return r && end ? { x: r.x - 4, y: r.y - 8, width: 620, height: end.y + end.height - r.y + 18 } : null;
+  return r && end ? { x: r.x - 4, y: r.y - 34, width: 620, height: end.y + end.height - r.y + 44 } : null;
 }));
 
 // Shot 9: a non-medical handover (Nadia, unhappy customer, Instagram).
 await go("#/follow-ups");
 await shoot("b-handover", await boxOf("Nadia Hussain", 1000, 1200, 120));
+// The same handover at a narrower window (the app's own responsive layout), so it reads at film size.
+await p.setViewportSize({ width: 1100, height: 1000 });
+await go("#/follow-ups");
+await shoot("b-handover-narrow", await boxOf("Nadia Hussain", 600, 1000, 120));
 console.log("ok");
 await b.close();

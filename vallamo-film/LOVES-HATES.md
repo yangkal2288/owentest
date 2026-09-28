@@ -2,6 +2,11 @@
 
 Re-read before every render. Newest notes at the top.
 
+## 2026-09-28: animatic v1
+- **Hated:** the thin line in "Connect your calendar". **Wanted:** "much less thin… make it pulsate." Overall: "make it 10x better."
+  - Fix (v2): the line is 10 px clay, draws on, then pulses on the beat (width swell, travelling beads Vallamo → Cliniko, a ring at the Cliniko end every other beat).
+  - Fix (v2): real motion blur (240 fps master, 4-subframe blend) on every move; a slow held camera on the calm shots; Sarah's message types into her real bubble; bigger chat and a readable 2× label; the handover card captured at a narrower window so it reads; larger crops for the rules beats; a deeper dolly through the opening enquiries; a few soft SFX (lift, land, clicks, a booked chime).
+
 ## 2026-09-28: shot 4 v2
 - **Loved:** "much better" (the 4.5 s pace).
 

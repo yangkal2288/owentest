@@ -29,11 +29,17 @@ const ROWS = 5;
 const CW = 363;
 const CH = 138;
 const G = 26;
+const LINE = 10;
+const PULSE_TRAVEL = 1.1; // seconds for a pulse to cross the line
 
 export function S07Connect() {
   const t = useTime();
   const lift = settle(t, 0.35, 7);
   const draw = tween(t, 1.05, 0.8);
+  // Pulse on the music's beat (TEMP bed: 100 BPM; beats fall at local 0.2 + 0.6k).
+  const since = (((t - 0.2) % 0.6) + 0.6) % 0.6;
+  const beat = draw >= 1 ? Math.exp(-since * 9) : 0;
+  const ring = (((t - 0.2) % 1.2) + 1.2) % 1.2 / 1.2;
   const whip = tween(t, 3.62, 0.38);
   // Line from the mark to Cliniko's left edge (screen px).
   const a = { x: 250, y: 752 };
@@ -70,8 +76,33 @@ export function S07Connect() {
         <div style={{ position: "absolute", left: a.x - 96, top: a.y - 48, ...blurIn(t, 0.7, null, 10) }}>
           <Logo file="vallamo-mark" w={96} h={96} />
         </div>
-        <svg width={1920} height={1080} style={{ position: "absolute", inset: 0 }}>
-          <path d={path} pathLength={1} fill="none" stroke={C.clay} strokeWidth={3} strokeDasharray={1} strokeDashoffset={1 - draw} strokeLinecap="round" />
+        {/* The connection: a thick clay line that draws on, then pulses on the beat.
+            Owen: "much less thin… make it pulsate". */}
+        <svg width={1920} height={1080} style={{ position: "absolute", inset: 0, overflow: "visible" }}>
+          <path d={path} pathLength={1} fill="none" stroke={C.clay} strokeWidth={LINE + 4 * beat} strokeDasharray={1} strokeDashoffset={1 - draw} strokeLinecap="round" />
+          {/* Data pulses travelling from Vallamo to Cliniko: paper-coloured beads riding the line. */}
+          {draw >= 1 &&
+            [0, 1, 2].map((i) => {
+              const p = ((t - 1.85) / PULSE_TRAVEL + i / 3) % 1;
+              const fade = Math.min(1, p * 6, (1 - p) * 6);
+              return (
+                <path
+                  key={i}
+                  d={path}
+                  pathLength={1}
+                  fill="none"
+                  stroke={C.paper}
+                  strokeOpacity={0.75 * fade * tween(t, 1.85, 0.3)}
+                  strokeWidth={LINE * 0.45}
+                  strokeLinecap="round"
+                  strokeDasharray={`0.035 1`}
+                  strokeDashoffset={-p}
+                />
+              );
+            })}
+          {/* Nodes at both ends; the Cliniko end rings out on every other beat. */}
+          <circle cx={b.x} cy={b.y} r={(LINE + 6) * tween(t, 1.75, 0.2) * (1 + 0.25 * beat)} fill={C.clay} />
+          {draw >= 1 && <circle cx={b.x} cy={b.y} r={LINE + 6 + ring * 46} fill="none" stroke={C.clay} strokeWidth={4} strokeOpacity={0.55 * (1 - ring)} />}
         </svg>
         {/* Cliniko, connected: lifts out of the grid to the front. */}
         <FloorShadow x={1040} y={700} w={520} h={50} height={120} style={{ opacity: 0.28 * lift }} />

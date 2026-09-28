@@ -19,13 +19,14 @@ const BEAT = 1.3;
 
 type Beat = { plain: string; accent: string; bit: string; w: number; ratio: number; click?: { x: number; y: number } };
 const BEATS: Beat[] = [
-  { plain: "Your hours.", accent: "Your rules.", bit: "maya-hours", w: 600, ratio: 1816 / 2344 },
-  { plain: "Deposits", accent: "taken.", bit: "b-deposits", w: 820, ratio: 364 / 1240 },
-  { plain: "Reminders", accent: "sent.", bit: "b-reminders", w: 760, ratio: 740 / 1264 },
+  { plain: "Your hours.", accent: "Your rules.", bit: "maya-hours", w: 680, ratio: 1816 / 2344 },
+  { plain: "Deposits", accent: "taken.", bit: "b-deposits", w: 1000, ratio: 356 / 1240 },
+  { plain: "Reminders", accent: "sent.", bit: "b-reminders", w: 900, ratio: 740 / 1264 },
   // The toggle's centre in the capture (fractions of its size).
-  { plain: "Quiet leads", accent: "followed up.", bit: "b-followup-off", w: 860, ratio: 172 / 1216, click: { x: 0.942, y: 0.276 } },
+  { plain: "Quiet leads", accent: "followed up.", bit: "b-followup-off", w: 1000, ratio: 172 / 1216, click: { x: 0.942, y: 0.276 } },
   // "I'm on it" on the handover card.
-  { plain: "Hands over", accent: "when it matters.", bit: "b-handover", w: 1000, ratio: 364 / 2224, click: { x: 0.862, y: 0.35 } },
+  // Captured at a 1100px window so the card reads at film size.
+  { plain: "Hands over", accent: "when it matters.", bit: "b-handover-narrow", w: 1000, ratio: 456 / 1544, click: { x: 0.802, y: 0.32 } },
 ];
 
 function Floating({ t, at, out, w, h, children }: { t: number; at: number; out: number | null; w: number; h: number; children: ReactNode }) {

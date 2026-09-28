@@ -15,10 +15,10 @@ import { accent, Bit, Card, FloorShadow, giant } from "../parts";
  */
 export const S06_LENGTH = 7;
 
-const SCALE = 1.75;
+const SCALE = 2.1;
 // The real thread, in order (bits.json heights, css px).
 const MSGS = [
-  { bit: "msg-1", h: 82, at: 0.5 }, // Sarah: anything after 5:30 this week?
+  { bit: "msg-1", h: 82, at: 0.2 }, // Sarah: anything after 5:30 this week?
   { bit: "msg-2", h: 82, at: 1.55 }, // Isla: Thursday 6:00 or Friday 5:30 with Dr Maya
   { bit: "msg-3", h: 61, at: 2.7 }, // Sarah: Thursday at 6 please (2×)
   { bit: "msg-4", h: 82, at: 3.0 },
@@ -26,6 +26,44 @@ const MSGS = [
   { bit: "msg-6", h: 124, at: 3.6 }, // Isla: you're booked… confirmation sent
 ];
 const GAPPX = 16;
+
+// Sarah's first message types in (Tessel prompt style): the real bubble, with
+// its own text uncovered character by character. Line boxes measured in
+// msg-1.png (4x px); the cover is the bubble's own colour.
+const BUBBLE = "#EFE8DC";
+const TYPE_LINES = [
+  { y0: 55, y1: 121, x0: 57, x1: 1420, chars: 52 },
+  { y0: 139, y1: 205, x0: 55, x1: 1281, chars: 49 },
+];
+const META_Y = 262; // "Sarah 9:17pm" sits below the bubble, hidden while she types
+const TYPE_FROM = 0.35;
+const TYPE_TO = 1.45;
+
+function TypedBubble({ t, w }: { t: number; w: number }) {
+  const k = w / 1864;
+  const total = TYPE_LINES.reduce((n, l) => n + l.chars, 0);
+  const typed = Math.floor(total * Math.min(1, Math.max(0, (t - TYPE_FROM) / (TYPE_TO - TYPE_FROM))));
+  let left = typed;
+  return (
+    // "Sarah 9:17pm" appears once she has sent it.
+    <div style={{ position: "relative", clipPath: `inset(0 0 ${(1 - tween(t, TYPE_TO, 0.2)) * (328 - META_Y) * k}px 0)` }}>
+      <Bit name="msg-1-cut" w={w} />
+      {TYPE_LINES.map((l, i) => {
+        const n = Math.max(0, Math.min(l.chars, left));
+        left -= l.chars;
+        const x = l.x0 + ((l.x1 - l.x0) * n) / l.chars;
+        const caret = n > 0 && n < l.chars ? true : i === 0 && typed === 0;
+        return (
+          <div key={i}>
+            <div style={{ position: "absolute", left: x * k, top: l.y0 * k, width: (l.x1 + 12 - x) * k, height: (l.y1 - l.y0) * k, background: BUBBLE }} />
+            {caret && t < TYPE_TO && <div style={{ position: "absolute", left: x * k + 2, top: (l.y0 + 6) * k, width: 3, height: (l.y1 - l.y0 - 12) * k, background: C.clay }} />}
+          </div>
+        );
+      })}
+
+    </div>
+  );
+}
 const BOTTOM = 860;
 const WIPE = 4.2;
 
@@ -54,7 +92,7 @@ export function S06Booked() {
         {MSGS.map((m, i) =>
           shown[i] > 0 ? (
             <div key={m.bit} style={{ marginBottom: GAPPX, ...blurIn(t, m.at, null, 24) }}>
-              <Bit name={m.bit} w={466 * SCALE} />
+              {i === 0 ? <TypedBubble t={t} w={466 * SCALE} /> : <Bit name={`${m.bit}-cut`} w={466 * SCALE} />}
             </div>
           ) : null,
         )}
@@ -63,18 +101,18 @@ export function S06Booked() {
       <div
         style={{
           position: "absolute",
-          right: 120,
-          top: 120,
-          height: 58,
-          padding: "0 22px",
-          borderRadius: 29,
+          left: 960 + (466 * SCALE) / 2 + 36,
+          top: 200,
+          height: 80,
+          padding: "0 30px",
+          borderRadius: 40,
           background: C.paper,
           border: `1.5px solid ${C.line}`,
           display: "flex",
           alignItems: "center",
           fontFamily: FONT.sans,
           fontWeight: 600,
-          fontSize: 30,
+          fontSize: 44,
           color: C.ink,
           letterSpacing: "-0.02em",
           ...blurIn(t, 2.45, WIPE - 0.1, 10),

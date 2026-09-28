@@ -1,8 +1,9 @@
-import type { ComponentType } from "react";
+import type { ComponentType, ReactNode } from "react";
 import { AbsoluteFill, Audio, Sequence, staticFile, useVideoConfig } from "remotion";
 
 import { C, FONT } from "../../brand";
 import { useTime } from "../../kit/time";
+import { ease } from "./motion";
 import { DemoLabel } from "./parts";
 import { S01Open } from "./scenes/S01Open";
 import { S03Meet } from "./scenes/S03Meet";
@@ -22,7 +23,32 @@ export type MeetProps = {
   guide?: boolean;
   /** TEMP music bed (public/audio/temp-bed.wav). Off for delivery. */
   music?: boolean;
+  /** The few subtle SFX (send, land, clicks, booked chime). */
+  sfx?: boolean;
 };
+
+// A slow held camera on every shot that doesn't hand exact positions to the
+// next (S04 → S05 is a measured magic move, so those two stay locked).
+const DRIFT = new Set(["S03", "S06", "S07", "S09", "S11", "S12"]);
+function Drift({ id, length, children }: { id: string; length: number; children: ReactNode }) {
+  const t = useTime();
+  if (!DRIFT.has(id)) return <>{children}</>;
+  const u = ease(Math.min(1, t / length));
+  return <AbsoluteFill style={{ transform: `scale(${1 + 0.035 * u}) translateY(${-6 * u}px)`, transformOrigin: "50% 48%" }}>{children}</AbsoluteFill>;
+}
+
+// Sound: few, soft, and never one on every landing (no-slop-motion). Global seconds.
+const SFX = [
+  { at: 13.62, file: "whoosh", volume: 0.18 }, // the three enquiries lift off
+  { at: 14.55, file: "thud", volume: 0.22 }, // Sarah lands first
+  { at: 17.35, file: "click", volume: 0.35 }, // cursor on Sarah
+  { at: 19.45, file: "click", volume: 0.2 }, // Sarah sends
+  { at: 22.15, file: "whoosh", volume: 0.2 }, // circle wipe
+  { at: 23.55, file: "chime", volume: 0.3 }, // Booked
+  { at: 28.6, file: "whoosh", volume: 0.24 }, // whip to the diary
+  { at: 38.5, file: "click", volume: 0.3 }, // follow-ups switched on
+  { at: 39.8, file: "click", volume: 0.3 }, // "I'm on it"
+];
 
 const SCENES: Record<string, ComponentType> = {
   S01: S01Open,
@@ -55,7 +81,7 @@ function Guide() {
   );
 }
 
-export function MeetFilm({ guide = false, music = false }: MeetProps) {
+export function MeetFilm({ guide = false, music = false, sfx = false }: MeetProps) {
   const { fps } = useVideoConfig();
   const t = useTime();
   const ui = t >= START.S04 && t < START.S11;
@@ -65,13 +91,21 @@ export function MeetFilm({ guide = false, music = false }: MeetProps) {
         const Scene = SCENES[s.id];
         return (
           <Sequence key={s.id} from={Math.round(START[s.id] * fps)} durationInFrames={Math.round(s.length * fps)} name={`${s.id} ${s.name}`}>
-            <Scene />
+            <Drift id={s.id} length={s.length}>
+              <Scene />
+            </Drift>
           </Sequence>
         );
       })}
       {ui && <DemoLabel />}
       {guide && <Guide />}
-      {music && <Audio src={staticFile("audio/temp-bed.wav")} />}
+      {music && <Audio src={staticFile("audio/temp-bed.wav")} volume={0.8} />}
+      {sfx &&
+        SFX.map((c, i) => (
+          <Sequence key={i} from={Math.round(c.at * fps)} durationInFrames={Math.round(1.5 * fps)} layout="none">
+            <Audio src={staticFile(`audio/sfx/${c.file}.wav`)} volume={c.volume} />
+          </Sequence>
+        ))}
     </AbsoluteFill>
   );
 }

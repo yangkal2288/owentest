@@ -19,7 +19,7 @@ export function Root() {
     <>
       <Composition id="Meet-x" component={MeetFilm} width={1920} height={1080} fps={60} durationInFrames={Math.round(FILM_LENGTH * 60)} defaultProps={{ fps: 60 } as MeetProps} calculateMetadata={film} />
       {/* Gate 6: the animatic, with the VO guide line and the TEMP music bed. */}
-      <Composition id="Meet-animatic" component={MeetFilm} width={1920} height={1080} fps={60} durationInFrames={Math.round(FILM_LENGTH * 60)} defaultProps={{ fps: 60, guide: true, music: true } as MeetProps} calculateMetadata={film} />
+      <Composition id="Meet-animatic" component={MeetFilm} width={1920} height={1080} fps={60} durationInFrames={Math.round(FILM_LENGTH * 60)} defaultProps={{ fps: 60, guide: true, music: true, sfx: true } as MeetProps} calculateMetadata={film} />
       {/* Scene previews, one per shot. */}
       <Composition id="Meet-s04" component={S04Channels} width={1920} height={1080} fps={60} durationInFrames={Math.round(S04_LENGTH * 60)} />
       {/* Gate 4: one style frame per frame. */}

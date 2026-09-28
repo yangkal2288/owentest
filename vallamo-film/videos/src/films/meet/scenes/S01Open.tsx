@@ -57,7 +57,7 @@ export function S01Open() {
       {ROWS.map((d) => {
         const u = tween(t, d.at, 0.6);
         if (u <= 0) return null;
-        const z = d.z + t * 30;
+        const z = d.z + t * 75; // a slow dolly through the enquiries
         return (
           <div
             key={d.bit}
