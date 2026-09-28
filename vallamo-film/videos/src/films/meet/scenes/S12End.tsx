@@ -8,14 +8,13 @@ import { accent, giant, Logo } from "../parts";
 /**
  * Shot 12 · End card (6.4 s): each line lands on its words in the VO. "See yours in ten minutes, built from your website. vallamo.com"
  * The lockup opens from the centre where shot 11's grid collapsed, the line,
- * one clay pill. The clay dot from shot 1 returns under it and fades.
+ * one clay pill.
  */
 export const S12_LENGTH = 6.4;
 
 export function S12End() {
   const t = useTime();
   const open = tween(t, 0, 0.6);
-  const dot = tween(t, 4.9, 0.3) * (1 - tween(t, 5.5, 0.7));
   return (
     <AbsoluteFill style={{ background: "#FFFFFF", alignItems: "center" }}>
       <div style={{ marginTop: 170, clipPath: `circle(${open * 75}% at 50% 40%)` }}>
@@ -43,7 +42,6 @@ export function S12End() {
       >
         vallamo.com <span style={{ fontSize: 28 }}>↗</span>
       </div>
-      <div style={{ position: "absolute", left: 951, top: 990, width: 18, height: 18, borderRadius: 9, background: C.clay, opacity: dot, transform: `scale(${0.6 + 0.4 * dot})` }} />
     </AbsoluteFill>
   );
 }

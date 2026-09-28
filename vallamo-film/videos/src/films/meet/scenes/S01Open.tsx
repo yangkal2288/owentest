@@ -1,24 +1,23 @@
 import { AbsoluteFill } from "remotion";
 
-import { C } from "../../../brand";
 import { useTime } from "../../../kit/time";
-import { blurIn, mix, tween } from "../motion";
+import { blurIn, tween } from "../motion";
 import { Bit, Card, giant } from "../parts";
 
 /**
- * Shots 1 + 2 · Dot and hook (0:00–0:06).
- * A clay dot stretches into a line; giant type sits on it while real
- * enquiries drift behind at depth and multiply. Out: the line retracts into
- * the dot, which becomes the Vallamo mark in shot 3.
+ * Shots 1 + 2 · Hook (0:00–0:06).
+ * Real enquiries drift in at depth from the first frame and multiply while
+ * the giant type lands. Owen: no clay dot or line at the start.
+ * Out: the enquiries blur away and the Vallamo mark opens in shot 3.
  */
 export const S01_LENGTH = 6;
 
 const ROWS = [
-  { bit: "row-1", x: 90, y: 110, z: -700, r: -4, at: 1.5 },
-  { bit: "row-5", x: 1320, y: 90, z: -900, r: 3, at: 1.7 },
-  { bit: "msg-1", x: 1150, y: 760, z: -500, r: -2, w: 466, at: 1.9 },
-  { bit: "row-3", x: 140, y: 780, z: -380, r: 2, at: 2.1 },
-  { bit: "row-0", x: 700, y: 20, z: -1200, r: 1, at: 2.3 },
+  { bit: "row-1", x: 90, y: 110, z: -700, r: -4, at: 0.1 },
+  { bit: "row-5", x: 1320, y: 90, z: -900, r: 3, at: 0.35 },
+  { bit: "msg-1", x: 1150, y: 760, z: -500, r: -2, w: 466, at: 0.6 },
+  { bit: "row-3", x: 140, y: 780, z: -380, r: 2, at: 0.85 },
+  { bit: "row-0", x: 700, y: 20, z: -1200, r: 1, at: 1.1 },
   // "Enquiries don't wait": more arrive.
   { bit: "row-7", x: 1480, y: 470, z: -1100, r: -3, at: 4.0 },
   { bit: "row-2", x: -60, y: 470, z: -1000, r: 4, at: 4.15 },
@@ -46,10 +45,6 @@ function Words({ t, lines, at, out }: { t: number; lines: string[]; at: number; 
 
 export function S01Open() {
   const t = useTime();
-  const dotIn = tween(t, 0.15, 0.35);
-  const stretch = tween(t, 0.85, 0.9);
-  const retract = tween(t, 5.45, 0.45);
-  const half = mix(0, 810, stretch) * (1 - retract);
   const rowsOut = tween(t, 5.3, 0.5);
 
   return (
@@ -76,20 +71,6 @@ export function S01Open() {
           </div>
         );
       })}
-      {/* The clay dot, then the line the type sits on. */}
-      <div style={{ position: "absolute", left: 960 - half, width: half * 2, top: 539, height: 3, background: C.clay }} />
-      <div
-        style={{
-          position: "absolute",
-          left: 960 + half - 9,
-          top: 531,
-          width: 18,
-          height: 18,
-          borderRadius: 9,
-          background: C.clay,
-          transform: `scale(${dotIn})`,
-        }}
-      />
       <Words t={t} lines={["You’re with", "a client."]} at={2.0} out={3.8} />
       <Words t={t} lines={["Enquiries", "don’t wait."]} at={4.0} out={5.35} />
     </AbsoluteFill>

@@ -6,6 +6,7 @@ Re-read before every render. Newest notes at the top.
 - Music "slightly" quieter again (0.45 → 0.36, ducked 0.16 → 0.12).
 - **Hates em dashes on screen.** Fix: pieces.mjs rewrites " — " to ", " (and "GBP — £" to "GBP (£)") in every captured piece.
 - **Drop the "Demo clinic · illustrative figures" label** ("everyone watching will know"). Removed. This overrides the brief's §2 label rule, on Owen's call.
+- **Remove the line at the start.** Fix: no clay dot or line in shot 1 (enquiries drift in from the first frame); the mark opens from its centre in shot 3, and the end card's returning dot is gone with it.
 - **The inbox flashed sharp for a moment when clicking into Sarah's conversation.** Fix: shot 5 pushes in and blurs straight into shot 6's already-blurred thread; no white fade, no sharp frame.
 
 ## 2026-09-28: v2 review cut
