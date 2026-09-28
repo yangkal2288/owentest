@@ -181,7 +181,8 @@ export function S06Booked() {
             style={{
               marginTop: 34,
               marginLeft: 70,
-              transform: `translateZ(${120 + lift * 420}px) translate(${lift * 260}px, ${-lift * 380 + (1 - enter) * 24}px) rotateZ(${-2 + lift * 4}deg)`,
+              // Exits towards camera and off to the right, below the outcome card: never across its text.
+              transform: `translateZ(${120 + lift * 420}px) translate(${lift * 520}px, ${lift * 90 + (1 - enter) * 24}px) rotateZ(${-2 + lift * 3}deg)`,
               opacity: enter * (1 - tween(t, WIPE + 2.45, 0.2)),
               filter: enter < 1 ? `blur(${(1 - enter) * 10}px)` : undefined,
             }}
