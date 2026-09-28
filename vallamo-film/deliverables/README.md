@@ -2,7 +2,7 @@
 
 | File | What |
 |---|---|
-| `Vallamo-Meet-X-1920x1080.mp4` | **The film.** 53.3 s, 1920×1080, 60 fps, H.264, BT.709. Voiceover, music and a few soft SFX, mixed to −14 LUFS. |
+| `Vallamo-Meet-X-FINAL-whatsapp-VO.mp4` | **The film** (with the final WhatsApp voiceover). 53.3 s, 1920×1080, 60 fps, H.264, BT.709. Voiceover, music and a few soft SFX, mixed to −14 LUFS. |
 | `Vallamo-Meet-X-1920x1080-music-only.mp4` | The same picture with music and SFX, no voice. |
 | `Vallamo-Meet-X-1920x1080-silent.mp4` | Picture only. |
 | `Vallamo-Meet-X.srt` | Captions timed to the recorded voiceover (the script's wording). |
