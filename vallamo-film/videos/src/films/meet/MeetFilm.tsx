@@ -43,12 +43,22 @@ function Drift({ id, length, children }: { id: string; length: number; children:
 // Owen: "make the music quieter".
 const MUSIC = 0.45;
 const DUCKED = 0.16;
+// Lines closer than 1.5 s share one duck, so the music never pumps up between them.
+const DUCKS = VO_LINES.reduce<{ from: number; to: number }[]>((acc, l) => {
+  const last = acc[acc.length - 1];
+  if (last && l.from - last.to < 1.5) last.to = l.to;
+  else acc.push({ from: l.from, to: l.to });
+  return acc;
+}, []);
 function musicVolume(t: number, vo: boolean) {
   if (!vo) return MUSIC;
   let d = 0;
-  for (const l of VO_LINES) d = Math.max(d, Math.min(1, (t - (l.from - 0.2)) / 0.2, (l.to + 0.25 - t) / 0.3));
+  for (const k of DUCKS) d = Math.max(d, Math.min(1, (t - (k.from - 0.4)) / 0.35, (k.to + 0.5 - t) / 0.45));
   return MUSIC - (MUSIC - DUCKED) * Math.max(0, Math.min(1, d));
 }
+// The speaker's own room tone under the whole read, so the voice never drops to digital silence between lines.
+const ROOM = { from: VO_LINES[0].from - 0.4, to: VO_LINES[VO_LINES.length - 1].to + 0.6 };
+const roomVolume = (t: number) => Math.max(0, Math.min(1, (t - ROOM.from) / 0.4, (ROOM.to - t) / 0.6));
 
 // Sound: few, soft, and never one on every landing (no-slop-motion). Shot-relative seconds.
 const SFX = [
@@ -60,7 +70,7 @@ const SFX = [
   { shot: "S06", at: 4.8, file: "whoosh", volume: 0.2 }, // circle wipe
   { shot: "S07", at: 3.6, file: "whoosh", volume: 0.24 }, // whip to the diary
   { shot: "S09", at: 4.72 + 0.55, file: "click", volume: 0.3 }, // follow-ups switched on
-  { shot: "S09", at: 7.9, file: "click", volume: 0.3 }, // "I'm on it"
+  { shot: "S09", at: 7.65, file: "click", volume: 0.3 }, // "I'm on it"
 ].map((c) => ({ ...c, at: START[c.shot] + c.at / shotSpeed(SHOTS.find((s) => s.id === c.shot)!) }));
 
 const SCENES: Record<string, ComponentType> = {
@@ -116,7 +126,12 @@ export function MeetFilm({ guide = false, music = false, sfx = false, vo = false
         {ui && <DemoLabel />}
         {guide && <Guide />}
         {music && <Audio src={staticFile("audio/music.wav")} volume={(f) => musicVolume(f / fps, vo)} />}
-        {vo &&
+        {vo && (
+          <Sequence from={Math.round(ROOM.from * fps)} durationInFrames={Math.round((ROOM.to - ROOM.from) * fps)} layout="none">
+            <Audio src={staticFile("audio/roomtone.wav")} volume={(f) => roomVolume(ROOM.from + f / fps)} />
+          </Sequence>
+        )}
+      {vo &&
         VO_LINES.map((l) => (
           <Sequence key={l.file} from={Math.round(l.from * fps)} durationInFrames={Math.ceil((l.to - l.from + 0.2) * fps)} layout="none">
             <Audio src={staticFile(l.file)} volume={1} />

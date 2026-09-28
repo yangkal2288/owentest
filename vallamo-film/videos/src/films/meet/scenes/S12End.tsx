@@ -6,23 +6,23 @@ import { blurIn, tween } from "../motion";
 import { accent, giant, Logo } from "../parts";
 
 /**
- * Shot 12 · End card (6.6 s): each line lands on its words in the VO. "See yours in ten minutes, built from your website. vallamo.com"
+ * Shot 12 · End card (6.4 s): each line lands on its words in the VO. "See yours in ten minutes, built from your website. vallamo.com"
  * The lockup opens from the centre where shot 11's grid collapsed, the line,
  * one clay pill. The clay dot from shot 1 returns under it and fades.
  */
-export const S12_LENGTH = 6.6;
+export const S12_LENGTH = 6.4;
 
 export function S12End() {
   const t = useTime();
   const open = tween(t, 0, 0.6);
-  const dot = tween(t, 5.1, 0.3) * (1 - tween(t, 5.7, 0.7));
+  const dot = tween(t, 4.9, 0.3) * (1 - tween(t, 5.5, 0.7));
   return (
     <AbsoluteFill style={{ background: "#FFFFFF", alignItems: "center" }}>
       <div style={{ marginTop: 170, clipPath: `circle(${open * 75}% at 50% 40%)` }}>
         <Logo file="vallamo-logo-lockup" w={320} h={310} />
       </div>
       <div style={{ ...giant(64), marginTop: 70, textAlign: "center", ...blurIn(t, 0.45) }}>See yours in 10 minutes.</div>
-      <div style={{ ...accent(68), marginTop: 10, textAlign: "center", ...blurIn(t, 2.2) }}>Built from your website.</div>
+      <div style={{ ...accent(68), marginTop: 10, textAlign: "center", ...blurIn(t, 2.25) }}>Built from your website.</div>
       <div
         style={{
           marginTop: 54,
@@ -38,7 +38,7 @@ export function S12End() {
           fontWeight: 600,
           fontSize: 32,
           letterSpacing: "-0.015em",
-          ...blurIn(t, 4.25, null, 14), // on "vallamo.com"
+          ...blurIn(t, 4.08, null, 14), // on "vallamo.com"
         }}
       >
         vallamo.com <span style={{ fontSize: 28 }}>↗</span>

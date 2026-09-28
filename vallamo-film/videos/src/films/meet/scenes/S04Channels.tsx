@@ -7,22 +7,22 @@ import { accent, Card, eyebrow, FloorShadow, giant } from "../parts";
 import { Piece, pieceSize } from "../Piece";
 
 /**
- * Shot 4 · Channels (VO line 4, 5.8 s).
+ * Shot 4 · Channels (VO line 4, 5.2 s).
  * "Answers on WhatsApp… Instagram… and your website… all in one inbox."
  * Each channel lands on its word in the VO.
  * The channel word and badge swap in place; each channel's real enquiry
  * pops in on the right as its word lands, so all three are on screen at the end.
  */
-export const S04_LENGTH = 5.8;
+export const S04_LENGTH = 5.2;
 
 // The product's easing (tailwind.config.mjs).
 const ease = Easing.bezier(0.2, 0.7, 0.2, 1);
 const tween = (t: number, start: number, length: number) => ease(clamp01((t - start) / length));
 
 const CHANNELS = [
-  { at: 0.95, badge: "badge-wa", word: "WhatsApp", row: "row-1" as const }, // Priya Shah
-  { at: 1.65, badge: "badge-ig", word: "Instagram", row: "row-0" as const }, // Sarah Mitchell
-  { at: 2.75, badge: "badge-web", word: "your website", row: "row-5" as const }, // Grace Morgan
+  { at: 1.0, badge: "badge-wa", word: "WhatsApp", row: "row-1" as const }, // Priya Shah
+  { at: 1.68, badge: "badge-ig", word: "Instagram", row: "row-0" as const }, // Sarah Mitchell
+  { at: 2.58, badge: "badge-web", word: "your website", row: "row-5" as const }, // Grace Morgan
 ] as const;
 const SWAP = 0.22; // the outgoing word leaves in this long; the next arrives over the same span
 const TYPE = 104;
@@ -46,7 +46,7 @@ function swapStyle(t: number, inAt: number, outAt: number | null, travel = 0.42)
 export function S04Channels() {
   const t = useTime();
   const intro = tween(t, 0, 0.35);
-  const sub = tween(t, 4.5, 0.35); // on "one inbox"
+  const sub = tween(t, 4.33, 0.35); // on "one inbox"
   const cardsIn = CHANNELS.map((c) => tween(t, c.at + 0.06, 0.36));
   const arrived = cardsIn.reduce((a, b) => a + b, 0);
   // The stack drifts up as it grows, keeping it centred on the frame.
@@ -59,7 +59,8 @@ export function S04Channels() {
 
   return (
     <AbsoluteFill style={{ background: "#FFFFFF", perspective: 1800, overflow: "hidden" }}>
-      <div style={{ position: "absolute", left: 150, top: 318, transform: `translateX(${-14 * drift - 30 * clear}px)`, opacity: 1 - clear, filter: clear > 0 ? `blur(${clear * 10}px)` : undefined }}>
+      {/* Always moving between words: the type pushes in slowly while the cards float, so no beat reads as a wait. */}
+      <div style={{ position: "absolute", left: 150, top: 318, transformOrigin: "0 50%", transform: `translateX(${-14 * drift - 30 * clear}px) scale(${1 + 0.04 * drift})`, opacity: 1 - clear, filter: clear > 0 ? `blur(${clear * 10}px)` : undefined }}>
         <div style={{ ...eyebrow, opacity: intro, transform: `translateY(${(1 - intro) * 8}px)` }}>Your channels</div>
         <div style={{ ...giant(TYPE), marginTop: 30, ...swapStyle(t, 0, null, 0.2) }}>Answers on</div>
         {/* Every channel keeps the same slot, so the line never re-centres. */}
@@ -92,7 +93,7 @@ export function S04Channels() {
           left: STACK_X,
           top: 0,
           transformStyle: "preserve-3d",
-          transform: `rotateY(${(-15 + 3 * drift) * (1 - flat)}deg) rotateX(${5 * (1 - flat)}deg) translateX(${-10 * drift * (1 - flat)}px)`,
+          transform: `rotateY(${(-17 + 7 * drift) * (1 - flat)}deg) rotateX(${(6 - 2 * drift) * (1 - flat)}deg) translateX(${-16 * drift * (1 - flat)}px)`,
           transformOrigin: "0 540px",
         }}
       >
@@ -105,9 +106,10 @@ export function S04Channels() {
               style={{
                 position: "absolute",
                 left: 0,
-                top: stackTop + i * (CARD_H + GAP),
+                top: 0,
                 opacity: u,
-                transform: `translateY(${(1 - u) * 28}px) scale(${0.97 + 0.03 * u})`,
+                // Transform only (no layout offset), with a gentle float that settles to rest for the hand-off.
+                transform: `translate3d(0, ${stackTop + i * (CARD_H + GAP) + (1 - u) * 28 + Math.sin(t * 1.7 + i * 1.3) * 5 * (1 - flat)}px, 0) scale(${0.97 + 0.03 * u})`,
                 filter: u < 1 ? `blur(${(1 - u) * 10}px)` : undefined,
               }}
             >

@@ -16,7 +16,7 @@ import { Piece, pieceSize, type PieceName } from "../Piece";
  * and a real handover (unhappy customer, Instagram) being picked up.
  */
 // Each beat starts on its phrase in the VO (line 8 placed at +0.15 s).
-export const S09_LENGTH = 9.4;
+export const S09_LENGTH = 9.2;
 
 type Beat = {
   plain: string;
@@ -37,7 +37,7 @@ const BEATS: Beat[] = [
   { plain: "Reminders", accent: "sent.", piece: "reminders", at: 3.5, w: 1000, surface: true },
   { plain: "Quiet leads", accent: "followed up.", piece: "followup-off", after: "followup-on", at: 4.72, w: 1000, surface: true, click: { x: 0.942, y: 0.276 } },
   // Captured at a 1100px window so the card reads at film size. Cursor clicks "I'm on it" on "hands".
-  { plain: "Hands over", accent: "when it matters.", piece: "handover", at: 6.25, clickAt: 7.9, w: 1000, surface: false, click: { x: 0.8, y: 0.313 } },
+  { plain: "Hands over", accent: "when it matters.", piece: "handover", at: 6.3, clickAt: 7.65, w: 1000, surface: false, click: { x: 0.8, y: 0.313 } },
 ];
 const PAD = 22;
 
