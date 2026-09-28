@@ -34,9 +34,11 @@ mkdirSync(out, { recursive: true });
 const webpackOverride = await import(join(root, "webpack-override.ts")).then((module) => module.webpackOverride).catch(() => undefined);
 const serveUrl = await bundle({ entryPoint: join(root, "src/index.ts"), webpackOverride, publicDir: join(root, "public") });
 const inputProps = { ...extraProps, debug };
-const selected = await selectComposition({ serveUrl, id: composition, inputProps });
+// Where Remotion cannot download its own headless shell, point REMOTION_BROWSER at a local Chromium.
+const browserExecutable = process.env.REMOTION_BROWSER ?? null;
+const selected = await selectComposition({ serveUrl, id: composition, inputProps, browserExecutable });
 for (const frame of frames) {
   const output = join(out, `f${frame}.png`);
-  await renderStill({ serveUrl, composition: selected, inputProps, frame: Number(frame), output, overwrite: true });
+  await renderStill({ serveUrl, composition: selected, inputProps, frame: Number(frame), output, overwrite: true, browserExecutable });
   console.log(output);
 }
