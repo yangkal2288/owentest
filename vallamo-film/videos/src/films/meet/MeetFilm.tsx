@@ -4,6 +4,7 @@ import { AbsoluteFill, Audio, Sequence, staticFile, useVideoConfig } from "remot
 import { C, FONT } from "../../brand";
 import { useTime } from "../../kit/time";
 import { ease, FilmClock, ShotSpeed } from "./motion";
+import { S00Question } from "./scenes/S00Question";
 import { S01Open } from "./scenes/S01Open";
 import { S03Meet } from "./scenes/S03Meet";
 import { S04Channels } from "./scenes/S04Channels";
@@ -73,6 +74,7 @@ const SFX = [
 ].map((c) => ({ ...c, at: START[c.shot] + c.at / shotSpeed(SHOTS.find((s) => s.id === c.shot)!) }));
 
 const SCENES: Record<string, ComponentType> = {
+  S00: S00Question,
   S01: S01Open,
   S03: S03Meet,
   S04: S04Channels,

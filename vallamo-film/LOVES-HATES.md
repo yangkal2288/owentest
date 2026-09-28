@@ -2,6 +2,10 @@
 
 Re-read before every render. Newest notes at the top.
 
+## 2026-09-28: new opening (v11)
+- **Add a question before "You're with a client"**, from Owen's mockup ("How many enquiries go unanswered while you're with a client?"). The mockup is a layout only: redesign and animate it.
+  - Fix: shot 0 (4.2 s, no VO) in the film's world. White, Inter bold, words rise in, a clay highlighter swipes under "unanswered", and real enquiries (not "New enquiry" placeholders) stack up in 3D in front of a slow clay ring, with the Vallamo wordmark between hairlines. Out: the type blurs and the enquiries sink into shot 1's blurred depth.
+
 ## 2026-09-28: final VO notes (v8 → v9)
 - Music "slightly" quieter again (0.45 → 0.36, ducked 0.16 → 0.12).
 - **Hates em dashes on screen.** Fix: pieces.mjs rewrites " — " to ", " (and "GBP — £" to "GBP (£)") in every captured piece.

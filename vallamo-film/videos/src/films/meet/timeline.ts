@@ -1,3 +1,4 @@
+import { S00_LENGTH } from "./scenes/S00Question";
 import { S01_LENGTH } from "./scenes/S01Open";
 import { S03_LENGTH } from "./scenes/S03Meet";
 import { S04_LENGTH } from "./scenes/S04Channels";
@@ -15,6 +16,7 @@ import VO_REC from "./vo-lines.json";
  * `speed` plays a shot faster than it was built, to fit the read; every cut names its transition.
  */
 export const SHOTS = [
+  { id: "S00", length: S00_LENGTH, name: "The question", out: "type blurs away, enquiries sink into depth" },
   { id: "S01", speed: 1.07, length: S01_LENGTH, name: "Dot + hook", out: "line retracts into the dot" },
   { id: "S03", length: S03_LENGTH, name: "Meet", out: "blur dissolve up" },
   { id: "S04", length: S04_LENGTH, name: "Channels", out: "cards turn face-on (picked up by S05)" },
