@@ -2,6 +2,12 @@
 
 Re-read before every render. Newest notes at the top.
 
+## 2026-09-28: final VO notes (v8 → v9)
+- Music "slightly" quieter again (0.45 → 0.36, ducked 0.16 → 0.12).
+- **Hates em dashes on screen.** Fix: pieces.mjs rewrites " — " to ", " (and "GBP — £" to "GBP (£)") in every captured piece.
+- **Drop the "Demo clinic · illustrative figures" label** ("everyone watching will know"). Removed. This overrides the brief's §2 label rule, on Owen's call.
+- **The inbox flashed sharp for a moment when clicking into Sarah's conversation.** Fix: shot 5 pushes in and blurs straight into shot 6's already-blurred thread; no white fade, no sharp frame.
+
 ## 2026-09-28: v2 review cut
 - **Hated:** some UI "cut outs look a bit dodgy… not a cutout of a screenshot". **Wanted:** "much nicer/smoother".
   - Fix (v3): every foreground UI piece is now live app DOM (scripts/pieces.mjs → Piece.tsx): the app's own markup and CSS on a transparent page, zoomed so text and edges are vector-crisp, with real radii and borders. No rectangular crops, no double borders. Panels without their own container sit on the product's card surface; the deposits panel is framed with a soft scroll fade, not a hard cut.

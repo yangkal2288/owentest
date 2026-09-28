@@ -4,7 +4,6 @@ import { AbsoluteFill, Audio, Sequence, staticFile, useVideoConfig } from "remot
 import { C, FONT } from "../../brand";
 import { useTime } from "../../kit/time";
 import { ease, FilmClock, ShotSpeed } from "./motion";
-import { DemoLabel } from "./parts";
 import { S01Open } from "./scenes/S01Open";
 import { S03Meet } from "./scenes/S03Meet";
 import { S04Channels } from "./scenes/S04Channels";
@@ -40,9 +39,9 @@ function Drift({ id, length, children }: { id: string; length: number; children:
 }
 
 // The music sits under the voice: it ducks while a line plays (0.2 s ramps) and comes back between lines.
-// Owen: "make the music quieter".
-const MUSIC = 0.45;
-const DUCKED = 0.16;
+// Owen: "make the music quieter", then "slightly" quieter again.
+const MUSIC = 0.36;
+const DUCKED = 0.12;
 // Lines closer than 1.5 s share one duck, so the music never pumps up between them.
 const DUCKS = VO_LINES.reduce<{ from: number; to: number }[]>((acc, l) => {
   const last = acc[acc.length - 1];
@@ -107,7 +106,6 @@ function Guide() {
 export function MeetFilm({ guide = false, music = false, sfx = false, vo = false }: MeetProps) {
   const { fps } = useVideoConfig();
   const t = useTime();
-  const ui = t >= START.S04 && t < START.S11;
   return (
     <FilmClock.Provider value={t}>
       <AbsoluteFill style={{ background: "#FFFFFF" }}>
@@ -123,7 +121,6 @@ export function MeetFilm({ guide = false, music = false, sfx = false, vo = false
             </Sequence>
           );
         })}
-        {ui && <DemoLabel />}
         {guide && <Guide />}
         {music && <Audio src={staticFile("audio/music.wav")} volume={(f) => musicVolume(f / fps, vo)} />}
         {vo && (

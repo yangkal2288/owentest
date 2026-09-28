@@ -72,7 +72,8 @@ function Typed({ t, w }: { t: number; w: number }) {
 
 export function S06Booked() {
   const t = useTime();
-  const bgBlur = tween(t, 0.1, 0.7);
+  // Already blurred on the first frame: shot 5 pushes in blurred, so the thread never flashes sharp.
+  const bgBlur = 1;
   const shown = MSGS.map((m) => tween(t, m.at, 0.3));
   const heights = MSGS.map((m) => pieceSize(m.name).h * SCALE);
   const total = MSGS.reduce((sum, _m, i) => sum + shown[i] * (heights[i] + GAPPX), 0);

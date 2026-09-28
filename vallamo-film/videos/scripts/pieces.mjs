@@ -67,6 +67,12 @@ async function piece(name, find, { edit, pad = 0 } = {}) {
         if (s instanceof HTMLSelectElement) [...d.options].forEach((o, j) => (j === s.selectedIndex ? o.setAttribute("selected", "") : o.removeAttribute("selected")));
       });
       if (editSrc) new Function("el", `(${editSrc})(el)`)(clone);
+      // Owen: no em dashes on screen. Presentation-only: "GBP — £" → "GBP (£)", any other " — " → ", ".
+      const walker = document.createTreeWalker(clone, NodeFilter.SHOW_TEXT);
+      for (let n = walker.nextNode(); n; n = walker.nextNode()) {
+        n.textContent = n.textContent.replace(/\b([A-Z]{3}) — (\S+)/g, "$1 ($2)").replace(/\s*—\s*/g, ", ");
+      }
+      for (const o of clone.querySelectorAll("option")) o.textContent = o.textContent.replace(/\b([A-Z]{3}) — (\S+)/g, "$1 ($2)");
       // Inherited text styles from the element's context.
       const cs = getComputedStyle(el.parentElement ?? el);
       const inherit = ["color", "font-family", "font-size", "font-weight", "line-height", "letter-spacing", "-webkit-font-smoothing"].map((k) => `${k}:${cs.getPropertyValue(k)}`).join(";");

@@ -58,8 +58,8 @@ export function S05Inbox() {
           perspective: 2200,
           transform: `scale(${1 + 1.6 * push})`,
           transformOrigin: `${focus.x}px ${focus.y}px`,
-          filter: push > 0.4 ? `blur(${(push - 0.4) * 16}px)` : undefined,
-          opacity: 1 - tween(t, 4.25, 0.25),
+          // Pushes in and blurs straight into shot 6's blurred thread: no fade to white, no sharp flash.
+          filter: push > 0.25 ? `blur(${(push - 0.25) * 24}px)` : undefined,
         }}
       >
         <div

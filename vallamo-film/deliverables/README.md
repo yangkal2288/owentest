@@ -10,7 +10,7 @@
 
 ## What's real
 
-- **Every piece of product UI is the real Vallamo app** (the North House Aesthetics demo tenant, fictional data, labelled "Demo clinic · illustrative figures"). Pieces are the app's own HTML and CSS, captured from `videos/public/ui/source.html`. Nothing is redrawn, mocked or AI-generated.
+- **Every piece of product UI is the real Vallamo app** (the North House Aesthetics demo tenant, fictional data; the on-screen "demo" label was dropped at Owen's request). Pieces are the app's own HTML and CSS, captured from `videos/public/ui/source.html`. Nothing is redrawn, mocked or AI-generated.
 - **Logo, colours and type** come from the brand package (`brand/`).
 - **Voiceover:** the final read (`vo/final/`, from the WhatsApp video of 28 Sep), cut on its own pauses into the script's lines, with rumble removed, the level evened out, and EQ and light compression for clarity and her own room tone under the whole read (`vo/final/vo_build.py`). Word timings come from Whisper, and each visual beat is placed on its word.
 - **Music:** Soundsurfer, "Product Video" (Pixabay, free for commercial use, no attribution required). Joined on downbeats to fit, ending on its real ending, and ducked under the voice.
@@ -22,6 +22,7 @@
 - Shot 8: the week's real bookings are hidden, then dropped back into their own slots.
 - Shot 9: the handover card is captured with the app at a 1100 px window, so it reads at film size. The follow-up switch is flipped in the real UI.
 - The "Design review" button and the launch banner are removed from every capture.
+- Em dashes in the app's text are shown as commas ("GBP (£)" for currency).
 - The back half of Sarah's conversation plays at double speed, and a "2×" label says so on screen.
 
 ## Re-render
