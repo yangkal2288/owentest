@@ -15,7 +15,7 @@ import { S08Fill } from "./scenes/S08Fill";
 import { S09Rules } from "./scenes/S09Rules";
 import { S11Handled } from "./scenes/S11Handled";
 import { S12End } from "./scenes/S12End";
-import { SHOTS, shotLength, shotSpeed, START, VO, VO_LINES } from "./timeline";
+import { FILM_LENGTH, SHOTS, shotLength, shotSpeed, START, VO, VO_LINES } from "./timeline";
 
 export type MeetProps = {
   fps?: number;
@@ -51,10 +51,11 @@ const DUCKS = VO_LINES.reduce<{ from: number; to: number }[]>((acc, l) => {
   return acc;
 }, []);
 function musicVolume(t: number, vo: boolean) {
-  if (!vo) return MUSIC;
+  if (!vo) return MUSIC * Math.max(0, Math.min(1, (FILM_LENGTH - t) / 1.2));
   let d = 0;
   for (const k of DUCKS) d = Math.max(d, Math.min(1, (t - (k.from - 0.4)) / 0.35, (k.to + 0.5 - t) / 0.45));
-  return MUSIC - (MUSIC - DUCKED) * Math.max(0, Math.min(1, d));
+  // A 1.2 s fade over the last beats, so the bed never cuts off at the film's end.
+  return (MUSIC - (MUSIC - DUCKED) * Math.max(0, Math.min(1, d))) * Math.max(0, Math.min(1, (FILM_LENGTH - t) / 1.2));
 }
 // The speaker's own room tone under the whole read, so the voice never drops to digital silence between lines.
 const ROOM = { from: VO_LINES[0].from - 0.4, to: VO_LINES[VO_LINES.length - 1].to + 0.6 };
