@@ -1,0 +1,39 @@
+1
+00:00:00,250 --> 00:00:02,600
+Have you lost a customer to a competitor?
+
+2
+00:00:03,000 --> 00:00:07,700
+The average customer waits ten minutes for a reply before trying a competitor.
+
+3
+00:00:08,300 --> 00:00:10,500
+Vallamo always replies instantly.
+
+4
+00:00:11,000 --> 00:00:13,400
+Meet Vallamo, your all-in-one front desk.
+
+5
+00:00:13,800 --> 00:00:16,100
+Answers from your clinic's information.
+
+6
+00:00:16,300 --> 00:00:18,800
+Enquiries answered.
+
+7
+00:00:19,000 --> 00:00:20,900
+Appointments booked.
+
+8
+00:00:21,800 --> 00:00:24,200
+Stop losing business to competitors.
+
+9
+00:00:24,400 --> 00:00:26,900
+See Vallamo on your website in ten minutes.
+
+10
+00:00:27,100 --> 00:00:28,800
+vallamo.com
