@@ -7,7 +7,7 @@ Re-read before every render. Newest notes at the top.
 - Phone answering is **out** (the optional voice line and shot 10 stay out).
 - Music: temporary bed for now; licensed track later.
 - The "2×" speed chip: **yes**.
-- One ink beat behind the logo: not answered yet. Default is white only.
+- One ink beat behind the logo: **no. Stay all white.**
 
 ## From the brief (§7)
 **Loves:** real UI on white popping out in 3D · the Apple-style browser · floating enquiries falling into place in the real inbox · the 2× booking · the card flying into the calendar · bold Inter with a Playfair italic accent · AIDA · "every channel, one inbox" energy · the professionalism of Tessel, Skydive and Shotbase.
