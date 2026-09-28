@@ -1,0 +1,6 @@
+node_modules/
+out/
+.DS_Store
+# Large local-only inputs (kept in the upload bundle, not in git)
+vallamo-film/reference/
+vallamo-film/sources/*.zip

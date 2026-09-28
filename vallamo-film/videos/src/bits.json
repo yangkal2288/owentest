@@ -1,0 +1,250 @@
+{
+ "row-0": {
+  "w": 343,
+  "h": 86,
+  "name": "Sarah Mitchell",
+  "channel": "Instagram",
+  "text": "Hi, do you have anything after 5:30 this week for an anti-wrinkle consultation? It'd be my first time."
+ },
+ "row-1": {
+  "w": 343,
+  "h": 86,
+  "name": "Priya Shah",
+  "channel": "WhatsApp",
+  "text": "Hi, I’d like some advice for pigmentation and uneven skin tone. Do you have any Saturday appointments?"
+ },
+ "row-2": {
+  "w": 343,
+  "h": 86,
+  "name": "Jasmine Cole",
+  "channel": "Web chat",
+  "text": "Do you do a discount if I book both Profhilo sessions together?"
+ },
+ "row-3": {
+  "w": 343,
+  "h": 86,
+  "name": "Imogen Johnson",
+  "channel": "Instagram",
+  "text": "Any availability for skin consultation next week?"
+ },
+ "row-4": {
+  "w": 343,
+  "h": 86,
+  "name": "Aisha Begum",
+  "channel": "WhatsApp",
+  "text": "Hi, is it too late to ask about a skin consultation?"
+ },
+ "row-5": {
+  "w": 343,
+  "h": 86,
+  "name": "Grace Morgan",
+  "channel": "Web chat",
+  "text": "Hi, could I get in for dermal filler consultation on Saturday?"
+ },
+ "row-6": {
+  "w": 343,
+  "h": 86,
+  "name": "Phoebe Ward",
+  "channel": "Instagram",
+  "text": "Any availability for skin consultation on Saturday?"
+ },
+ "row-7": {
+  "w": 343,
+  "h": 86,
+  "name": "Zara Johnson",
+  "channel": "WhatsApp",
+  "text": "Do you have anything for anti-wrinkle treatment this week?"
+ },
+ "row-8": {
+  "w": 343,
+  "h": 86,
+  "name": "Melissa Cooper",
+  "channel": "Web chat",
+  "text": "Looking for a dermal filler consultation next week if possible"
+ },
+ "inbox-list": {
+  "w": 343,
+  "h": 560,
+  "rowsTop": 34,
+  "rowH": 86
+ },
+ "msg-1": {
+  "w": 466,
+  "h": 82
+ },
+ "msg-2": {
+  "w": 466,
+  "h": 82
+ },
+ "msg-3": {
+  "w": 466,
+  "h": 61
+ },
+ "msg-4": {
+  "w": 466,
+  "h": 82
+ },
+ "msg-5": {
+  "w": 466,
+  "h": 61
+ },
+ "msg-6": {
+  "w": 466,
+  "h": 124
+ },
+ "thread-head": {
+  "w": 530,
+  "h": 1092
+ },
+ "outcome-pre": {
+  "w": 263,
+  "h": 54
+ },
+ "outcome-booked": {
+  "w": 263,
+  "h": 70
+ },
+ "upcoming-card": {
+  "w": 263,
+  "h": 54
+ },
+ "bk-sarah": {
+  "w": 343,
+  "h": 29
+ },
+ "calendar": {
+  "w": 410,
+  "h": 762,
+  "slot": {
+   "x": 61,
+   "y": 699,
+   "w": 343,
+   "h": 29
+  }
+ },
+ "booking-drawer": {
+  "w": 480,
+  "h": 520
+ },
+ "kpi-enquiries": {
+  "w": 210,
+  "h": 114
+ },
+ "kpi-booked": {
+  "w": 210,
+  "h": 114
+ },
+ "kpi-handled": {
+  "w": 210,
+  "h": 114
+ },
+ "kpi-recovered": {
+  "w": 358,
+  "h": 314
+ },
+ "kpi-channels": {
+  "w": 358,
+  "h": 299
+ },
+ "inbox-head": {
+  "w": 344,
+  "h": 101
+ },
+ "row-0-selected": {
+  "w": 343,
+  "h": 86
+ },
+ "int-cliniko": {
+  "w": 363,
+  "h": 74
+ },
+ "int-0": {
+  "w": 363,
+  "h": 138,
+  "name": "Google Calendar"
+ },
+ "int-1": {
+  "w": 363,
+  "h": 138,
+  "name": "Outlook / Microsoft 365"
+ },
+ "int-2": {
+  "w": 363,
+  "h": 138,
+  "name": "Microsoft Bookings"
+ },
+ "int-3": {
+  "w": 363,
+  "h": 138,
+  "name": "Cal.com"
+ },
+ "int-4": {
+  "w": 363,
+  "h": 138,
+  "name": "Acuity Scheduling"
+ },
+ "int-5": {
+  "w": 363,
+  "h": 138,
+  "name": "Pabau"
+ },
+ "rules-when": {
+  "w": 655,
+  "h": 202
+ },
+ "rules-services": {
+  "w": 655,
+  "h": 142
+ },
+ "maya-link": {
+  "w": 550,
+  "h": 200
+ },
+ "maya-services": {
+  "w": 586,
+  "h": 236
+ },
+ "maya-hours": {
+  "w": 586,
+  "h": 454
+ },
+ "pg-ask": {
+  "w": 219,
+  "h": 40
+ },
+ "pg-reply": {
+  "w": 732,
+  "h": 254,
+  "chip6": {
+   "x": 108,
+   "y": 68,
+   "w": 102,
+   "h": 32
+  },
+  "traceTop": 134
+ },
+ "pg-trace": {
+  "w": 571,
+  "h": 120
+ },
+ "pg-chosen": {
+  "w": 109,
+  "h": 40
+ },
+ "pill-unavailable": {
+  "w": 95,
+  "h": 22
+ },
+ "pill-available": {
+  "w": 80,
+  "h": 22
+ },
+ "pill-checked": {
+  "w": 134,
+  "h": 22
+ },
+ "cal-maya-head": {
+  "w": 352,
+  "h": 54
+ }
+}

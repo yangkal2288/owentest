@@ -1,0 +1,13 @@
+{
+	"name": "acme-launch-film",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"dev": "npx --yes hyperframes@0.8.78 preview",
+		"check": "npx --yes hyperframes@0.8.78 check",
+		"snapshot": "npx --yes hyperframes@0.8.78 snapshot",
+		"render": "npx --yes hyperframes@0.8.78 render",
+		"render:film": "npx --yes tsx scripts/render/render.ts",
+		"render:audio": "npx --yes tsx scripts/render/render.ts --audio-only"
+	}
+}
