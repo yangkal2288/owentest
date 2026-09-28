@@ -3,7 +3,7 @@ import { AbsoluteFill, Audio, Sequence, staticFile, useVideoConfig } from "remot
 
 import { C, FONT } from "../../brand";
 import { useTime } from "../../kit/time";
-import { ease, FilmClock } from "./motion";
+import { ease, FilmClock, ShotSpeed } from "./motion";
 import { DemoLabel } from "./parts";
 import { S01Open } from "./scenes/S01Open";
 import { S03Meet } from "./scenes/S03Meet";
@@ -15,7 +15,7 @@ import { S08Fill } from "./scenes/S08Fill";
 import { S09Rules } from "./scenes/S09Rules";
 import { S11Handled } from "./scenes/S11Handled";
 import { S12End } from "./scenes/S12End";
-import { FILM_LENGTH, SHOTS, START, VO } from "./timeline";
+import { SHOTS, shotLength, shotSpeed, START, VO, VO_LINES } from "./timeline";
 
 export type MeetProps = {
   fps?: number;
@@ -25,6 +25,8 @@ export type MeetProps = {
   music?: boolean;
   /** The few subtle SFX (send, land, clicks, booked chime). */
   sfx?: boolean;
+  /** The recorded voiceover (public/audio/vo). */
+  vo?: boolean;
 };
 
 // A slow held camera on every shot that doesn't hand exact positions to the
@@ -37,6 +39,16 @@ function Drift({ id, length, children }: { id: string; length: number; children:
   return <AbsoluteFill style={{ transform: `scale(${1 + 0.035 * u}) translateY(${-6 * u}px)`, transformOrigin: "50% 48%" }}>{children}</AbsoluteFill>;
 }
 
+// The music sits under the voice: it ducks while a line plays (0.2 s ramps) and comes back between lines.
+const MUSIC = 0.7;
+const DUCKED = 0.32;
+function musicVolume(t: number, vo: boolean) {
+  if (!vo) return MUSIC;
+  let d = 0;
+  for (const l of VO_LINES) d = Math.max(d, Math.min(1, (t - (l.from - 0.2)) / 0.2, (l.to + 0.25 - t) / 0.3));
+  return MUSIC - (MUSIC - DUCKED) * Math.max(0, Math.min(1, d));
+}
+
 // Sound: few, soft, and never one on every landing (no-slop-motion). Shot-relative seconds.
 const SFX = [
   { shot: "S05", at: 0.12, file: "whoosh", volume: 0.18 }, // the three enquiries lift off
@@ -44,11 +56,11 @@ const SFX = [
   { shot: "S05", at: 3.85, file: "click", volume: 0.35 }, // cursor on Sarah
   { shot: "S06", at: 1.45, file: "click", volume: 0.2 }, // Sarah sends
   { shot: "S06", at: 3.95, file: "chime", volume: 0.32 }, // booked: confetti
-  { shot: "S06", at: 5.2, file: "whoosh", volume: 0.2 }, // circle wipe
+  { shot: "S06", at: 4.8, file: "whoosh", volume: 0.2 }, // circle wipe
   { shot: "S07", at: 3.6, file: "whoosh", volume: 0.24 }, // whip to the diary
-  { shot: "S09", at: 3.9 + 0.62, file: "click", volume: 0.3 }, // follow-ups switched on
-  { shot: "S09", at: 5.2 + 0.62, file: "click", volume: 0.3 }, // "I'm on it"
-].map((c) => ({ ...c, at: START[c.shot] + c.at }));
+  { shot: "S09", at: 3.74 + 0.55, file: "click", volume: 0.3 }, // follow-ups switched on
+  { shot: "S09", at: 6.41, file: "click", volume: 0.3 }, // "I'm on it"
+].map((c) => ({ ...c, at: START[c.shot] + c.at / shotSpeed(SHOTS.find((s) => s.id === c.shot)!) }));
 
 const SCENES: Record<string, ComponentType> = {
   S01: S01Open,
@@ -66,7 +78,7 @@ const SCENES: Record<string, ComponentType> = {
 function Guide() {
   const t = useTime();
   const line = VO.find((v) => t >= v.from && t < v.to);
-  const shot = SHOTS.find((s) => t >= START[s.id] && t < START[s.id] + s.length) ?? SHOTS[SHOTS.length - 1];
+  const shot = SHOTS.find((s) => t >= START[s.id] && t < START[s.id] + shotLength(s)) ?? SHOTS[SHOTS.length - 1];
   return (
     <>
       <div style={{ position: "absolute", right: 24, top: 18, fontFamily: FONT.sans, fontSize: 18, color: C.ink3, letterSpacing: "0.04em" }}>
@@ -81,7 +93,7 @@ function Guide() {
   );
 }
 
-export function MeetFilm({ guide = false, music = false, sfx = false }: MeetProps) {
+export function MeetFilm({ guide = false, music = false, sfx = false, vo = false }: MeetProps) {
   const { fps } = useVideoConfig();
   const t = useTime();
   const ui = t >= START.S04 && t < START.S11;
@@ -91,17 +103,25 @@ export function MeetFilm({ guide = false, music = false, sfx = false }: MeetProp
         {SHOTS.map((s) => {
           const Scene = SCENES[s.id];
           return (
-            <Sequence key={s.id} from={Math.round(START[s.id] * fps)} durationInFrames={Math.round(s.length * fps)} name={`${s.id} ${s.name}`}>
-              <Drift id={s.id} length={s.length}>
-                <Scene />
-              </Drift>
+            <Sequence key={s.id} from={Math.round(START[s.id] * fps)} durationInFrames={Math.round(shotLength(s) * fps)} name={`${s.id} ${s.name}`}>
+              <ShotSpeed.Provider value={shotSpeed(s)}>
+                <Drift id={s.id} length={shotLength(s)}>
+                  <Scene />
+                </Drift>
+              </ShotSpeed.Provider>
             </Sequence>
           );
         })}
         {ui && <DemoLabel />}
         {guide && <Guide />}
-        {music && <Audio src={staticFile("audio/music.wav")} volume={(f) => 0.72 * Math.min(1, Math.max(0, (FILM_LENGTH - 0.1 - f / fps) / 1.4))} />}
-        {sfx &&
+        {music && <Audio src={staticFile("audio/music.wav")} volume={(f) => musicVolume(f / fps, vo)} />}
+        {vo &&
+        VO_LINES.map((l) => (
+          <Sequence key={l.file} from={Math.round(l.from * fps)} durationInFrames={Math.ceil((l.to - l.from + 0.2) * fps)} layout="none">
+            <Audio src={staticFile(l.file)} volume={1} />
+          </Sequence>
+        ))}
+      {sfx &&
           SFX.map((c, i) => (
             <Sequence key={i} from={Math.round(c.at * fps)} durationInFrames={Math.round(1.5 * fps)} layout="none">
               <Audio src={staticFile(`audio/sfx/${c.file}.wav`)} volume={c.volume} />

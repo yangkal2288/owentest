@@ -15,14 +15,16 @@ import { Piece, pieceSize, type PieceName } from "../Piece";
  * Deposits and › Reminders, the abandoned-enquiry follow-up being switched on,
  * and a real handover (unhappy customer, Instagram) being picked up.
  */
-export const S09_LENGTH = 6.5;
-const BEAT = 1.3;
+// Each beat starts on its phrase in the VO (take 2, line 8 placed at +0.15 s).
+export const S09_LENGTH = 7.9;
 
 type Beat = {
   plain: string;
   accent: string;
   piece: PieceName;
   after?: PieceName; // state after the click
+  at: number; // shot seconds, on the phrase
+  clickAt?: number; // shot seconds (default: 0.55 s into the beat)
   w: number;
   surface: boolean; // sits on a product card surface (sections without their own container)
   click?: { x: number; y: number }; // fractions of the piece
@@ -30,12 +32,12 @@ type Beat = {
   clip?: number;
 };
 const BEATS: Beat[] = [
-  { plain: "Your hours.", accent: "Your rules.", piece: "hours", w: 900, surface: true },
-  { plain: "Deposits", accent: "taken.", piece: "deposits", w: 1000, surface: true, clip: 214 },
-  { plain: "Reminders", accent: "sent.", piece: "reminders", w: 1000, surface: true },
-  { plain: "Quiet leads", accent: "followed up.", piece: "followup-off", after: "followup-on", w: 1000, surface: true, click: { x: 0.942, y: 0.276 } },
-  // Captured at a 1100px window so the card reads at film size. Cursor on "I'm on it".
-  { plain: "Hands over", accent: "when it matters.", piece: "handover", w: 1000, surface: false, click: { x: 0.8, y: 0.313 } },
+  { plain: "Your hours.", accent: "Your rules.", piece: "hours", at: 0, w: 900, surface: true },
+  { plain: "Deposits", accent: "taken.", piece: "deposits", at: 1.72, w: 1000, surface: true, clip: 214 },
+  { plain: "Reminders", accent: "sent.", piece: "reminders", at: 2.72, w: 1000, surface: true },
+  { plain: "Quiet leads", accent: "followed up.", piece: "followup-off", after: "followup-on", at: 3.74, w: 1000, surface: true, click: { x: 0.942, y: 0.276 } },
+  // Captured at a 1100px window so the card reads at film size. Cursor clicks "I'm on it" on "hands".
+  { plain: "Hands over", accent: "when it matters.", piece: "handover", at: 5.24, clickAt: 6.41, w: 1000, surface: false, click: { x: 0.8, y: 0.313 } },
 ];
 const PAD = 22;
 
@@ -58,20 +60,21 @@ export function S09Rules() {
   return (
     <AbsoluteFill style={{ background: "#FFFFFF", overflow: "hidden" }}>
       {BEATS.map((b, i) => {
-        const at = i * BEAT;
-        const out = i < BEATS.length - 1 ? at + BEAT - 0.2 : S09_LENGTH - 0.12;
+        const at = b.at;
+        // The outgoing beat blurs away as the next one arrives, so there is never an empty frame.
+        const out = i < BEATS.length - 1 ? BEATS[i + 1].at - 0.08 : S09_LENGTH - 0.12;
         if (t < at - 0.01 || t > out + 0.3) return null;
         const size = pieceSize(b.piece);
         const inner = b.surface ? b.w - PAD * 2 : b.w;
         const zoom = inner / size.w;
         const ih = (b.clip ?? size.h) * zoom;
         const h = ih + (b.surface ? PAD * 2 : 0);
-        const clickAt = at + 0.62;
+        const clickAt = b.clickAt ?? at + 0.55;
         const switched = !!b.after && t >= clickAt;
         const origin = { x: 1850 - b.w + (b.surface ? PAD : 0), y: 540 - h / 2 - (clickAt - at) * 10 + (b.surface ? PAD : 0) };
         const target = b.click ? { x: origin.x + b.click.x * inner, y: origin.y + b.click.y * ih } : null;
         const cursor = target
-          ? cursorAt(t, [{ t: at + 0.1, x: target.x + 220, y: target.y + 200 }, { t: clickAt, x: target.x, y: target.y, click: true }], (x, y) => ({ x, y }))
+          ? cursorAt(t, [{ t: Math.max(at + 0.1, clickAt - 0.6), x: target.x + 220, y: target.y + 200 }, { t: clickAt, x: target.x, y: target.y, click: true }], (x, y) => ({ x, y }))
           : null;
         const body = (
           <div style={{ position: "relative", ...(b.clip ? { height: ih, overflow: "hidden", maskImage: "linear-gradient(to bottom, #000 calc(100% - 40px), transparent)", WebkitMaskImage: "linear-gradient(to bottom, #000 calc(100% - 40px), transparent)" } : {}) }}>
@@ -95,7 +98,7 @@ export function S09Rules() {
               )}
             </Floating>
             {cursor && (
-              <div style={{ position: "absolute", inset: 0, opacity: tween(t, at + 0.1, 0.2) * (1 - tween(t, out - 0.05, 0.2)) }}>
+              <div style={{ position: "absolute", inset: 0, opacity: tween(t, Math.max(at + 0.1, clickAt - 0.6), 0.2) * (1 - tween(t, out - 0.05, 0.2)) }}>
                 <UserCursor {...cursor} />
               </div>
             )}

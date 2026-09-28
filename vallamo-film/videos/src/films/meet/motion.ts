@@ -2,7 +2,7 @@ import { createContext, useContext, type CSSProperties } from "react";
 import { Easing } from "remotion";
 
 import { critical, step } from "../../kit/spring";
-import { clamp01 } from "../../kit/time";
+import { clamp01, useTime } from "../../kit/time";
 
 /** The product's easing, cubic-bezier(.2,.7,.2,1): all UI moves use it. */
 export const ease = Easing.bezier(0.2, 0.7, 0.2, 1);
@@ -38,3 +38,8 @@ export const sinceBeat = (filmT: number, every = 1) => {
   const period = BEAT * every;
   return (((filmT - FIRST_BEAT) % period) + period) % period;
 };
+
+/** Playback speed of the current shot (set per shot in timeline.ts to fit the VO). */
+export const ShotSpeed = createContext(1);
+/** Shot time, scaled by the shot's speed: scenes that are sped up read this instead of useTime. */
+export const useShotTime = () => useTime() * useContext(ShotSpeed);

@@ -1,8 +1,7 @@
 import { AbsoluteFill } from "remotion";
 
 import { C } from "../../../brand";
-import { useTime } from "../../../kit/time";
-import { BEAT, blurIn, settle, sinceBeat, tween, useFilmTime } from "../motion";
+import { BEAT, blurIn, settle, sinceBeat, tween, useFilmTime, useShotTime } from "../motion";
 import { Bit, FloorShadow, giant, Logo } from "../parts";
 import { Piece } from "../Piece";
 
@@ -34,7 +33,7 @@ const LINE = 10;
 const PULSE_TRAVEL = 1.1; // seconds for a pulse to cross the line
 
 export function S07Connect() {
-  const t = useTime();
+  const t = useShotTime(); // this shot plays sped up to fit the VO (timeline.ts)
   const lift = settle(t, 0.35, 7);
   const draw = tween(t, 1.05, 0.8);
   // Pulse on the music's beat: a swell every beat, a ring every other beat.

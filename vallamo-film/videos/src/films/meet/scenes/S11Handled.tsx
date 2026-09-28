@@ -48,7 +48,7 @@ export function S11Handled() {
             </span>
           ))}
         </div>
-        <div style={{ position: "absolute", left: 0, right: 0, top: 500, textAlign: "center", ...accent(250), ...blurIn(t, 1.25, null, 30) }}>Handled.</div>
+        <div style={{ position: "absolute", left: 0, right: 0, top: 500, textAlign: "center", ...accent(250), ...blurIn(t, 1.62, null, 30) }}>Handled.</div>
       </div>
     </AbsoluteFill>
   );

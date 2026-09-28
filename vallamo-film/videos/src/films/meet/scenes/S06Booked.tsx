@@ -7,7 +7,7 @@ import { accent, FloorShadow, giant } from "../parts";
 import { Piece, pieceSize, type PieceName } from "../Piece";
 
 /**
- * Shot 6 · Booked (7.9 s). "It replies from your own information, checks your
+ * Shot 6 · Booked (7.5 s). "It replies from your own information, checks your
  * diary… and books the appointment."
  * Sarah's real conversation, as live app DOM, plays in focus over her blurred
  * thread: her message types in, Isla replies, the back half runs at 2×
@@ -15,7 +15,7 @@ import { Piece, pieceSize, type PieceName } from "../Piece";
  * two clay rings pulse out from its edges (Owen: "tone it down… make it pop or pulse"). Then a clay circle wipe from it opens onto the outcome
  * at poster size: In progress → Booked, and the THU 24 card, which lifts out.
  */
-export const S06_LENGTH = 7.9;
+export const S06_LENGTH = 7.5;
 
 const SCALE = 2.1;
 const COL_W = 466 * SCALE;
@@ -31,7 +31,7 @@ const MSGS: { name: PieceName; at: number }[] = [
 const GAPPX = 16;
 const BOTTOM = 860;
 const CONFIRMED = 3.95; // msg-6 has landed: hold, pop, pulse
-const WIPE = 5.25;
+const WIPE = 4.85;
 
 // Sarah's first message types into her real bubble: her own text is uncovered
 // character by character. Line boxes in the piece (css px); the cover is the bubble's colour.
@@ -83,10 +83,10 @@ export function S06Booked() {
   const hold = tween(t, CONFIRMED, 1.3);
   const clay = tween(t, WIPE, 0.45);
   const white = tween(t, WIPE + 0.2, 0.45);
-  const flip = tween(t, 6.3, 0.22);
-  const flipIn = tween(t, 6.52, 0.25);
-  const enter = tween(t, 6.85, 0.3);
-  const lift = tween(t, 7.45, 0.45);
+  const flip = tween(t, WIPE + 1.05, 0.22);
+  const flipIn = tween(t, WIPE + 1.27, 0.25);
+  const enter = tween(t, WIPE + 1.6, 0.3);
+  const lift = tween(t, WIPE + 2.2, 0.45);
   const P = 2.6; // poster scale for the outcome
 
   return (
@@ -161,7 +161,7 @@ export function S06Booked() {
         <div style={{ position: "absolute", left: 140, top: 340 }}>
           <div style={{ ...giant(92), ...blurIn(t, WIPE + 0.4) }}>Answers.</div>
           <div style={{ ...giant(92), marginTop: 12, ...blurIn(t, WIPE + 0.62) }}>Checks your diary.</div>
-          <div style={{ ...accent(112), marginTop: 10, ...blurIn(t, 6.4) }}>Books it.</div>
+          <div style={{ ...accent(112), marginTop: 10, ...blurIn(t, WIPE + 1.15) }}>Books it.</div>
         </div>
         <FloorShadow x={1110} y={840} w={620} h={70} height={200} style={{ opacity: 0.3 * tween(t, WIPE + 0.5, 0.4) }} />
         <div style={{ position: "absolute", left: 1080, top: 300, transformStyle: "preserve-3d", transform: "rotateY(-14deg) rotateX(8deg)" }}>
@@ -182,7 +182,7 @@ export function S06Booked() {
               marginTop: 34,
               marginLeft: 70,
               transform: `translateZ(${120 + lift * 420}px) translate(${lift * 260}px, ${-lift * 380 + (1 - enter) * 24}px) rotateZ(${-2 + lift * 4}deg)`,
-              opacity: enter * (1 - tween(t, 7.7, 0.2)),
+              opacity: enter * (1 - tween(t, WIPE + 2.45, 0.2)),
               filter: enter < 1 ? `blur(${(1 - enter) * 10}px)` : undefined,
             }}
           >

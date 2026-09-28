@@ -1,8 +1,7 @@
 import { AbsoluteFill } from "remotion";
 
-import { useTime } from "../../../kit/time";
 import PIECES from "../../../pieces.json";
-import { blurIn, mix, settle, tween } from "../motion";
+import { blurIn, mix, settle, tween, useShotTime } from "../motion";
 import { accent, FloorShadow, giant } from "../parts";
 import { Piece, pieceSize } from "../Piece";
 
@@ -30,7 +29,7 @@ const SARAH = BLOCKS.find((b) => isSarah(b.who))!;
 const r8 = (b: { x: number; y: number; w: number; h: number }) => ({ x: b.x * W8, y: b.y * W8, w: b.w * W8, h: b.h * W8 });
 
 export function S08Fill() {
-  const t = useTime();
+  const t = useShotTime(); // this shot plays sped up to fit the VO (timeline.ts)
   const enter = tween(t, 0, 0.45);
   const push = tween(t, 4.5, 0.5);
   const sr = r8(SARAH);

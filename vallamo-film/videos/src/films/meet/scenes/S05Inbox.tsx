@@ -2,8 +2,7 @@ import { AbsoluteFill, Img, staticFile } from "remotion";
 
 import { C } from "../../../brand";
 import { cursorAt, UserCursor } from "../../../kit/cursor";
-import { useTime } from "../../../kit/time";
-import { mix, settle, tween } from "../motion";
+import { mix, settle, tween, useShotTime } from "../motion";
 import { Browser, Card, FloorShadow } from "../parts";
 import { Piece } from "../Piece";
 import { CARD_H, CARD_W, GAP, STACK_TOP, STACK_X } from "./S04Channels";
@@ -35,7 +34,7 @@ const CARDS = [
 const CLICK = 3.85;
 
 export function S05Inbox() {
-  const t = useTime();
+  const t = useShotTime(); // this shot plays sped up to fit the VO (timeline.ts)
   const rise = settle(t, 0, 6);
   const tilt = 22 * tween(t, 0.1, 0.8) * (1 - tween(t, 2.65, 0.8));
   const push = tween(t, CLICK + 0.1, 0.55);
