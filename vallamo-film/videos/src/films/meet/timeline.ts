@@ -39,13 +39,13 @@ export const FILM_LENGTH = SHOTS.reduce((sum, s) => sum + s.length, 0);
 /** The VO script's lines on the guide timeline (captions and SRT come from here). */
 export const VO = [
   { from: 2.0, to: 4.0, text: "You're with a client." },
-  { from: 4.0, to: 6.0, text: "Enquiries don't wait." },
-  { from: 6.0, to: 9.0, text: "Meet Vallamo… your new front desk." },
-  { from: 9.0, to: 15.0, text: "It answers on WhatsApp… Instagram… and your website… all in one inbox." },
-  { from: 18.0, to: 25.0, text: "It replies from your own information, checks your diary… and books the appointment." },
-  { from: 25.0, to: 29.0, text: "Connect your calendar…" },
-  { from: 29.0, to: 34.0, text: "…and watch it fill up." },
-  { from: 34.0, to: 40.5, text: "Your hours. Your rules. Deposits taken, reminders sent, quiet leads followed up… and when it matters, it hands over to you." },
-  { from: 40.5, to: 43.5, text: "Your entire front desk… Handled." },
-  { from: 43.5, to: 48.5, text: "See yours in ten minutes, built from your website. vallamo.com" },
+  { from: 4.0, to: START.S03, text: "Enquiries don't wait." },
+  { from: START.S03, to: START.S04, text: "Meet Vallamo… your new front desk." },
+  { from: START.S04, to: START.S04 + 6, text: "It answers on WhatsApp… Instagram… and your website… all in one inbox." },
+  { from: START.S06, to: START.S07, text: "It replies from your own information, checks your diary… and books the appointment." },
+  { from: START.S07, to: START.S08, text: "Connect your calendar…" },
+  { from: START.S08, to: START.S09, text: "…and watch it fill up." },
+  { from: START.S09, to: START.S11, text: "Your hours. Your rules. Deposits taken, reminders sent, quiet leads followed up… and when it matters, it hands over to you." },
+  { from: START.S11, to: START.S12, text: "Your entire front desk… Handled." },
+  { from: START.S12, to: FILM_LENGTH, text: "See yours in ten minutes, built from your website. vallamo.com" },
 ];

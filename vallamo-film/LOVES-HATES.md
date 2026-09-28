@@ -2,6 +2,13 @@
 
 Re-read before every render. Newest notes at the top.
 
+## 2026-09-28: v2 review cut
+- **Hated:** some UI "cut outs look a bit dodgy… not a cutout of a screenshot". **Wanted:** "much nicer/smoother".
+  - Fix (v3): every foreground UI piece is now live app DOM (scripts/pieces.mjs → Piece.tsx): the app's own markup and CSS on a transparent page, zoomed so text and edges are vector-crisp, with real radii and borders. No rectangular crops, no double borders. Panels without their own container sit on the product's card surface; the deposits panel is framed with a soft scroll fade, not a hard cut.
+- **Wanted:** hold on the final booking confirmation, with celebration confetti from its edges.
+  - Fix (v3): shot 6 holds 1.3 s on Isla's "you're booked" message, the camera leans in and brand-colour confetti bursts from the message's edges (beneath it, never over text), with the booked chime. Shot 6 is 7.9 s; the end card is trimmed to 4.4 s to keep the film at 48.8 s.
+- Music: Owen to pick a free licensed track (Pixabay or Mixkit), see chat.
+
 ## 2026-09-28: animatic v1
 - **Hated:** the thin line in "Connect your calendar". **Wanted:** "much less thin… make it pulsate." Overall: "make it 10x better."
   - Fix (v2): the line is 10 px clay, draws on, then pulses on the beat (width swell, travelling beads Vallamo → Cliniko, a ring at the Cliniko end every other beat).

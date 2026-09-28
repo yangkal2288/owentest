@@ -27,7 +27,7 @@ export function S11Handled() {
           top: 540,
           transformStyle: "preserve-3d",
           transform: `scale(${1 - collapse * 0.94}) rotateX(55deg) rotateZ(-28deg) translate(${-1400 + t * 60}px, ${-1500 + t * 110}px)`,
-          opacity: 0.5 * tween(t, 0, 0.35) * (1 - collapse),
+          opacity: 0.5 * tween(t, 0, 0.18) * (1 - collapse),
           filter: "blur(1.5px)",
         }}
       >
@@ -43,7 +43,7 @@ export function S11Handled() {
       <div style={{ position: "absolute", inset: 0, opacity: 1 - collapse }}>
         <div style={{ position: "absolute", left: 0, right: 0, top: 330, textAlign: "center", ...giant(132) }}>
           {["Your", "entire", "front", "desk."].map((w, i) => (
-            <span key={w} style={{ display: "inline-block", marginRight: "0.24em", ...blurIn(t, 0.15 + i * 0.08, null, 30) }}>
+            <span key={w} style={{ display: "inline-block", marginRight: "0.24em", ...blurIn(t, 0.05 + i * 0.07, null, 30) }}>
               {w}
             </span>
           ))}

@@ -1,4 +1,4 @@
-import type { CSSProperties } from "react";
+import { createContext, useContext, type CSSProperties } from "react";
 import { Easing } from "remotion";
 
 import { critical, step } from "../../kit/spring";
@@ -27,3 +27,13 @@ export function blurIn(t: number, at: number, out: number | null = null, rise = 
 
 /** Visible between two times (with the blurIn fades inside the window). */
 export const live = (t: number, from: number, to: number) => t >= from - 0.001 && t < to + 0.25;
+
+/** Film time (seconds from the film's first frame), for anything locked to the music. */
+export const FilmClock = createContext(0);
+export const useFilmTime = () => useContext(FilmClock);
+/** TEMP bed: 100 BPM, first beat at 2.0 s. Seconds since the latest beat. */
+export const BEAT = 0.6;
+export const sinceBeat = (filmT: number, every = 1) => {
+  const period = BEAT * every;
+  return (((filmT - 2.0) % period) + period) % period;
+};

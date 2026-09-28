@@ -6,16 +6,16 @@ import { blurIn, tween } from "../motion";
 import { accent, giant, Logo } from "../parts";
 
 /**
- * Shot 12 · End card (5 s). "See yours in ten minutes, built from your website. vallamo.com"
+ * Shot 12 · End card (4.4 s). "See yours in ten minutes, built from your website. vallamo.com"
  * The lockup opens from the centre where shot 11's grid collapsed, the line,
  * one clay pill. The clay dot from shot 1 returns under it and fades.
  */
-export const S12_LENGTH = 5;
+export const S12_LENGTH = 4.4;
 
 export function S12End() {
   const t = useTime();
   const open = tween(t, 0, 0.6);
-  const dot = tween(t, 3.4, 0.3) * (1 - tween(t, 4.1, 0.7));
+  const dot = tween(t, 2.9, 0.3) * (1 - tween(t, 3.5, 0.7));
   return (
     <AbsoluteFill style={{ background: "#FFFFFF", alignItems: "center" }}>
       <div style={{ marginTop: 170, clipPath: `circle(${open * 75}% at 50% 40%)` }}>

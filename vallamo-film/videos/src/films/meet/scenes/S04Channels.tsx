@@ -3,7 +3,8 @@ import { AbsoluteFill, Easing, Img, staticFile } from "remotion";
 
 import { C } from "../../../brand";
 import { clamp01, useTime } from "../../../kit/time";
-import { accent, Bit, Card, eyebrow, FloorShadow, giant } from "../parts";
+import { accent, Card, eyebrow, FloorShadow, giant } from "../parts";
+import { Piece, pieceSize } from "../Piece";
 
 /**
  * Shot 4 · Channels (VO line 4, 4.5 s).
@@ -19,14 +20,14 @@ const ease = Easing.bezier(0.2, 0.7, 0.2, 1);
 const tween = (t: number, start: number, length: number) => ease(clamp01((t - start) / length));
 
 const CHANNELS = [
-  { at: 0.2, badge: "badge-wa", word: "WhatsApp", row: "row-1" }, // Priya Shah
-  { at: 1.05, badge: "badge-ig", word: "Instagram", row: "row-0" }, // Sarah Mitchell
-  { at: 1.9, badge: "badge-web", word: "your website", row: "row-5" }, // Grace Morgan
+  { at: 0.2, badge: "badge-wa", word: "WhatsApp", row: "row-1" as const }, // Priya Shah
+  { at: 1.05, badge: "badge-ig", word: "Instagram", row: "row-0" as const }, // Sarah Mitchell
+  { at: 1.9, badge: "badge-web", word: "your website", row: "row-5" as const }, // Grace Morgan
 ] as const;
 const SWAP = 0.22; // the outgoing word leaves in this long; the next arrives over the same span
 const TYPE = 104;
 export const CARD_W = 700;
-export const CARD_H = (CARD_W * 86) / 343 + 3;
+export const CARD_H = (CARD_W * pieceSize("row-0").h) / pieceSize("row-0").w + 3;
 export const GAP = 26;
 export const STACK_X = 1070;
 /** Where the three cards rest, flat, on the last frame: shot 5 picks them up from here. */
@@ -111,7 +112,7 @@ export function S04Channels() {
               }}
             >
               <Card>
-                <Bit name={c.row} w={CARD_W} />
+                <Piece name={c.row} w={CARD_W} />
               </Card>
             </div>
           );

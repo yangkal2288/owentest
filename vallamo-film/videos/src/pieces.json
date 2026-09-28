@@ -1,0 +1,332 @@
+{
+ "row-0": {
+  "w": 343,
+  "h": 92
+ },
+ "row-0-selected": {
+  "w": 343,
+  "h": 92
+ },
+ "row-1": {
+  "w": 343,
+  "h": 92
+ },
+ "row-5": {
+  "w": 343,
+  "h": 92
+ },
+ "msg-1": {
+  "w": 466,
+  "h": 82
+ },
+ "msg-2": {
+  "w": 466,
+  "h": 82
+ },
+ "msg-3": {
+  "w": 466,
+  "h": 61
+ },
+ "msg-4": {
+  "w": 466,
+  "h": 82
+ },
+ "msg-5": {
+  "w": 466,
+  "h": 61
+ },
+ "msg-6": {
+  "w": 466,
+  "h": 124
+ },
+ "outcome-pre": {
+  "w": 263,
+  "h": 54
+ },
+ "outcome-booked": {
+  "w": 263,
+  "h": 70
+ },
+ "upcoming-card": {
+  "w": 263,
+  "h": 54
+ },
+ "int-cliniko": {
+  "w": 363,
+  "h": 74
+ },
+ "int-google-calendar": {
+  "w": 363,
+  "h": 138
+ },
+ "int-outlook-microsoft": {
+  "w": 363,
+  "h": 138
+ },
+ "int-microsoft-bookings": {
+  "w": 363,
+  "h": 138
+ },
+ "int-cal-com": {
+  "w": 363,
+  "h": 138
+ },
+ "int-acuity-scheduling": {
+  "w": 363,
+  "h": 138
+ },
+ "int-square-appointments": {
+  "w": 363,
+  "h": 138
+ },
+ "int-boulevard": {
+  "w": 363,
+  "h": 138
+ },
+ "int-pabau": {
+  "w": 363,
+  "h": 138
+ },
+ "int-phorest": {
+  "w": 363,
+  "h": 138
+ },
+ "week": {
+  "w": 1114,
+  "h": 768,
+  "blocks": [
+   {
+    "id": "wk-00",
+    "who": "Emily Carter",
+    "x": 61,
+    "y": 159,
+    "w": 67,
+    "h": 29
+   },
+   {
+    "id": "wk-01",
+    "who": "Freya Morgan10:00am · Hydrafacial",
+    "x": 61,
+    "y": 191,
+    "w": 67,
+    "h": 45
+   },
+   {
+    "id": "wk-02",
+    "who": "Molly Shah11:00am · Dermal Filler Treatm",
+    "x": 61,
+    "y": 255,
+    "w": 67,
+    "h": 45
+   },
+   {
+    "id": "wk-03",
+    "who": "Grace Wood",
+    "x": 136,
+    "y": 287,
+    "w": 67,
+    "h": 29
+   },
+   {
+    "id": "wk-04",
+    "who": "Tia Hill12:00pm · Dermal Filler Treatmen",
+    "x": 61,
+    "y": 319,
+    "w": 67,
+    "h": 45
+   },
+   {
+    "id": "wk-05",
+    "who": "Leah Shah",
+    "x": 136,
+    "y": 319,
+    "w": 67,
+    "h": 29
+   },
+   {
+    "id": "wk-06",
+    "who": "Leah Carter",
+    "x": 61,
+    "y": 447,
+    "w": 67,
+    "h": 29
+   },
+   {
+    "id": "wk-07",
+    "who": "Danielle Morgan3:00pm · Profhilo",
+    "x": 61,
+    "y": 511,
+    "w": 67,
+    "h": 45
+   },
+   {
+    "id": "wk-08",
+    "who": "Tia Jones",
+    "x": 61,
+    "y": 607,
+    "w": 67,
+    "h": 29
+   },
+   {
+    "id": "wk-09",
+    "who": "Sienna Hughes",
+    "x": 136,
+    "y": 607,
+    "w": 67,
+    "h": 29
+   },
+   {
+    "id": "wk-10",
+    "who": "Megan Hall",
+    "x": 61,
+    "y": 671,
+    "w": 67,
+    "h": 29
+   },
+   {
+    "id": "wk-11",
+    "who": "Aisha Begum",
+    "x": 212,
+    "y": 351,
+    "w": 42,
+    "h": 29
+   },
+   {
+    "id": "wk-12",
+    "who": "Emily Moore",
+    "x": 212,
+    "y": 479,
+    "w": 42,
+    "h": 22
+   },
+   {
+    "id": "wk-13",
+    "who": "Grace Morgan",
+    "x": 212,
+    "y": 703,
+    "w": 42,
+    "h": 29
+   },
+   {
+    "id": "wk-14",
+    "who": "Naomi Wilson6:00pm · Profhilo",
+    "x": 262,
+    "y": 703,
+    "w": 42,
+    "h": 45
+   },
+   {
+    "id": "wk-15",
+    "who": "Lauren Shah",
+    "x": 312,
+    "y": 703,
+    "w": 42,
+    "h": 29
+   },
+   {
+    "id": "wk-16",
+    "who": "Charlotte White",
+    "x": 363,
+    "y": 255,
+    "w": 67,
+    "h": 29
+   },
+   {
+    "id": "wk-17",
+    "who": "Tia Carter",
+    "x": 363,
+    "y": 607,
+    "w": 67,
+    "h": 29
+   },
+   {
+    "id": "wk-18",
+    "who": "Samantha Walker",
+    "x": 363,
+    "y": 671,
+    "w": 67,
+    "h": 22
+   },
+   {
+    "id": "wk-19",
+    "who": "Melissa Wood",
+    "x": 438,
+    "y": 671,
+    "w": 67,
+    "h": 29
+   },
+   {
+    "id": "wk-20",
+    "who": "Megan Carter",
+    "x": 514,
+    "y": 159,
+    "w": 142,
+    "h": 29
+   },
+   {
+    "id": "wk-21",
+    "who": "Olivia Williams",
+    "x": 514,
+    "y": 319,
+    "w": 142,
+    "h": 29
+   },
+   {
+    "id": "wk-22",
+    "who": "Megan Carter",
+    "x": 514,
+    "y": 543,
+    "w": 142,
+    "h": 29
+   },
+   {
+    "id": "wk-23",
+    "who": "Sarah Mitchell",
+    "x": 514,
+    "y": 703,
+    "w": 142,
+    "h": 29
+   },
+   {
+    "id": "wk-24",
+    "who": "Harriet Bell",
+    "x": 664,
+    "y": 207,
+    "w": 142,
+    "h": 29
+   },
+   {
+    "id": "wk-25",
+    "who": "Phoebe Ward",
+    "x": 815,
+    "y": 335,
+    "w": 142,
+    "h": 29
+   }
+  ]
+ },
+ "deposits": {
+  "w": 658,
+  "h": 689
+ },
+ "reminders": {
+  "w": 658,
+  "h": 408
+ },
+ "followup-off": {
+  "w": 608,
+  "h": 86
+ },
+ "followup-on": {
+  "w": 608,
+  "h": 86
+ },
+ "hours": {
+  "w": 590,
+  "h": 350
+ },
+ "handover": {
+  "w": 774,
+  "h": 230
+ }
+}

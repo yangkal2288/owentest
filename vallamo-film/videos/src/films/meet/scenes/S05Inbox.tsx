@@ -4,7 +4,8 @@ import { C } from "../../../brand";
 import { cursorAt, UserCursor } from "../../../kit/cursor";
 import { useTime } from "../../../kit/time";
 import { mix, settle, tween } from "../motion";
-import { Bit, Browser, Card, FloorShadow } from "../parts";
+import { Browser, Card, FloorShadow } from "../parts";
+import { Piece } from "../Piece";
 import { CARD_H, CARD_W, GAP, STACK_TOP, STACK_X } from "./S04Channels";
 
 /**
@@ -27,9 +28,9 @@ const BAR = 52;
 const slot = (n: number) => ({ x: 253 * S, y: BAR + 202 * S + 86 * S * n, w: 343 * S, h: 86 * S });
 // Shot 4 order → inbox slot. Staging: the web-chat slot shows Grace (shot 4's website card).
 const CARDS = [
-  { bit: "row-1", slot: 2, order: 2 }, // Priya · WhatsApp
-  { bit: "row-0", slot: 0, order: 0 }, // Sarah · Instagram
-  { bit: "row-5", slot: 1, order: 1 }, // Grace · web chat
+  { bit: "row-1" as const, slot: 2, order: 2 }, // Priya · WhatsApp
+  { bit: "row-0" as const, slot: 0, order: 0 }, // Sarah · Instagram
+  { bit: "row-5" as const, slot: 1, order: 1 }, // Grace · web chat
 ];
 const CLICK = 3.85;
 
@@ -87,13 +88,16 @@ export function S05Inbox() {
             const to = slot(c.slot);
             const z = 240 * (1 - u);
             const landed = u > 0.985;
-            const bit = c.slot === 0 && t >= CLICK ? "row-0-selected" : c.bit;
+            const selected = c.slot === 0 && t >= CLICK;
             return (
               <div key={c.bit}>
                 <FloorShadow x={to.x + 12} y={to.y + to.h * 0.2} w={to.w - 24} h={to.h * 0.6} height={z} style={{ transform: "translateZ(1px)", opacity: landed ? 0 : 0.3 * u }} />
                 <div style={{ position: "absolute", left: mix(from.x, to.x, u), top: mix(from.y, to.y, u), transform: `translateZ(${z}px)` }}>
                   <Card radius={mix(22, 0, u)} style={{ borderColor: landed ? "transparent" : C.line }}>
-                    <Bit name={bit} w={mix(from.w, to.w, u)} />
+                    <div style={{ position: "relative" }}>
+                      <Piece name={c.bit} w={mix(from.w, to.w, u)} style={{ visibility: selected ? "hidden" : "visible" }} />
+                      {c.slot === 0 && <Piece name="row-0-selected" w={mix(from.w, to.w, u)} style={{ position: "absolute", left: 0, top: 0, visibility: selected ? "visible" : "hidden" }} />}
+                    </div>
                   </Card>
                 </div>
               </div>

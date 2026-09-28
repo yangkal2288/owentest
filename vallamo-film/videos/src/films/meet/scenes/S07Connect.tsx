@@ -2,8 +2,9 @@ import { AbsoluteFill } from "remotion";
 
 import { C } from "../../../brand";
 import { useTime } from "../../../kit/time";
-import { blurIn, settle, tween } from "../motion";
-import { Bit, Card, FloorShadow, giant, Logo } from "../parts";
+import { BEAT, blurIn, settle, sinceBeat, tween, useFilmTime } from "../motion";
+import { Bit, FloorShadow, giant, Logo } from "../parts";
+import { Piece } from "../Piece";
 
 /**
  * Shot 7 · Connect your calendar (4 s). "Connect your calendar…"
@@ -36,10 +37,10 @@ export function S07Connect() {
   const t = useTime();
   const lift = settle(t, 0.35, 7);
   const draw = tween(t, 1.05, 0.8);
-  // Pulse on the music's beat (TEMP bed: 100 BPM; beats fall at local 0.2 + 0.6k).
-  const since = (((t - 0.2) % 0.6) + 0.6) % 0.6;
-  const beat = draw >= 1 ? Math.exp(-since * 9) : 0;
-  const ring = (((t - 0.2) % 1.2) + 1.2) % 1.2 / 1.2;
+  // Pulse on the music's beat: a swell every beat, a ring every other beat.
+  const filmT = useFilmTime();
+  const beat = draw >= 1 ? Math.exp(-sinceBeat(filmT) * 9) : 0;
+  const ring = sinceBeat(filmT, 2) / (BEAT * 2);
   const whip = tween(t, 3.62, 0.38);
   // Line from the mark to Cliniko's left edge (screen px).
   const a = { x: 250, y: 752 };
@@ -107,9 +108,7 @@ export function S07Connect() {
         {/* Cliniko, connected: lifts out of the grid to the front. */}
         <FloorShadow x={1040} y={700} w={520} h={50} height={120} style={{ opacity: 0.28 * lift }} />
         <div style={{ position: "absolute", left: 1004, top: 548 - (74 * 1.6) / 2 + (1 - lift) * 80, opacity: lift, filter: lift < 1 ? `blur(${(1 - lift) * 10}px)` : undefined }}>
-          <Card radius={20}>
-            <Bit name="b-int-cliniko" w={CW * 1.6} />
-          </Card>
+          <Piece name="int-cliniko" w={CW * 1.6} />
         </div>
       </div>
     </AbsoluteFill>

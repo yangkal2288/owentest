@@ -3,7 +3,7 @@ import { AbsoluteFill, Audio, Sequence, staticFile, useVideoConfig } from "remot
 
 import { C, FONT } from "../../brand";
 import { useTime } from "../../kit/time";
-import { ease } from "./motion";
+import { ease, FilmClock } from "./motion";
 import { DemoLabel } from "./parts";
 import { S01Open } from "./scenes/S01Open";
 import { S03Meet } from "./scenes/S03Meet";
@@ -37,18 +37,18 @@ function Drift({ id, length, children }: { id: string; length: number; children:
   return <AbsoluteFill style={{ transform: `scale(${1 + 0.035 * u}) translateY(${-6 * u}px)`, transformOrigin: "50% 48%" }}>{children}</AbsoluteFill>;
 }
 
-// Sound: few, soft, and never one on every landing (no-slop-motion). Global seconds.
+// Sound: few, soft, and never one on every landing (no-slop-motion). Shot-relative seconds.
 const SFX = [
-  { at: 13.62, file: "whoosh", volume: 0.18 }, // the three enquiries lift off
-  { at: 14.55, file: "thud", volume: 0.22 }, // Sarah lands first
-  { at: 17.35, file: "click", volume: 0.35 }, // cursor on Sarah
-  { at: 19.45, file: "click", volume: 0.2 }, // Sarah sends
-  { at: 22.15, file: "whoosh", volume: 0.2 }, // circle wipe
-  { at: 23.55, file: "chime", volume: 0.3 }, // Booked
-  { at: 28.6, file: "whoosh", volume: 0.24 }, // whip to the diary
-  { at: 38.5, file: "click", volume: 0.3 }, // follow-ups switched on
-  { at: 39.8, file: "click", volume: 0.3 }, // "I'm on it"
-];
+  { shot: "S05", at: 0.12, file: "whoosh", volume: 0.18 }, // the three enquiries lift off
+  { shot: "S05", at: 1.05, file: "thud", volume: 0.22 }, // Sarah lands first
+  { shot: "S05", at: 3.85, file: "click", volume: 0.35 }, // cursor on Sarah
+  { shot: "S06", at: 1.45, file: "click", volume: 0.2 }, // Sarah sends
+  { shot: "S06", at: 3.95, file: "chime", volume: 0.32 }, // booked: confetti
+  { shot: "S06", at: 5.2, file: "whoosh", volume: 0.2 }, // circle wipe
+  { shot: "S07", at: 3.6, file: "whoosh", volume: 0.24 }, // whip to the diary
+  { shot: "S09", at: 3.9 + 0.62, file: "click", volume: 0.3 }, // follow-ups switched on
+  { shot: "S09", at: 5.2 + 0.62, file: "click", volume: 0.3 }, // "I'm on it"
+].map((c) => ({ ...c, at: START[c.shot] + c.at }));
 
 const SCENES: Record<string, ComponentType> = {
   S01: S01Open,
@@ -86,26 +86,28 @@ export function MeetFilm({ guide = false, music = false, sfx = false }: MeetProp
   const t = useTime();
   const ui = t >= START.S04 && t < START.S11;
   return (
-    <AbsoluteFill style={{ background: "#FFFFFF" }}>
-      {SHOTS.map((s) => {
-        const Scene = SCENES[s.id];
-        return (
-          <Sequence key={s.id} from={Math.round(START[s.id] * fps)} durationInFrames={Math.round(s.length * fps)} name={`${s.id} ${s.name}`}>
-            <Drift id={s.id} length={s.length}>
-              <Scene />
-            </Drift>
-          </Sequence>
-        );
-      })}
-      {ui && <DemoLabel />}
-      {guide && <Guide />}
-      {music && <Audio src={staticFile("audio/temp-bed.wav")} volume={0.8} />}
-      {sfx &&
-        SFX.map((c, i) => (
-          <Sequence key={i} from={Math.round(c.at * fps)} durationInFrames={Math.round(1.5 * fps)} layout="none">
-            <Audio src={staticFile(`audio/sfx/${c.file}.wav`)} volume={c.volume} />
-          </Sequence>
-        ))}
-    </AbsoluteFill>
+    <FilmClock.Provider value={t}>
+      <AbsoluteFill style={{ background: "#FFFFFF" }}>
+        {SHOTS.map((s) => {
+          const Scene = SCENES[s.id];
+          return (
+            <Sequence key={s.id} from={Math.round(START[s.id] * fps)} durationInFrames={Math.round(s.length * fps)} name={`${s.id} ${s.name}`}>
+              <Drift id={s.id} length={s.length}>
+                <Scene />
+              </Drift>
+            </Sequence>
+          );
+        })}
+        {ui && <DemoLabel />}
+        {guide && <Guide />}
+        {music && <Audio src={staticFile("audio/temp-bed.wav")} volume={0.8} />}
+        {sfx &&
+          SFX.map((c, i) => (
+            <Sequence key={i} from={Math.round(c.at * fps)} durationInFrames={Math.round(1.5 * fps)} layout="none">
+              <Audio src={staticFile(`audio/sfx/${c.file}.wav`)} volume={c.volume} />
+            </Sequence>
+          ))}
+      </AbsoluteFill>
+    </FilmClock.Provider>
   );
 }
