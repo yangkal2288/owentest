@@ -111,7 +111,7 @@ export function Lost({ t }: { t: number }) {
   const land = settle(t, 0.42, 13);
   const rise = settle(t, T2 - 0.1, 10);
   const y1 = pick(F, 880, 540);
-  const y2 = pick(F, 772, 488);
+  const y2 = pick(F, 772, 530);
   const cardY = y1 + (y2 - y1) * rise + (1 - land) * 260;
   const out = tween(t, OUT, 0.42);
   // The counter.
