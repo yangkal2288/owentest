@@ -8,6 +8,7 @@ import { STYLE_FRAMES, StyleFrames } from "./films/meet/style/StyleFrames";
 import { FILM_LENGTH } from "./films/meet/timeline";
 import { MetaAd, metaLength, type MetaProps } from "./films/meta/MetaAd";
 import { PaidAd, paidLength, type PaidProps } from "./films/paid/PaidAd";
+import { CineTest } from "./films/cinema/Test";
 
 // "Meet Vallamo", the X film: one 1920x1080 composition. `fps` is a prop so
 // scripts/render-film.sh can render the 240 fps master for motion blur.
@@ -47,6 +48,7 @@ export function Root() {
       <Composition id="Paid-short-45" component={PaidAd} width={1080} height={1350} fps={60} durationInFrames={Math.round(paidLength("short") * 60)} defaultProps={{ fps: 60, format: "45", cut: "short" } as PaidProps} calculateMetadata={paid} />
       <Composition id="Paid-short-916" component={PaidAd} width={1080} height={1920} fps={60} durationInFrames={Math.round(paidLength("short") * 60)} defaultProps={{ fps: 60, format: "916", cut: "short" } as PaidProps} calculateMetadata={paid} />
       <Composition id="Paid-short-mix" component={PaidAd} width={1080} height={1350} fps={60} durationInFrames={Math.round(paidLength("short") * 60)} defaultProps={{ fps: 60, format: "45", cut: "short", music: true, sfx: true } as PaidProps} calculateMetadata={paid} />
+      <Composition id="Cine-test" component={CineTest} width={1080} height={1350} fps={60} durationInFrames={60} />
       {/* Scene previews, one per shot. */}
       <Composition id="Meet-s04" component={S04Channels} width={1920} height={1080} fps={60} durationInFrames={Math.round(S04_LENGTH * 60)} />
       <Composition id="Meet-pieces" component={PieceTest} width={1920} height={1080} fps={60} durationInFrames={1} />

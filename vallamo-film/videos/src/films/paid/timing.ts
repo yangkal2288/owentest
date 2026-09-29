@@ -1,96 +1,100 @@
 import { createContext, useContext } from "react";
 
+import type { Msg } from "../meta/parts";
+
 /**
- * "You paid for the enquiry. Your competitor got the booking."
- * (VALLAMO_MARKETING_SPEND_AD_PRODUCTION_BRIEF.md). Two cuts share every scene; this
- * table is the only place their timings differ. Music: Soundsurfer "Product Video",
- * 89.1 BPM, downbeats every 2.694 s from 2.79 s. The big moments land on beats.
+ * "You're with a client. An enquiry for £120 comes in. What happens? You lose them to a
+ * competitor. Your marketing spend. Their booking. Meet Vallamo…" (Owen's story over
+ * VALLAMO_MARKETING_SPEND_AD_PRODUCTION_BRIEF.md). Music: Soundsurfer "Product Video",
+ * 89.1 BPM, downbeats every 2.694 s from 2.79 s; the scene changes land on them.
  */
 const BEAT = 60 / 89.1;
-const DB = (n: number) => 2.79 + (n - 1) * BEAT * 4; // downbeat n
+const DB = (n: number) => 2.79 + (n - 1) * BEAT * 4;
 const B = (n: number, beats: number) => DB(n) + beats * BEAT;
 
 export type Cut = {
   id: "main" | "short";
   length: number;
   music: string;
-  /** Hook, whole on the first frame: lines of [text, emphasised] runs. */
-  hook: [string, boolean][][];
-  /** The opening path (Your ad → New enquiry → Another clinic); main only. */
-  path: number[] | null;
-  card: { in: number; client: number | null; status: "client" | "noReply" };
-  timer: { from: number; to: number; settle: number } | null;
-  reply: number; // "I've booked the appointment with another clinic."
-  replyText: string;
+  client: { out: number };
+  enquiry: { at: number; drop: number };
+  what: number | null; // "What happens?"
+  count: [number, number]; // the unanswered minutes run
+  reply: number; // "I've booked with another clinic."
+  lose: number; // "You lose them to a competitor."
   crack: number;
-  x: number; // shatter, red X, buzzer
-  xOut: number;
-  /** Meet Vallamo; main only. */
-  meet: { at: number; always: number; pills: number[]; out: number } | null;
-  demo: { at: number; msgs: { name: string; at: number; out?: number }[]; fast: [number, number] | null; booked: number; out: number };
-  /** `ctaText` null: the button is the domain itself (the short cut, where the headline is the action). */
+  shatter: number;
+  spend: { at: number; price: number; their: number; out: number };
+  meet: { at: number; out: number } | null;
+  always: { at: number; pills: number[]; out: number } | null;
+  /** `head`: the main cut's "Answered while you're with a client", or the short cut's product line. */
+  demo: { at: number; head: "answered" | "always"; msgs: Msg[]; fast: [number, number] | null; booked: number; out: number };
   end: { at: number; headline: [string, string, string]; offer: number; cta: number; url: number; ctaText: string | null };
 };
 
 export const CUTS: Record<Cut["id"], Cut> = {
   main: {
     id: "main",
-    length: 35.45,
-    music: "audio/music-paid35.wav",
-    hook: [[["You paid for", false]], [["the enquiry.", false]], [["Your ", false], ["competitor", true]], [["got the booking.", false]]],
-    path: [0.55, 1.25, 1.95],
-    card: { in: 1.3, client: B(1, 3), status: "client" }, // 4.81
-    timer: { from: 7.45, to: 8.85, settle: 8.95 },
-    reply: 9.35,
-    replyText: "I’ve booked the appointment with another clinic.",
-    crack: B(4, 0) + 0.44, // 11.31
-    x: B(4, 1), // 11.54
-    xOut: B(5, 2) - 0.2, // 14.71
-    meet: { at: B(5, 2), always: B(6, 2), pills: [B(6, 3), B(6, 3.5), B(6, 4)], out: B(7, 2) - 0.2 },
+    length: 30.04,
+    music: "audio/music-meta.wav",
+    client: { out: DB(1) - 0.15 },
+    enquiry: { at: DB(1), drop: B(1, 0.6) },
+    what: DB(2),
+    count: [B(2, 0.2), B(2, 2.6)],
+    reply: B(2, 3.05),
+    lose: B(2, 3.3),
+    crack: B(3, 1.6),
+    shatter: B(3, 1.85),
+    spend: { at: B(3, 2), price: B(3, 2.75), their: DB(4), out: B(4, 2.9) },
+    meet: { at: B(4, 3.1), out: DB(6) - 0.1 },
+    always: { at: DB(6), pills: [B(6, 1.3), B(6, 1.8), B(6, 2.3)], out: DB(7) - 0.15 },
     demo: {
-      at: B(7, 2), // 20.30
+      at: DB(7),
+      head: "answered",
       msgs: [
-        { name: "p-u1", at: 20.7 },
-        { name: "m-dots", at: 21.0, out: 21.3 },
-        { name: "p-i1", at: 21.3 },
-        { name: "p-u2", at: 22.55 },
-        { name: "p-idet", at: 23.0 },
-        { name: "p-u3", at: 23.35 },
-        { name: "m-dots", at: 23.6, out: 23.82 },
-        { name: "p-i2", at: 23.82 },
+        { name: "p-u1", at: B(7, 0.7) },
+        { name: "m-dots", at: B(7, 1.1), out: B(7, 1.5) },
+        { name: "p-i1", at: B(7, 1.5) },
+        { name: "p-u2", at: B(7, 2.9) },
+        { name: "p-idet", at: B(7, 3.4) },
+        { name: "p-u3", at: B(7, 3.9) },
+        { name: "m-dots", at: B(7, 4.3), out: B(7, 4.6) },
+        { name: "p-i2", at: B(7, 4.6) },
       ],
-      fast: [22.85, 23.9], // the details step plays at 2x, labelled
-      booked: B(9, 1), // 25.01
-      out: 28.4,
+      fast: [B(7, 3.2), B(7, 4.8)],
+      booked: B(8, 2),
+      out: DB(9) - 0.15,
     },
-    end: { at: 28.4, headline: ["Stop losing", "business to", "competitors."], offer: B(10, 4) - 0.02, cta: B(11, 1) - 0.4, url: B(11, 2) - 0.4, ctaText: "See it with your clinic’s details" },
+    end: { at: DB(9), headline: ["Stop losing", "business to", "competitors"], offer: B(9, 1.2), cta: B(9, 2), url: B(9, 3), ctaText: "See it with your clinic’s details" },
   },
   short: {
     id: "short",
     length: 15.2,
     music: "audio/music-paid15.wav",
-    hook: [[["Your paid", false]], [["enquiry waited.", false]], [["They booked", false]], [["elsewhere.", true]]],
-    path: null,
-    card: { in: 0.25, client: null, status: "noReply" },
-    timer: null,
-    reply: 1.55,
-    replyText: "Booked with another clinic.",
-    crack: 3.12,
-    x: B(1, 0.9), // 3.4
-    xOut: B(2, 0) - 0.2, // 5.28
+    client: { out: 1.3 },
+    enquiry: { at: 1.44, drop: 1.7 },
+    what: null,
+    count: [2.2, 3.2],
+    reply: 3.4,
+    lose: 3.55,
+    crack: 4.7,
+    shatter: 4.86,
+    spend: { at: 4.95, price: 5.3, their: DB(2), out: 6.65 },
     meet: null,
+    always: null,
     demo: {
-      at: B(2, 0), // 5.48
+      at: B(2, 2),
+      head: "always",
       msgs: [
-        { name: "p-u1", at: 5.85 },
-        { name: "m-dots", at: 6.15, out: 6.4 },
-        { name: "p-i1", at: 6.4 },
+        { name: "p-u1", at: B(2, 2.6) },
+        { name: "m-dots", at: B(2, 3.0), out: B(2, 3.35) },
+        { name: "p-i1", at: B(2, 3.35) },
       ],
       fast: null,
-      booked: B(3, 0) - 0.3, // 7.88
-      out: 9.45,
+      booked: B(3, 1.4),
+      out: B(4, -0.9),
     },
-    end: { at: 9.45, headline: ["See it with", "your clinic’s", "details."], offer: 10.2, cta: 10.87, url: 11.54, ctaText: null },
+    end: { at: B(4, -0.6), headline: ["See it with", "your clinic’s", "details"], offer: B(4, 0.5), cta: B(4, 1.2), url: B(4, 2), ctaText: null },
   },
 };
 

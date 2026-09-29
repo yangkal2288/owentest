@@ -7,6 +7,7 @@ import { type Msg, Widget, WIDGET_W } from "../parts";
 import { BEAT, useMetaCut } from "../timeline";
 import { display, em } from "../type";
 import { RESULT_CENTRE } from "./Product";
+import { World } from "../../cinema/kit";
 
 /**
  * 21.3–30 s · "Stop losing business to competitors. See Vallamo on your website in
@@ -45,6 +46,7 @@ export function End({ t }: { t: number }) {
     <AbsoluteFill>
       <AbsoluteFill style={{ background: C.clay, clipPath: `circle(${clay * 2400}px at ${o.x}px ${o.y}px)` }} />
       <AbsoluteFill style={{ background: "#FFFFFF", clipPath: `circle(${white * 2400}px at ${o.x}px ${o.y}px)`, overflow: "hidden" }}>
+        <World kind="week" t={t} blur={14} wash={0.82} zoom={1.2} spin={-10} tilt={55} />
         {/* The real widget, as it sits on a clinic's website. */}
         <div
           style={{

@@ -8,6 +8,7 @@ import { pick, useF } from "../format";
 import { Block, ChannelPill, type Msg, Widget, WIDGET_W, widgetHeight } from "../parts";
 import { useMetaCut } from "../timeline";
 import { display, em } from "../type";
+import { Float, pushIn, SHADOW, World } from "../../cinema/kit";
 
 /**
  * 8.2–21.6 s · the product, one continuous shot around the real website chat widget.
@@ -34,7 +35,24 @@ const PILLS = [
 function Head({ t, at, out, children }: { t: number; at: number; out: number; children: React.ReactNode }) {
   const F = useF();
   if (t < at - 0.01 || t > out + 0.3) return null;
-  return <div style={{ position: "absolute", left: 72, top: F.top, ...blurIn(t, at, out, 24, 0.32) }}>{children}</div>;
+  // Slams in from larger and blurred; leaves through the lens.
+  const u = tween(t, at, 0.24);
+  const o = tween(t, out, 0.24);
+  return (
+    <div
+      style={{
+        position: "absolute",
+        left: 72,
+        top: F.top,
+        opacity: Math.min(1, u * 1.6) * (1 - o),
+        transform: `translate3d(0, ${(1 - u) * 40}px, 0) scale(${1 + (1 - u) * 0.35 + o * o * 0.5})`,
+        transformOrigin: "0% 50%",
+        filter: u < 0.99 || o > 0 ? `blur(${(1 - u) * 16 + o * 20}px)` : undefined,
+      }}
+    >
+      {children}
+    </div>
+  );
 }
 
 export function Product({ t }: { t: number }) {
@@ -83,7 +101,9 @@ export function Product({ t }: { t: number }) {
   const caption = { ...display(46 * s), color: C.ink2, textAlign: "center" as const, position: "absolute" as const, left: 0, right: 0 };
 
   return (
-    <AbsoluteFill style={{ overflow: "hidden", perspective: 2000 }}>
+    <AbsoluteFill style={{ overflow: "hidden", perspective: 2000, ...pushIn(t, P - 0.3) }}>
+      {/* The inbox in depth; it lifts towards white when the proof and the result need clean ground. */}
+      <World kind="inbox" t={t} blur={10} wash={0.62 + 0.26 * Math.max(away, cleared)} zoom={1.1} spin={-18} tilt={46} />
       {/* The headlines. */}
       <Head t={t} at={P} out={MEET - 0.2}>
         <div style={{ ...display(104 * s), lineHeight: 1.04, whiteSpace: "nowrap" }}>
@@ -139,11 +159,16 @@ export function Product({ t }: { t: number }) {
             left: wx,
             top: F.uiTop,
             transformOrigin: `${ox}px 0px`,
-            transform: `translate3d(${wSide}px, ${(1 - rise) * 900 + wDrop}px, 0) scale(${wScale})`,
+            // Swings in from depth and settles with a slight turn.
+            transform: `translate3d(${wSide}px, ${(1 - rise) * 300 + wDrop}px, ${(1 - rise) * -900}px) rotateY(${mix(-38, -4, rise)}deg) rotateX(${mix(16, 2, rise)}deg) scale(${wScale})`,
             opacity: wOp,
+            filter: rise < 0.97 ? `blur(${(1 - rise) * 16}px)` : undefined,
+            transformStyle: "preserve-3d",
           }}
         >
-          <Widget t={t} msgs={MSGS} body={BODY} style={{ transform: `scale(${k})`, transformOrigin: "0 0" }} />
+          <Float t={t} sway={0.45}>
+            <Widget t={t} msgs={MSGS} body={BODY} style={{ transform: `scale(${k})`, transformOrigin: "0 0", boxShadow: SHADOW.card }} />
+          </Float>
         </div>
       )}
       <div style={{ ...caption, top: F.uiTop + widgetHeight(BODY) * k + pick(F, 30, 18), opacity: rise * (1 - back) * (1 - away) * (1 - cleared) }}>
@@ -195,7 +220,7 @@ export function Product({ t }: { t: number }) {
               transform: `translate3d(0, ${(1 - why) * 80}px, ${(1 - why) * -200}px) rotateX(${(1 - why) * -16}deg)`,
             }}
           >
-            <div style={{ borderRadius: 16 * wk, boxShadow: "0 30px 80px -30px rgb(44 37 32 / .38)", background: C.paper }}>
+            <div style={{ borderRadius: 16 * wk, boxShadow: SHADOW.lift, background: C.paper }}>
               <Piece name="m-why" w={590 * wk} />
             </div>
             {/* The line that matters: what it answered from. */}
@@ -236,7 +261,7 @@ export function Product({ t }: { t: number }) {
                 transform: `translate3d(${(1 - u) * p.from[0] + o * p.from[0] * 0.6}px, ${(1 - u) * p.from[1] + bob}px, 0) rotate(${r * u}deg) scale(${0.7 + 0.3 * u})`,
               }}
             >
-              <ChannelPill card={p.card} label={p.label} scale={s} />
+              <ChannelPill card={p.card} label={p.label} scale={s} style={{ boxShadow: SHADOW.card }} />
             </div>
           );
         })}
@@ -277,7 +302,7 @@ export function Product({ t }: { t: number }) {
                     transform: `translate3d(0, ${(1 - u) * pick(F, 520, 360)}px, ${(1 - u) * -300}px) rotateX(${(1 - u) * 30}deg) scale(${1 + 0.035 * (tween(t, BOOKED + 0.25 + i * 0.22, 0.12) - tween(t, BOOKED + 0.37 + i * 0.22, 0.4))})`,
                     borderRadius: 12 * R,
                     background: C.paper,
-                    boxShadow: "0 30px 80px -28px rgb(44 37 32 / .32)",
+                    boxShadow: SHADOW.lift,
                   }}
                 >
                   <Piece name={name} w={263 * R} />

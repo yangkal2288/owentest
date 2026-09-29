@@ -1,11 +1,27 @@
 1
-00:00:00,200 --> 00:00:03,200
-Your paid enquiry waited. They booked elsewhere.
+00:00:00,000 --> 00:00:01,300
+You’re with a client.
 
 2
-00:00:05,500 --> 00:00:07,600
-Vallamo always replies instantly.
+00:00:01,450 --> 00:00:03,300
+An enquiry for £120 comes in.
 
 3
-00:00:10,000 --> 00:00:12,800
-See Vallamo on your website in ten minutes.
+00:00:03,550 --> 00:00:04,800
+You lose them to a competitor.
+
+4
+00:00:04,950 --> 00:00:06,600
+Your marketing spend. Their booking.
+
+5
+00:00:06,850 --> 00:00:09,000
+Vallamo always replies instantly.
+
+6
+00:00:09,100 --> 00:00:10,200
+Appointment booked.
+
+7
+00:00:10,500 --> 00:00:15,000
+See it with your clinic’s details. See Vallamo on your website in ten minutes.

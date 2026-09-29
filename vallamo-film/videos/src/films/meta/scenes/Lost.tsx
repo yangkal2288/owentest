@@ -1,10 +1,11 @@
 import { AbsoluteFill } from "remotion";
 
-import { C, FONT, SH } from "../../../brand";
+import { C, FONT } from "../../../brand";
 import { blurIn, mix, settle, tween } from "../../meet/motion";
 import { pick, useF } from "../format";
 import { Block } from "../parts";
 import { Breakable, shake } from "../shatter";
+import { Float, SHADOW, World } from "../../cinema/kit";
 import { useMetaCut } from "../timeline";
 import { display, em, eyebrow, RED } from "../type";
 
@@ -33,7 +34,7 @@ function Card({ t, s }: { t: number; s: number }) {
   const lost = t >= REPLY + 0.3;
   const line = ink(C.line, RED, red);
   return (
-    <div style={{ position: "relative", width: 936, background: C.paper, border: `${1.5 + 2.5 * red}px solid ${line}`, borderRadius: 40 * s, padding: 40 * s, boxSizing: "border-box", boxShadow: SH.float, fontFamily: FONT.sans, overflow: "hidden" }}>
+    <div style={{ position: "relative", width: 936, background: C.paper, border: `${1.5 + 2.5 * red}px solid ${line}`, borderRadius: 40 * s, padding: 40 * s, boxSizing: "border-box", boxShadow: SHADOW.lift, fontFamily: FONT.sans, overflow: "hidden" }}>
       <div style={{ position: "absolute", inset: 0, background: RED, opacity: 0.07 * red }} />
       <div style={{ position: "relative", display: "flex", alignItems: "center", gap: 24 * s }}>
         <div style={{ width: 84 * s, height: 84 * s, borderRadius: "50%", background: C.canvas, display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 600, fontSize: 30 * s, color: C.ink2 }}>EC</div>
@@ -79,7 +80,7 @@ export function Lost({ t }: { t: number }) {
   const rise = settle(t, T2 - 0.1, 10);
   const y1 = pick(F, 880, 540);
   const y2 = pick(F, 772, 530);
-  const cardY = y1 + (y2 - y1) * rise + (1 - land) * 260;
+  const cardY = y1 + (y2 - y1) * rise + (1 - land) * 1100;
   const out = tween(t, OUT, 0.42);
   // The counter.
   const n = TICKS.filter((x) => t >= x).length;
@@ -96,7 +97,9 @@ export function Lost({ t }: { t: number }) {
   const sh = shake(t, t < SHATTER ? amp : 0);
   const lostText = tween(t, SHATTER + 0.22, 0.3);
   return (
-    <AbsoluteFill style={{ background: "#FFFFFF", overflow: "hidden", perspective: 1800 }}>
+    <AbsoluteFill style={{ overflow: "hidden", perspective: 1800 }}>
+      {/* The inbox in depth: all the enquiries still waiting. */}
+      <World kind="inbox" t={t} blur={7 + 14 * tween(t, SHATTER, 0.4)} wash={0.58 + 0.2 * tween(t, SHATTER, 0.4)} zoom={1.04 + 0.02 * t} />
       {/* A red flash through the frame when it breaks. */}
       <AbsoluteFill style={{ background: RED, opacity: 0.1 * (tween(t, SHATTER, 0.04) - tween(t, SHATTER + 0.06, 0.4)) }} />
       <AbsoluteFill style={{ transform: `scale(${1 + 0.035 * tween(t, 0, 8)})`, transformOrigin: "50% 40%" }}>
@@ -152,14 +155,17 @@ export function Lost({ t }: { t: number }) {
             top: 0,
             opacity: Math.min(1, land * 2),
             filter: land < 0.97 ? `blur(${(1 - land) * 12}px)` : undefined,
-            transform: `translate3d(${sh.x}px, ${cardY + sh.y}px, 0) rotate(${sh.r}deg) scale(${0.9 + 0.1 * land})`,
-            transformOrigin: "50% 50%",
+            // Swings up from below the frame, tipped back, and settles facing camera.
+            transform: `translate3d(${sh.x}px, ${cardY + sh.y}px, ${(1 - land) * 300}px) rotateX(${(1 - land) * -36}deg) rotate(${sh.r}deg)`,
+            transformOrigin: "50% 100%",
             transformStyle: "preserve-3d",
           }}
         >
-          <Breakable t={t} crackAt={CRACK} shatterAt={SHATTER} radius={40 * s}>
-            <Card t={t} s={s} />
-          </Breakable>
+          <Float t={t} sway={t < SHATTER ? 0.6 : 0}>
+            <Breakable t={t} crackAt={CRACK} shatterAt={SHATTER} radius={40 * s}>
+              <Card t={t} s={s} />
+            </Breakable>
+          </Float>
         </div>
 
         {/* What's left. */}

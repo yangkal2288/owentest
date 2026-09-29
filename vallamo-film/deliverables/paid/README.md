@@ -1,50 +1,42 @@
-# Vallamo: "You paid for the enquiry. Your competitor got the booking."
+# Vallamo: "You're with a client" (the marketing-spend ad)
 
-Built to `VALLAMO_MARKETING_SPEND_AD_PRODUCTION_BRIEF.md` in the same world as the "always replies instantly" ad (v2): white and clay, vallamo.com's type (Playfair Display with its italic for emphasis), the real Vallamo widget and booking cards, the same shatter. New: the deep-red loss card.
+Owen's story over `VALLAMO_MARKETING_SPEND_AD_PRODUCTION_BRIEF.md`: *You're with a client. An enquiry for £120 comes in. What happens? You lose them to a competitor. Your marketing spend. Their booking. Meet Vallamo…*
+
+Made after the reference Owen chose (a launch film where nothing sits on empty white): the real Vallamo UI as a tilted world in depth behind every shot, big type that slams in with motion blur, push-through cuts, layered soft shadows, the clay full stop as the connecting motif. vallamo.com's type throughout (Playfair Display, its italic for emphasis).
 
 | File | What |
 |---|---|
-| `Vallamo-PaidEnquiry-35s-1080x1350-v1.mp4` | **Main cut, Feed (4:5).** 35.5 s, 60 fps, music and restrained SFX at −14 LUFS. |
-| `Vallamo-PaidEnquiry-35s-1080x1920-v1.mp4` | **Main cut, Reels and Stories (9:16).** Recomposed for the tall frame; key text inside Meta's safe area. |
-| `Vallamo-PaidEnquiry-15s-1080x1350-v1.mp4` / `…-1080x1920-v1.mp4` | **15 s cut**, both layouts. |
-| `cover-*.png` | Covers: the hook with its path and the enquiry. |
-| `*.srt` | Captions (the brief's script). |
-| `VO-script-for-recording.md` | Both scripts with timings. |
+| `Vallamo-PaidEnquiry-30s-1080x1350-v2.mp4` / `…-1080x1920-v2.mp4` | **Main cut**, Feed (4:5) and Reels/Stories (9:16). 30 s, 60 fps, music and restrained SFX at −14 LUFS. |
+| `Vallamo-PaidEnquiry-15s-1080x1350-v2.mp4` / `…-1080x1920-v2.mp4` | **15 s cut**, both layouts. |
+| `*.srt` · `VO-script-for-recording.md` | Captions and the script with timings. |
 
 ## Main cut
 
-| Time | Picture |
+| Time | Shot |
 |---|---|
-| 0–4.8 | **Clinic owners** · "You paid for the enquiry. Your *competitor* got the booking." whole on frame one; **Your ad → New enquiry → Another clinic** builds; the enquiry from the ad lands (one notification). |
-| 4.8–7.4 | "You're with a *client.*" The enquiry, large: **"Can I book the £120 laser session this week?"** · status *You're with a client*. **Example scenario · £120 appointment** stays readable to the end of the loss. |
-| 7.4–11.5 | The clock accelerates **00:00 → 10:00** and settles on **10 minutes without a reply**, the card shaking harder as it runs; **"I've booked the appointment with another clinic."** holds for two seconds. |
-| 11.5–14.9 | The card cracks and shatters into one deep-red **X**, **£120**, **BOOKING LOST**; "Your marketing. *Their booking.*" One buzzer; the music ducks. |
-| 14.9–20.3 | White and gold: the wordmark, "Your all-in-one *front desk*", then **Vallamo ALWAYS replies *instantly*.** with **WhatsApp · Instagram · Website**. |
-| 20.3–28.4 | **A new enquiry, with Vallamo** · "Answered while you're with a *client*." The real widget: the question, "Thursday at 3pm is available. Would you like that?", "Yes, please.", the details step (at 2×, labelled), Isla's confirmation; then the real **Booked** outcome and **Thu 24 · Laser Session · 3:00pm** on white, with **Appointment booked · Thursday, 3pm** in gold. |
-| 28.4–35.5 | "Stop losing business to *competitors.*" · "See Vallamo on your website in *ten minutes.*" · **See it with your clinic's details** · the Vallamo mark and **vallamo.com**. The whole card holds for the last four seconds. |
+| 0–2.8 | "You're with a *client*." over the week's real diary in depth, whole on frame one. |
+| 2.8–5.5 | Push through onto the inbox. "An enquiry for *£120* comes in." The enquiry drops in from above and lands (one notification). |
+| 5.5–7.5 | "What *happens*?" The camera leans in; the minutes run (No reply · 1 → 10 min) and it shakes harder. |
+| 7.5–9.4 | "I've booked with another clinic." "You lose them to a *competitor*." It cracks and shatters towards camera. |
+| 9.5–12.8 | "Your marketing spend." **£120**, struck through (one buzzer, music ducks). "Their *booking*." |
+| 13–16.2 | A clay field opens: the Vallamo wordmark, "Your all-in-one *front desk*." |
+| 16.3–18.9 | Onto the inbox: "Vallamo **ALWAYS** replies *instantly*." WhatsApp · Instagram · Website land from depth. |
+| 19–24.2 | "Answered while you're with a *client*." The real widget swings in from depth: the question, Thursday at 3pm, yes please, the details (2×), confirmed. The real **Booked** outcome and **Thu 24 · Laser Session · 3:00pm** burst forward: "Appointment *booked*." "Thursday, 3pm". |
+| 24.3–30 | "Stop losing business to *competitors*." · "See Vallamo on your website in *ten minutes*." · **See it with your clinic's details** · the mark and **vallamo.com**. Holds four seconds. |
 
-## 15 s cut
+## Staged
 
-"Your paid enquiry waited. They booked *elsewhere.*" over the enquiry (*No reply · You're with a client*) → "Booked with another clinic." → the shatter into **X · £120 · BOOKING LOST** → **Vallamo ALWAYS replies *instantly*** with the reply and the booking → "See it with your clinic's *details*." with the offer, the mark and a **vallamo.com** button.
-
-## Staged, and why
-
-- **The demo clinic has no £120 laser session** (its real laser service is a £20 Laser Consultation with Nina Patel, with a deposit). The brief's £120 appointment is staged in the conversation text, the outcome summary and the booking card. The rest is the real product UI.
-- The "before" enquiry is drawn in the film's own type, not as Vallamo.
-- The "Example conversation" label is left off, as Owen asked for the last ad; the demo is labelled **A new enquiry, with Vallamo** so it never reads as the lost customer returning.
-- No payment is shown: the result is **Appointment booked**.
-- No "Voice, coming in October" here: the brief keeps phone for its own treatment. Easy to add.
+- The demo clinic has no £120 laser session (its real one is a £20 Laser Consultation); the brief's £120 appointment is staged in the conversation, the outcome summary and the booking card. Everything else is the real product UI.
+- The "before" enquiry is drawn in the film's own type, not as Vallamo. No "example" labels, as Owen asked.
 
 ## Before it runs
 
-- £120 is an illustrative appointment price, not a measured loss (brief §What £120 means). The label says so on screen.
+- £120 is an illustrative appointment price (brief §What £120 means).
 - Match the Meta button to the destination; the ten-minute website offer must match what the link delivers.
-- **No voiceover yet**: the cut reads fully muted.
+- No voiceover yet: it reads fully muted.
 
 ## Re-render
 
 ```bash
-cd videos
-node scripts/meta-pieces.mjs && node scripts/pieces-png.mjs
-REMOTION_BROWSER=/path/to/chromium scripts/render-paid.sh main 45 v1   # main|short, 45|916
+cd videos && REMOTION_BROWSER=/path/to/chromium scripts/render-paid.sh main 45 v2   # main|short, 45|916
 ```
