@@ -14,7 +14,7 @@ declare -A SIZE=([916]=1080x1920 [45]=1080x1350)
 npx remotion render src/index.ts "$COMP-$fmt" "$out/master/$TAG$fmt-240.mp4" --props "{\"fps\":240,\"format\":\"$fmt\",\"cut\":\"$cut\"}" --codec h264 --crf 10 --pixel-format yuv444p --muted --concurrency ${CONCURRENCY:-6} --log error "${BROWSER[@]}"
 "$F" -v error -y -i "$out/master/$TAG$fmt-240.mp4" \
   -filter_threads 1 \
-  -vf "tmix=frames=4:weights='1 1 1 1',select='not(mod(n+1\,4))',setpts=N/(60*TB),scale=in_range=tv:out_range=tv:in_color_matrix=bt601:out_color_matrix=bt709:threads=1:flags=accurate_rnd+full_chroma_int,format=yuv420p" \
+  -vf "tmix=frames=4:weights='1 1 1 1',select='not(mod(n+1\,4))',setpts=N/(60*TB),noise=c0s=5:c0f=t+u:c1s=0:c2s=0,scale=in_range=tv:out_range=tv:in_color_matrix=bt601:out_color_matrix=bt709:threads=1:flags=accurate_rnd+full_chroma_int,format=yuv420p" \
   -r 60 -c:v libx264 -preset slow -crf 17 -x264-params colorprim=bt709:transfer=bt709:colormatrix=bt709 \
   -color_primaries bt709 -color_trc bt709 -colorspace bt709 -color_range tv -movflags +faststart -an \
   "$out/silent-$TAG$fmt.mp4"

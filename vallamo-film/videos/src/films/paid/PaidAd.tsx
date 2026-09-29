@@ -1,7 +1,6 @@
 import { AbsoluteFill, Audio, Sequence, staticFile, useCurrentFrame, useVideoConfig } from "remotion";
 
 import { FilmClock } from "../meet/motion";
-import { Grain } from "../cinema/kit";
 import { FORMATS, FormatCtx, type Format } from "../meta/format";
 import { Story } from "./scenes/Story";
 import { Always, Demo, End, MeetClay } from "./scenes/Vallamo";
@@ -60,7 +59,6 @@ export function PaidAd({ format = "45", cut = "main", music = false, sfx = false
             {c.always && t >= c.always.at - 0.25 && t < c.always.out + 0.35 && <Always t={t} />}
             {t >= c.demo.at - 0.1 && t < c.demo.out + 0.35 && <Demo t={t} />}
             {t >= c.end.at - 0.1 && <End t={t} />}
-            <Grain t={t} />
           </AbsoluteFill>
           {music && <Audio src={staticFile(c.music)} volume={(f) => musicVolume(c, f / fps)} />}
           {sfx &&

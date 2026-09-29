@@ -37,7 +37,9 @@ export function World({ kind, t, blur = 7, wash = 0.55, x = 0, y = 0, zoom = 1, 
   const H = T.rows * (T.h + T.gap);
   const drift = t * 26;
   const baked = blur >= 13 ? 16 : 8;
-  const extra = Math.max(0, blur - baked);
+  // A live CSS blur over the whole tilted plane is the most expensive thing in a frame, so
+  // small differences from the baked tiles snap to them; only big animated spikes blur live.
+  const extra = blur - baked > 3.5 ? blur - baked : 0;
   return (
     <AbsoluteFill style={{ overflow: "hidden", background: "#FBF9F5", opacity, ...style }}>
       <AbsoluteFill style={{ perspective: 1400, perspectiveOrigin: "50% 30%" }}>
