@@ -3,7 +3,7 @@ import { AbsoluteFill, Audio, Sequence, staticFile, useCurrentFrame, useVideoCon
 import { FilmClock } from "../meet/motion";
 import { FORMATS, FormatCtx, type Format } from "./format";
 import { End } from "./scenes/End";
-import { LOST_TICKS, Lost } from "./scenes/Lost";
+import { CRACK, LOST_TICKS, Lost, REPLY, SHATTER } from "./scenes/Lost";
 import { Product, WIPE } from "./scenes/Product";
 import { CUT, DOWNBEAT, LENGTH } from "./timeline";
 
@@ -14,7 +14,10 @@ const SFX: { at: number; file: string; volume: number }[] = [
   { at: 0.42, file: "chime", volume: 0.16 }, // the enquiry lands
   ...LOST_TICKS.map((at, i) => ({ at, file: "click", volume: i === 9 ? 0 : 0.07 + i * 0.01 })),
   { at: LOST_TICKS[9], file: "thud", volume: 0.26 }, // ten
-  { at: 6.55, file: "click", volume: 0.18 }, // "booked somewhere else"
+  { at: REPLY, file: "click", volume: 0.2 }, // "booked somewhere else"
+  { at: CRACK, file: "click", volume: 0.3 }, // it cracks
+  { at: SHATTER, file: "thud", volume: 0.42 }, // and shatters
+  { at: SHATTER, file: "whoosh", volume: 0.24 },
   { at: 7.8, file: "whoosh", volume: 0.2 },
   { at: 8.5, file: "click", volume: 0.2 }, // her enquiry
   { at: 9.04, file: "click", volume: 0.22 }, // Isla, straight away
@@ -27,7 +30,8 @@ const SFX: { at: number; file: string; volume: number }[] = [
   { at: 17.02, file: "click", volume: 0.22 },
   { at: DOWNBEAT(7), file: "chime", volume: 0.3 }, // booked
   { at: WIPE, file: "whoosh", volume: 0.2 },
-  { at: DOWNBEAT(9) + 2 * (60 / 89.1), file: "thud", volume: 0.2 }, // the CTA
+  { at: DOWNBEAT(8) + 2 * (60 / 89.1), file: "thud", volume: 0.2 }, // the CTA
+  { at: DOWNBEAT(9), file: "chime", volume: 0.14 }, // voice, coming in October
 ];
 
 export function MetaAd({ format = "916", music = false, sfx = false }: MetaProps) {
