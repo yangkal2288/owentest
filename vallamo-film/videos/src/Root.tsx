@@ -9,6 +9,7 @@ import { FILM_LENGTH } from "./films/meet/timeline";
 import { MetaAd, metaLength, type MetaProps } from "./films/meta/MetaAd";
 import { PaidAd, paidLength, type PaidProps } from "./films/paid/PaidAd";
 import { GrowthAd, growthLength, type GrowthProps } from "./films/growth/GrowthAd";
+import { MEET_FRAME_LENGTH, MeetFrame, type MeetFrameProps } from "./films/meetframe/MeetFrame";
 import { CineTest } from "./films/cinema/Test";
 import { HalloweenTest } from "./films/halloween/Test";
 import { HalloweenFilm, halloweenLength, type HalloweenProps } from "./films/halloween/Film";
@@ -61,6 +62,8 @@ export function Root() {
       <Composition id="Paid-short-45" component={PaidAd} width={1080} height={1350} fps={60} durationInFrames={Math.round(paidLength("short") * 60)} defaultProps={{ fps: 60, format: "45", cut: "short" } as PaidProps} calculateMetadata={paid} />
       <Composition id="Paid-short-916" component={PaidAd} width={1080} height={1920} fps={60} durationInFrames={Math.round(paidLength("short") * 60)} defaultProps={{ fps: 60, format: "916", cut: "short" } as PaidProps} calculateMetadata={paid} />
       <Composition id="Paid-short-mix" component={PaidAd} width={1080} height={1350} fps={60} durationInFrames={Math.round(paidLength("short") * 60)} defaultProps={{ fps: 60, format: "45", cut: "short", music: true, sfx: true } as PaidProps} calculateMetadata={paid} />
+      <Composition id="MeetFrame-916" component={MeetFrame} width={1080} height={1920} fps={60} durationInFrames={Math.round(MEET_FRAME_LENGTH * 60)} defaultProps={{ format: "916" } as MeetFrameProps} />
+      <Composition id="MeetFrame-45" component={MeetFrame} width={1080} height={1350} fps={60} durationInFrames={Math.round(MEET_FRAME_LENGTH * 60)} defaultProps={{ format: "45" } as MeetFrameProps} />
       <Composition id="Growth-main-45" component={GrowthAd} width={1080} height={1350} fps={60} durationInFrames={Math.round(growthLength("main") * 60)} defaultProps={{ fps: 60, format: "45", cut: "main" } as GrowthProps} calculateMetadata={growth} />
       <Composition id="Growth-main-916" component={GrowthAd} width={1080} height={1920} fps={60} durationInFrames={Math.round(growthLength("main") * 60)} defaultProps={{ fps: 60, format: "916", cut: "main" } as GrowthProps} calculateMetadata={growth} />
       <Composition id="Growth-main-mix" component={GrowthAd} width={1080} height={1350} fps={60} durationInFrames={Math.round(growthLength("main") * 60)} defaultProps={{ fps: 60, format: "45", cut: "main", music: true, sfx: true } as GrowthProps} calculateMetadata={growth} />
