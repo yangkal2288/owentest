@@ -4,7 +4,8 @@ import { C, FONT, SH } from "../../../brand";
 import { blurIn, mix, settle, tween } from "../../meet/motion";
 import { pick, useF } from "../format";
 import { Block } from "../parts";
-import { CUT } from "../timeline";
+import { Breakable, shake } from "../shatter";
+import { useMetaCut } from "../timeline";
 import { display, em, eyebrow, RED } from "../type";
 
 /**
@@ -17,46 +18,15 @@ import { display, em, eyebrow, RED } from "../type";
  * shatters. "Lost to a competitor." is what's left.
  * The "before" is drawn in the film's own type, not as Vallamo: Vallamo is the answer.
  */
-const T2 = CUT.tenMin; // 2.79
-// The ten minutes tick by, slowing as they run out (the last few hang).
-const TICKS = Array.from({ length: 10 }, (_, i) => 3.05 + 2.35 * (1 - Math.pow(1 - (i + 1) / 10, 1.7)));
-export const LOST_TICKS = TICKS;
-const TEN = TICKS[9]; // ≈ 5.4
-export const REPLY = 5.85; // "Never mind, I've booked somewhere else."
-export const CRACK = 6.42;
-export const SHATTER = 6.6;
-const OUT = 7.8;
-
 const ink = (a: string, b: string, u: number) => {
   const p = (h: string) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16));
   const [x, y] = [p(a), p(b)];
   return `rgb(${x.map((v, i) => Math.round(v + (y[i] - v) * u)).join(",")})`;
 };
 
-// Shards: rings around the impact point, in % of the card (y stretched so they read round).
-const IMPACT = { x: 63, y: 46 };
-const rnd = (i: number) => {
-  const s = Math.sin(i * 127.1 + 311.7) * 43758.5453;
-  return s - Math.floor(s);
-};
-const N = 9;
-const ANG = Array.from({ length: N }, (_, i) => ((i + 0.35 * (rnd(i) - 0.5)) / N) * Math.PI * 2);
-const ring = (r: number, j: number) => ANG.map((a, i) => ({ x: IMPACT.x + Math.cos(a) * r * (0.85 + 0.3 * rnd(i + j)), y: IMPACT.y + Math.sin(a) * r * 1.8 * (0.85 + 0.3 * rnd(i + j + 7)) }));
-const R1 = ring(9, 1);
-const R2 = ring(30, 2);
-const R3 = ring(160, 3);
-type Shard = { pts: { x: number; y: number }[]; c: { x: number; y: number }; seed: number };
-const SHARDS: Shard[] = [];
-for (let i = 0; i < N; i++) {
-  const j = (i + 1) % N;
-  const layers = [[IMPACT, R1[i], R1[j]], [R1[i], R2[i], R2[j], R1[j]], [R2[i], R3[i], R3[j], R2[j]]];
-  layers.forEach((pts, l) => {
-    const c = { x: pts.reduce((s, p) => s + p.x, 0) / pts.length, y: pts.reduce((s, p) => s + p.y, 0) / pts.length };
-    SHARDS.push({ pts, c: { x: Math.min(95, Math.max(5, c.x)), y: Math.min(95, Math.max(5, c.y)) }, seed: rnd(i * 3 + l + 50) });
-  });
-}
-
 function Card({ t, s }: { t: number; s: number }) {
+  const { tenMin: T2, ticks: TICKS, reply: REPLY } = useMetaCut().lost;
+  const TEN = TICKS[9];
   const n = TICKS.filter((x) => t >= x).length;
   const red = tween(t, TEN, 0.25);
   const reply = tween(t, REPLY, 0.3);
@@ -92,19 +62,16 @@ function Card({ t, s }: { t: number; s: number }) {
   );
 }
 
-/** Deterministic shake: layered sines, amplitude in px. */
-const shake = (t: number, a: number) => ({
-  x: (a * (Math.sin(t * 91) + 0.6 * Math.sin(t * 143 + 1.3))) / 1.6,
-  y: (a * 0.6 * (Math.sin(t * 107 + 0.7) + 0.5 * Math.sin(t * 171 + 2.1))) / 1.5,
-  r: a * 0.05 * Math.sin(t * 77 + 0.4),
-});
-
 export function Lost({ t }: { t: number }) {
   const F = useF();
+  const { tenMin: T2, ticks: TICKS, reply: REPLY, crack: CRACK, shatter: SHATTER, out: OUT } = useMetaCut().lost;
+  const TEN = TICKS[9];
+  // The 15 s cut has no ten-minute phase: the question stays until the card breaks.
+  const hasTen = Number.isFinite(T2);
   const s = F.type;
   const X = 72;
   // Phase 1: the question.
-  const qOut = tween(t, T2 - 0.05, 0.35);
+  const qOut = tween(t, hasTen ? T2 - 0.05 : OUT, 0.35);
   const block = tween(t, 0.1, 0.32);
   const pop = 1 + 0.05 * (1 - settle(t, 0, 14));
   // The enquiry lands, then rises into place for the ten minutes.
@@ -127,8 +94,6 @@ export function Lost({ t }: { t: number }) {
     (t > REPLY ? 10 * Math.exp(-(t - REPLY) * 5) : 0) +
     (t > CRACK - 0.15 && t < SHATTER ? 22 : 0);
   const sh = shake(t, t < SHATTER ? amp : 0);
-  const crack = tween(t, CRACK, 0.12);
-  const broken = t >= SHATTER;
   const lostText = tween(t, SHATTER + 0.22, 0.3);
   return (
     <AbsoluteFill style={{ background: "#FFFFFF", overflow: "hidden", perspective: 1800 }}>
@@ -192,65 +157,9 @@ export function Lost({ t }: { t: number }) {
             transformStyle: "preserve-3d",
           }}
         >
-          {!broken ? (
-            <div style={{ position: "relative" }}>
-              <Card t={t} s={s} />
-              {crack > 0 && (
-                <svg viewBox="0 0 100 100" preserveAspectRatio="none" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", overflow: "hidden", borderRadius: 40 * s }}>
-                  {SHARDS.map((sd, i) => (
-                    <polygon
-                      key={i}
-                      points={sd.pts.map((p) => `${p.x},${p.y}`).join(" ")}
-                      fill="none"
-                      stroke={RED}
-                      strokeWidth={2.5}
-                      vectorEffect="non-scaling-stroke"
-                      strokeLinejoin="round"
-                      pathLength={1}
-                      strokeDasharray={1}
-                      strokeDashoffset={1 - crack}
-                    />
-                  ))}
-                </svg>
-              )}
-            </div>
-          ) : (
-            <div style={{ position: "relative" }}>
-              {/* Holds the card's size; the shards are copies of it, each clipped to its piece. */}
-              <div style={{ visibility: "hidden" }}>
-                <Card t={t} s={s} />
-              </div>
-              {SHARDS.map((sd, i) => {
-                const u = t - SHATTER;
-                const dx = sd.c.x - IMPACT.x;
-                const dy = (sd.c.y - IMPACT.y) / 1.8;
-                const d = Math.max(4, Math.hypot(dx, dy));
-                const v = (1400 + 900 * sd.seed) / Math.sqrt(d);
-                const x = (dx / d) * v * u * 9.36 * 0.12;
-                const y = (dy / d) * v * u * 5.2 * 0.22 + 1500 * u * u;
-                const z = (sd.seed - 0.3) * 900 * u;
-                const r = (sd.seed - 0.5) * 520 * u;
-                const o = 1 - tween(u, 0.35, 0.55);
-                if (o <= 0) return null;
-                return (
-                  <div
-                    key={i}
-                    style={{
-                      position: "absolute",
-                      inset: 0,
-                      clipPath: `polygon(${sd.pts.map((p) => `${p.x}% ${p.y}%`).join(",")})`,
-                      transform: `translate3d(${x}px, ${y}px, ${z}px) rotate(${r}deg) rotateX(${r * 0.6}deg)`,
-                      transformOrigin: `${sd.c.x}% ${sd.c.y}%`,
-                      opacity: o,
-                      filter: u > 0.2 ? `blur(${(u - 0.2) * 6}px)` : undefined,
-                    }}
-                  >
-                    <Card t={t} s={s} />
-                  </div>
-                );
-              })}
-            </div>
-          )}
+          <Breakable t={t} crackAt={CRACK} shatterAt={SHATTER} radius={40 * s}>
+            <Card t={t} s={s} />
+          </Breakable>
         </div>
 
         {/* What's left. */}
@@ -260,7 +169,7 @@ export function Lost({ t }: { t: number }) {
               position: "absolute",
               left: 0,
               right: 0,
-              top: y2 + pick(F, 150, 120),
+              top: (hasTen ? y2 : y1) + pick(F, 150, 120),
               textAlign: "center",
               ...em(96 * s),
               color: RED,

@@ -6,7 +6,7 @@ import { Logo } from "../../meet/parts";
 import { Piece, pieceSize } from "../../meet/Piece";
 import { pick, useF } from "../format";
 import { Block, ChannelPill, type Msg, Widget, WIDGET_W, widgetHeight } from "../parts";
-import { BEAT, CUT, DOWNBEAT } from "../timeline";
+import { useMetaCut } from "../timeline";
 import { display, em } from "../type";
 
 /**
@@ -22,27 +22,12 @@ import { display, em } from "../type";
  * 18.95  "Appointments booked."  The real Booked outcome and the Tuesday 12:30 booking
  *        replace the chat on white, with two clay rings, and "Straight into your booking system".
  */
-export const P = CUT.product; // 8.18
-const MEET = DOWNBEAT(4); // 10.87
-const PROOF = DOWNBEAT(5); // 13.56
-const ANSWERED = DOWNBEAT(6); // 16.26
-const BOOKED = DOWNBEAT(7); // 18.95
-export const WIPE = 21.25;
-
-const MSGS: Msg[] = [
-  { name: "m-u1", at: 8.5 },
-  { name: "m-dots", at: 8.76, out: 9.04 },
-  { name: "m-i1", at: 9.04 },
-  { name: "m-u2", at: 16.45 },
-  { name: "m-dots", at: 16.74, out: 17.02 },
-  { name: "m-i2", at: 17.02 },
-];
 const BODY = 250;
 const PILLS = [
   // A stack down the left, overlapping the widget's edge.
-  { card: "m-ch-wa", label: "WhatsApp", at: MEET + 0.2, tall: [48, 700, -2], feed: [48, 400, -2], from: [-520, 0] },
-  { card: "m-ch-ig", label: "Instagram", at: MEET + 0.2 + BEAT / 2, tall: [84, 860, 1.5], feed: [84, 540, 1.5], from: [-520, 0] },
-  { card: "m-ch-web", label: "Website", at: MEET + 0.2 + BEAT, tall: [48, 1020, -1], feed: [48, 680, -1], from: [-520, 0] },
+  { card: "m-ch-wa", label: "WhatsApp", tall: [48, 700, -2], feed: [48, 400, -2], from: [-520, 0] },
+  { card: "m-ch-ig", label: "Instagram", tall: [84, 860, 1.5], feed: [84, 540, 1.5], from: [-520, 0] },
+  { card: "m-ch-web", label: "Website", tall: [48, 1020, -1], feed: [48, 680, -1], from: [-520, 0] },
 ] as const;
 
 /** One headline beat, left aligned at the top of the safe area. */
@@ -54,6 +39,7 @@ function Head({ t, at, out, children }: { t: number; at: number; out: number; ch
 
 export function Product({ t }: { t: number }) {
   const F = useF();
+  const { P, MEET, PROOF, ANSWERED, BOOKED, WIPE, backEnd, meetOut, pillsOut, msgs: MSGS, pills } = useMetaCut().product;
   const s = F.type;
   const k = F.ui;
   const wx = (F.W - WIDGET_W * k) / 2;
@@ -61,7 +47,7 @@ export function Product({ t }: { t: number }) {
   // The widget: rises in, steps back for the channels, hands its reply over for the proof,
   // comes back for her answer, and clears for the result. Never half-visible behind anything.
   const rise = settle(t, P - 0.26, 11);
-  const back = tween(t, MEET, 0.5) * (1 - tween(t, PROOF + 0.3, 0.3));
+  const back = tween(t, MEET, 0.5) * (1 - tween(t, backEnd, 0.3));
   const wScale = 1 - 0.28 * back;
   const wDrop = pick(F, 40, 30) * back;
   const wSide = pick(F, 160, 190) * back;
@@ -126,7 +112,7 @@ export function Product({ t }: { t: number }) {
           </div>
         </div>
       </Head>
-      <Head t={t} at={MEET} out={PROOF - 0.2}>
+      <Head t={t} at={MEET} out={meetOut}>
         <Logo file="vallamo-wordmark" w={400 * s} h={130 * s} style={{ marginLeft: -6 * s }} />
         <div style={{ ...display(72 * s), marginTop: 18 * s, ...blurIn(t, MEET + 0.2, null, 14) }}>
           Your all-in-one <span style={em(76 * s)}>front desk.</span>
@@ -230,12 +216,13 @@ export function Product({ t }: { t: number }) {
       )}
 
       {/* The three live channels. */}
-      {t > MEET && t < PROOF + 0.4 &&
-        PILLS.map((p) => {
-          const u = settle(t, p.at, 13);
-          const o = tween(t, PROOF - 0.15, 0.35);
+      {t > MEET && t < pillsOut + 0.55 &&
+        PILLS.map((p, i) => {
+          const at = pills[i];
+          const u = settle(t, at, 13);
+          const o = tween(t, pillsOut, 0.35);
           const [x, y, r] = pick<readonly number[]>(F, p.tall, p.feed);
-          const bob = Math.sin((t - p.at) * 2.2 + x) * 6;
+          const bob = Math.sin((t - at) * 2.2 + x) * 6;
           if (u <= 0) return null;
           return (
             <div

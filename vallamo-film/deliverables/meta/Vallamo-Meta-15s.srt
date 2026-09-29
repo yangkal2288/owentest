@@ -1,0 +1,15 @@
+1
+00:00:00,200 --> 00:00:03,000
+Have you lost a customer to a competitor?
+
+2
+00:00:04,200 --> 00:00:05,400
+Vallamo always replies instantly.
+
+3
+00:00:05,600 --> 00:00:07,600
+Your all-in-one front desk.
+
+4
+00:00:10,100 --> 00:00:12,800
+See it on your website in ten minutes.

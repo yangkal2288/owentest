@@ -1,0 +1,66 @@
+{
+ "mode": "fit",
+ "output": "fit-soundsurfer-paid35.wav",
+ "sources": [
+  "soundsurfer-product-video.wav"
+ ],
+ "sr": 48000,
+ "duration": 35.498,
+ "target": 35.3,
+ "joins": [
+  {
+   "a_time": 23.922,
+   "b_time_tracked": 105.732,
+   "b_time": 105.7401,
+   "lag_ms": 8.0,
+   "transient_corr": 0.582,
+   "out_time": 23.922,
+   "fade": [
+    23.237,
+    23.922
+   ],
+   "grid_drift_ms_after_1_bar": -0.4,
+   "tempo_a": 87.59,
+   "tempo_b": 87.59,
+   "level_diff_db": -0.5,
+   "similarity": {
+    "chroma": 0.917,
+    "bass": 0.858,
+    "rhythm": 0.817,
+    "total": 0.877,
+    "beats_compared": 16
+   },
+   "alternatives": [
+    {
+     "a_time": 21.188,
+     "b_time": 103.015,
+     "total": 0.875
+    },
+    {
+     "a_time": 18.46,
+     "b_time": 100.275,
+     "total": 0.872
+    },
+    {
+     "a_time": 15.732,
+     "b_time": 97.559,
+     "total": 0.872
+    },
+    {
+     "a_time": 13.003,
+     "b_time": 94.83,
+     "total": 0.858
+    },
+    {
+     "a_time": 10.286,
+     "b_time": 92.102,
+     "total": 0.86
+    }
+   ],
+   "warnings": [
+    "whole bars only: the result is 35.50 s, +0.20 s from the target. Fade the tail, or end the picture on the last downbeat"
+   ],
+   "label": "remove 81.80 s (30 bars) 23.93-105.73"
+  }
+ ]
+}

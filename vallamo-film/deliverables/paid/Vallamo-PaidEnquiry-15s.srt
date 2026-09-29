@@ -1,0 +1,11 @@
+1
+00:00:00,200 --> 00:00:03,200
+Your paid enquiry waited. They booked elsewhere.
+
+2
+00:00:05,500 --> 00:00:07,600
+Vallamo always replies instantly.
+
+3
+00:00:10,000 --> 00:00:12,800
+See Vallamo on your website in ten minutes.

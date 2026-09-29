@@ -4,9 +4,9 @@ import { C, FONT } from "../../../brand";
 import { blurIn, settle, tween } from "../../meet/motion";
 import { pick, useF } from "../format";
 import { type Msg, Widget, WIDGET_W } from "../parts";
-import { BEAT, DOWNBEAT } from "../timeline";
+import { BEAT, useMetaCut } from "../timeline";
 import { display, em } from "../type";
-import { RESULT_CENTRE, WIPE } from "./Product";
+import { RESULT_CENTRE } from "./Product";
 
 /**
  * 21.3–30 s · "Stop losing business to competitors. See Vallamo on your website in
@@ -16,11 +16,6 @@ import { RESULT_CENTRE, WIPE } from "./Product";
  * demo), vallamo.com right under it, and "Voice, coming in October" at the top. The real
  * widget rises at the foot; the button breathes on the beat through the hold.
  */
-const HEAD = WIPE + 0.3; // 21.55
-const OFFER = DOWNBEAT(8) + BEAT; // 22.32
-const CTA = DOWNBEAT(8) + 2 * BEAT; // 23.0
-const URL = DOWNBEAT(8) + 3 * BEAT; // 23.67
-const VOICE = DOWNBEAT(9); // 24.34
 const PEEK: Msg[] = [
   { name: "m-u1", at: 0 },
   { name: "m-i1", at: 0 },
@@ -33,6 +28,9 @@ const LINES: [string, boolean][] = [
 
 export function End({ t }: { t: number }) {
   const F = useF();
+  const cut = useMetaCut();
+  const WIPE = cut.product.WIPE;
+  const { head: HEAD, offer: OFFER, cta: CTA, url: URL, voice: VOICE } = cut.end;
   const s = F.type;
   const o = RESULT_CENTRE(F);
   const clay = tween(t, WIPE, 0.42);

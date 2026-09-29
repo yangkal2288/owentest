@@ -11,7 +11,7 @@ const SRC = "file://" + path.resolve("public/ui/source.html");
 const OUT = "public/ui/pieces";
 fs.mkdirSync(OUT, { recursive: true });
 const meta = JSON.parse(fs.readFileSync("src/pieces.json", "utf8"));
-for (const k of Object.keys(meta)) if (k.startsWith("m-")) delete meta[k];
+for (const k of Object.keys(meta)) if (k.startsWith("m-") || k.startsWith("p-")) delete meta[k];
 
 const b = await chromium.launch({ executablePath: process.env.CHROMIUM ?? "/opt/pw-browsers/chromium-1194/chrome-linux/chrome" });
 const p = await b.newPage({ viewport: { width: 1440, height: 1400 } });
@@ -112,6 +112,13 @@ const MSGS = {
   "m-u2": ["user", "12:30, please."],
   "m-i2": ["isla", "You're booked with Dr Maya on Tuesday at 12:30. A confirmation has just been sent."],
   "m-dots": ["isla", "•••"],
+  // The paid-enquiry ad (VALLAMO_MARKETING_SPEND_AD_PRODUCTION_BRIEF.md): a new enquiry, with Vallamo.
+  "p-u1": ["user", "Can I book the £120 laser session this week?"],
+  "p-i1": ["isla", "Thursday at 3pm is available. Would you like that?"],
+  "p-u2": ["user", "Yes, please."],
+  "p-idet": ["isla", "Lovely. Could I take your mobile number and email for the booking?"],
+  "p-u3": ["user", "07700 900318, amy.lee@example.com"],
+  "p-i2": ["isla", "You're booked for a laser session on Thursday at 3pm. A confirmation has just been sent."],
 };
 await go(SRC + "#/channels/website");
 await p.evaluate((W) => {
@@ -185,6 +192,23 @@ await p.evaluate(() => {
 });
 await piece("m-outcome", fn(`() => document.querySelector('[data-film="outcome-booked"]')`));
 await piece("m-upcoming", fn(`() => document.querySelector('[data-film="upcoming"] > :last-child')`));
+
+// The paid-enquiry ad: the same real result, staged for Thursday 3pm.
+await go("file://" + path.resolve("public/ui/snaps/inbox-sarah.html"));
+await p.addStyleTag({ content: '[data-film="outcome-booked"]{display:block!important}' });
+await p.evaluate(() => {
+  const sum = document.querySelector('[data-film="outcome-summary"]');
+  if (sum && sum.firstChild) sum.firstChild.textContent = "Website enquiry from an ad; assistant offered Thursday at 3pm and booked it.";
+  const up = document.querySelector('[data-film="upcoming"] > :last-child');
+  const walker = document.createTreeWalker(up, NodeFilter.SHOW_TEXT);
+  for (let n = walker.nextNode(); n; n = walker.nextNode()) {
+    const s = n.textContent.trim();
+    if (s === "Anti-Wrinkle Consultation") n.textContent = "Laser Session";
+    else if (s.startsWith("6:00pm")) n.textContent = "3:00pm · Nina Patel";
+  }
+});
+await piece("p-outcome", fn(`() => document.querySelector('[data-film="outcome-booked"]')`));
+await piece("p-upcoming", fn(`() => document.querySelector('[data-film="upcoming"] > :last-child')`));
 
 fs.writeFileSync("src/pieces.json", JSON.stringify(meta, null, 1));
 await b.close();
