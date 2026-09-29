@@ -18,9 +18,12 @@ export const SHADOW = {
 };
 
 export type WorldKind = "week" | "inbox";
+// The depth of field is baked into the tiles (scripts: see world-*.jpg, Gaussian 8 and 16):
+// a live CSS blur over the whole plane made every 240 fps frame several times slower.
+// Only blur beyond the baked amount (the spikes in a transition) is applied live.
 const TILE: Record<WorldKind, { src: string; w: number; h: number; gap: number; cols: number; rows: number }> = {
-  week: { src: "ui/bits/week-card.png", w: 1114, h: 769, gap: 70, cols: 4, rows: 5 },
-  inbox: { src: "ui/bits/inbox-list.png", w: 686, h: 1120, gap: 60, cols: 6, rows: 3 },
+  week: { src: "ui/bits/world-week-card", w: 1114, h: 769, gap: 70, cols: 4, rows: 5 },
+  inbox: { src: "ui/bits/world-inbox-list", w: 686, h: 1120, gap: 60, cols: 6, rows: 3 },
 };
 
 /**
@@ -33,6 +36,8 @@ export function World({ kind, t, blur = 7, wash = 0.55, x = 0, y = 0, zoom = 1, 
   const W = T.cols * (T.w + T.gap);
   const H = T.rows * (T.h + T.gap);
   const drift = t * 26;
+  const baked = blur >= 13 ? 16 : 8;
+  const extra = Math.max(0, blur - baked);
   return (
     <AbsoluteFill style={{ overflow: "hidden", background: "#FBF9F5", opacity, ...style }}>
       <AbsoluteFill style={{ perspective: 1400, perspectiveOrigin: "50% 30%" }}>
@@ -46,13 +51,14 @@ export function World({ kind, t, blur = 7, wash = 0.55, x = 0, y = 0, zoom = 1, 
             marginLeft: -W / 2,
             marginTop: -H / 2,
             transform: `scale(${zoom}) rotateX(${tilt}deg) rotateZ(${spin}deg) translate3d(${x - drift}px, ${y - drift * 0.4}px, 0)`,
-            filter: blur > 0.2 ? `blur(${blur}px)` : undefined,
+            background: "#EEE8DF",
+            filter: extra > 0.5 ? `blur(${extra}px)` : undefined,
           }}
         >
           {Array.from({ length: T.cols * T.rows }, (_, i) => (
             <Img
               key={i}
-              src={staticFile(T.src)}
+              src={staticFile(`${T.src}-b${baked}.jpg`)}
               style={{
                 position: "absolute",
                 left: (i % T.cols) * (T.w + T.gap) + ((Math.floor(i / T.cols) % 2) * (T.w + T.gap)) / 2,
@@ -60,7 +66,6 @@ export function World({ kind, t, blur = 7, wash = 0.55, x = 0, y = 0, zoom = 1, 
                 width: T.w,
                 height: T.h,
                 borderRadius: 26,
-                boxShadow: "0 30px 60px -20px rgb(44 37 32 / .25)",
               }}
             />
           ))}
