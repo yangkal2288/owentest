@@ -9,6 +9,8 @@ import { FILM_LENGTH } from "./films/meet/timeline";
 import { MetaAd, metaLength, type MetaProps } from "./films/meta/MetaAd";
 import { PaidAd, paidLength, type PaidProps } from "./films/paid/PaidAd";
 import { CineTest } from "./films/cinema/Test";
+import { HalloweenTest } from "./films/halloween/Test";
+import { HalloweenFilm, halloweenLength, type HalloweenProps } from "./films/halloween/Film";
 
 // "Meet Vallamo", the X film: one 1920x1080 composition. `fps` is a prop so
 // scripts/render-film.sh can render the 240 fps master for motion blur.
@@ -26,6 +28,11 @@ const meta = ({ props }: { props: MetaProps }) => {
 const paid = ({ props }: { props: PaidProps }) => {
   const fps = props.fps ?? 60;
   return { fps, durationInFrames: Math.round(paidLength(props.cut ?? "main") * fps) };
+};
+
+const halloween = ({ props }: { props: HalloweenProps }) => {
+  const fps = props.fps ?? 60;
+  return { fps, durationInFrames: Math.round(halloweenLength(props.cut ?? "70") * fps) };
 };
 
 export function Root() {
@@ -48,6 +55,17 @@ export function Root() {
       <Composition id="Paid-short-45" component={PaidAd} width={1080} height={1350} fps={60} durationInFrames={Math.round(paidLength("short") * 60)} defaultProps={{ fps: 60, format: "45", cut: "short" } as PaidProps} calculateMetadata={paid} />
       <Composition id="Paid-short-916" component={PaidAd} width={1080} height={1920} fps={60} durationInFrames={Math.round(paidLength("short") * 60)} defaultProps={{ fps: 60, format: "916", cut: "short" } as PaidProps} calculateMetadata={paid} />
       <Composition id="Paid-short-mix" component={PaidAd} width={1080} height={1350} fps={60} durationInFrames={Math.round(paidLength("short") * 60)} defaultProps={{ fps: 60, format: "45", cut: "short", music: true, sfx: true } as PaidProps} calculateMetadata={paid} />
+      {/* "The Booking Thief", the Halloween film (VALLAMO_HALLOWEEN_SELF_SERVE_AD_BRIEF.md): 70, 35 and 15 s, 4:5 and 9:16. */}
+      <Composition id="Halloween-70-45" component={HalloweenFilm} width={1080} height={1350} fps={60} durationInFrames={Math.round(halloweenLength("70") * 60)} defaultProps={{ fps: 60, format: "45", cut: "70" } as HalloweenProps} calculateMetadata={halloween} />
+      <Composition id="Halloween-70-916" component={HalloweenFilm} width={1080} height={1920} fps={60} durationInFrames={Math.round(halloweenLength("70") * 60)} defaultProps={{ fps: 60, format: "916", cut: "70" } as HalloweenProps} calculateMetadata={halloween} />
+      <Composition id="Halloween-70-mix" component={HalloweenFilm} width={1080} height={1350} fps={60} durationInFrames={Math.round(halloweenLength("70") * 60)} defaultProps={{ fps: 60, format: "45", cut: "70", music: true, sfx: true } as HalloweenProps} calculateMetadata={halloween} />
+      <Composition id="Halloween-35-45" component={HalloweenFilm} width={1080} height={1350} fps={60} durationInFrames={Math.round(halloweenLength("35") * 60)} defaultProps={{ fps: 60, format: "45", cut: "35" } as HalloweenProps} calculateMetadata={halloween} />
+      <Composition id="Halloween-35-916" component={HalloweenFilm} width={1080} height={1920} fps={60} durationInFrames={Math.round(halloweenLength("35") * 60)} defaultProps={{ fps: 60, format: "916", cut: "35" } as HalloweenProps} calculateMetadata={halloween} />
+      <Composition id="Halloween-35-mix" component={HalloweenFilm} width={1080} height={1350} fps={60} durationInFrames={Math.round(halloweenLength("35") * 60)} defaultProps={{ fps: 60, format: "45", cut: "35", music: true, sfx: true } as HalloweenProps} calculateMetadata={halloween} />
+      <Composition id="Halloween-15-45" component={HalloweenFilm} width={1080} height={1350} fps={60} durationInFrames={Math.round(halloweenLength("15") * 60)} defaultProps={{ fps: 60, format: "45", cut: "15" } as HalloweenProps} calculateMetadata={halloween} />
+      <Composition id="Halloween-15-916" component={HalloweenFilm} width={1080} height={1920} fps={60} durationInFrames={Math.round(halloweenLength("15") * 60)} defaultProps={{ fps: 60, format: "916", cut: "15" } as HalloweenProps} calculateMetadata={halloween} />
+      <Composition id="Halloween-15-mix" component={HalloweenFilm} width={1080} height={1350} fps={60} durationInFrames={Math.round(halloweenLength("15") * 60)} defaultProps={{ fps: 60, format: "45", cut: "15", music: true, sfx: true } as HalloweenProps} calculateMetadata={halloween} />
+      <Composition id="Halloween-test" component={HalloweenTest} width={1080} height={1920} fps={60} durationInFrames={60} />
       <Composition id="Cine-test" component={CineTest} width={1080} height={1350} fps={60} durationInFrames={60} />
       {/* Scene previews, one per shot. */}
       <Composition id="Meet-s04" component={S04Channels} width={1920} height={1080} fps={60} durationInFrames={Math.round(S04_LENGTH * 60)} />

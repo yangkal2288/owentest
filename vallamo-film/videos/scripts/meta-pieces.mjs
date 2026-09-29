@@ -11,7 +11,7 @@ const SRC = "file://" + path.resolve("public/ui/source.html");
 const OUT = "public/ui/pieces";
 fs.mkdirSync(OUT, { recursive: true });
 const meta = JSON.parse(fs.readFileSync("src/pieces.json", "utf8"));
-for (const k of Object.keys(meta)) if (k.startsWith("m-") || k.startsWith("p-")) delete meta[k];
+for (const k of Object.keys(meta)) if (k.startsWith("m-") || k.startsWith("p-") || k.startsWith("h-")) delete meta[k];
 
 const b = await chromium.launch({ executablePath: process.env.CHROMIUM ?? "/opt/pw-browsers/chromium-1194/chrome-linux/chrome" });
 const p = await b.newPage({ viewport: { width: 1440, height: 1400 } });
@@ -119,6 +119,12 @@ const MSGS = {
   "p-idet": ["isla", "Lovely. Could I take your mobile number and email for the booking?"],
   "p-u3": ["user", "07700 900318, amy.lee@example.com"],
   "p-i2": ["isla", "You're booked for a laser session on Thursday at 3pm. A confirmation has just been sent."],
+  // The Halloween film: Jess, a new website-chat enquiry.
+  "h-u1": ["user", "I'd like the £120 facial. Anything Thursday?"],
+  "h-i1": ["isla", "Thursday at 3pm is available. Would you like that?"],
+  "h-u2": ["user", "Yes, please."],
+  "h-u3": ["user", "07700 900455, jess.kaur@example.com"],
+  "h-i2": ["isla", "You're booked for a facial on Thursday at 3pm. A confirmation has just been sent."],
 };
 await go(SRC + "#/channels/website");
 await p.evaluate((W) => {
