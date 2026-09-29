@@ -46,7 +46,7 @@ export function End({ t }: { t: number }) {
     <AbsoluteFill>
       {/* A soft clay lens iris from the booking, the close following through it. */}
       <AbsoluteFill style={{ background: `radial-gradient(circle at ${o.x}px ${o.y}px, #C49A69 0%, ${C.clay} 40%, #8C6A43 100%)`, ...iris(t, WIPE, 0.6, `${o.x}px`, `${o.y}px`, 320), opacity: clay > 0 ? 1 : 0 }} />
-      <AbsoluteFill style={{ background: "#FFFFFF", ...iris(t, WIPE + 0.16, 0.6, `${o.x}px`, `${o.y}px`, 320), opacity: white > 0 ? 1 : 0, overflow: "hidden" }}>
+      <AbsoluteFill style={{ background: "#FFFFFF", ...iris(t, WIPE + 0.3, 0.6, `${o.x}px`, `${o.y}px`, 320), opacity: white > 0 ? 1 : 0, overflow: "hidden" }}>
         <World kind="week" t={t} blur={14} wash={0.82} zoom={1.2} spin={-10} tilt={55} />
         {/* The real widget, as it sits on a clinic's website. */}
         <div
