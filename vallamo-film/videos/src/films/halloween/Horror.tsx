@@ -42,7 +42,7 @@ export function Line({ u, at, to, who, children }: { u: number; at: number; to: 
   const a = tween(u, at, 0.2);
   const o = tween(u, to, 0.2);
   return (
-    <div style={{ position: "absolute", left: 60, right: 60, top: pick(F, 1150, 1170), textAlign: "center", opacity: a * (1 - o) }}>
+    <div style={{ position: "absolute", left: 60, right: 60, top: pick(F, 1250, 1210), textAlign: "center", opacity: a * (1 - o) }}>
       {who && <div style={{ fontFamily: FONT.sans, fontWeight: 700, fontSize: 22, letterSpacing: "0.2em", textTransform: "uppercase", color: who === "Mr Elsewhere" ? "#9FB8D6" : "#E3C28C", marginBottom: 6 }}>{who}</div>}
       <div style={{ ...(who ? display(46) : em(44)), color: "#F6EEE3", lineHeight: 1.2, textShadow: "0 2px 20px rgba(0,0,0,.8)" }}>{children}</div>
     </div>
@@ -97,9 +97,9 @@ export type DarkScript = {
 /** One continuous shot: the card glows in the dark, the shade watches, the hand comes for it. */
 export function DarkShot({ u, s, len, children }: { u: number; s: DarkScript; len: number; children?: ReactNode }) {
   const F = useF();
-  const cw = 820;
+  const cw = pick(F, 780, 740);
   const cx = (F.W - cw) / 2;
-  const cy = pick(F, 690, 470);
+  const cy = pick(F, 640, 440);
   const cardIn = settle(u, s.cardIn, 10);
   const h = s.hand;
   const reach = h ? settle(u, h.in, 7) : 0;
@@ -114,7 +114,7 @@ export function DarkShot({ u, s, len, children }: { u: number; s: DarkScript; le
   const push = 1 + (s.push ?? 0.05) * (u / len);
   // The hand: reaches in from the right to the card's right edge; drags it off into the dark.
   const handW = 1000;
-  const handX = mix(F.W + 60, cx + cw - 260, reach) + drag * 900 + miss * 30 + gone * 700;
+  const handX = mix(F.W + 60, cx + cw - 440, reach) + drag * 900 + miss * 40 + gone * 700;
   const handY = cy + pick(F, 150, 120) - 175 + drag * 60;
   const shake = stamp > 0 && stamp < 1 ? Math.sin(u * 90) * 10 * (1 - stamp) : 0;
   return (
@@ -122,7 +122,7 @@ export function DarkShot({ u, s, len, children }: { u: number; s: DarkScript; le
       <Night t={u} lift={light}>
         <AbsoluteFill style={{ transform: `scale(${push}) translateY(${shake}px)` }}>
           {/* Maya, with her client, warm behind frosted glass across the dark room. */}
-          {s.glass && <TreatmentGlass t={u} x={F.W - 330} y={pick(F, 360, 180)} w={300} h={400} style={{ filter: "blur(2px) brightness(.85)", opacity: 0.8, boxShadow: "0 0 120px rgba(255,200,130,.35)" }} />}
+          {s.glass && <TreatmentGlass t={u} x={F.W - 360} y={pick(F, 1180, 900)} w={300} h={380} style={{ filter: "blur(2px) brightness(.85)", opacity: 0.85, boxShadow: "0 0 120px rgba(255,200,130,.35)" }} />}
           {sh && (
             <div style={{ position: "absolute", left: (F.W - mix(520, 760, near)) / 2 - 140, top: pick(F, 90, -40) + near * 40, width: mix(520, 760, near), filter: `blur(${mix(3, 0, near)}px)` }}>
               <Shade t={u} reveal={settle(u, sh.in, 6)} eyes={tween(u, sh.eyes, 0.4) * (1 - (sh.fade !== undefined ? tween(u, sh.fade, 0.8) : 0))} recoil={sh.recoil !== undefined ? tween(u, sh.recoil, 0.6) : 0} fade={sh.fade !== undefined ? tween(u, sh.fade, 1.2) : 0} style={{ width: "100%" }} />

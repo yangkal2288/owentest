@@ -112,7 +112,7 @@ const CUTS: Record<HalloweenCut, Shot[]> = {
           <AlwaysLine u={u} at={2.3} to={4.8} />
         </DarkShot>
       ),
-      lines: [{ at: 2.3, to: 4.7, who: null, text: "Vallamo always replies instantly." }],
+      // The headline says it; no subtitle on top of the reply.
       sfx: [
         { at: 0.15, file: "chime", volume: 0.16 },
         { at: 0.8, file: "whoosh", volume: 0.18 },
@@ -145,7 +145,6 @@ const CUTS: Record<HalloweenCut, Shot[]> = {
           <AlwaysLine u={u} at={1.5} to={4.0} />
         </DarkShot>
       ),
-      lines: [{ at: 1.5, to: 4.0, who: null, text: "Vallamo always replies instantly." }],
       sfx: [{ at: 0.95, file: "chime", volume: 0.3 }],
     },
     { len: 1.2, warm: true, render: (u) => <BookedShot u={u + 0.3} /> },
@@ -205,7 +204,6 @@ const CUTS: Record<HalloweenCut, Shot[]> = {
           <AlwaysLine u={u} at={3.0} to={6.3} />
         </DarkShot>
       ),
-      lines: [{ at: 3.0, to: 6.2, who: null, text: "Vallamo always replies instantly." }],
       sfx: [
         { at: 0.3, file: "chime", volume: 0.16 },
         { at: 1.2, file: "whoosh", volume: 0.18 },
