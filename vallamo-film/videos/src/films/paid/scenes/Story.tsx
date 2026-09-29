@@ -141,7 +141,10 @@ export function Story({ t }: { t: number }) {
           <div style={{ position: "relative", display: "inline-block", marginTop: pick(F, 10, 4) }}>
             <Slam t={t} at={sp.price} lines={[[["£120"]]]} base={{ ...display(pick(F, 300, 270)), color: DEEP, letterSpacing: "-0.04em", lineHeight: 1 }} emStyle={em(300)} size={pick(F, 300, 270)} />
             {/* Struck through. */}
-            <div style={{ position: "absolute", left: "-6%", right: "-6%", top: "52%", height: pick(F, 16, 14), borderRadius: 8, background: DEEP, transform: `rotate(-7deg) scaleX(${tween(t, sp.price + 0.22, 0.16)})`, transformOrigin: "0 50%" }} />
+            {/* Tilted about its own centre so it crosses the middle of the figures; drawn on left to right. */}
+            <div style={{ position: "absolute", left: "-5%", right: "-5%", top: "57%", height: pick(F, 16, 14), marginTop: -pick(F, 8, 7), transform: "rotate(-7deg)" }}>
+              <div style={{ width: "100%", height: "100%", borderRadius: 8, background: DEEP, transform: `scaleX(${tween(t, sp.price + 0.22, 0.16)})`, transformOrigin: "0 50%" }} />
+            </div>
           </div>
           <Slam t={t} at={sp.their} lines={[[["Their "], ["booking", true]]]} base={display(pick(F, 104, 96))} emStyle={{ ...em(pick(F, 112, 104)), color: DEEP }} size={pick(F, 104, 96)} dot style={{ marginTop: pick(F, 6, 0) }} />
         </div>
