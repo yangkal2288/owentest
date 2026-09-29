@@ -9,7 +9,7 @@ cut=$1; fmt=$2; ver=$3; out=out/paid/$ver; mkdir -p "$out/master"
 BROWSER=()
 [ -n "$REMOTION_BROWSER" ] && BROWSER=(--browser-executable="$REMOTION_BROWSER")
 declare -A SIZE=([916]=1080x1920 [45]=1080x1350)
-declare -A NAME=([main]=35s [short]=15s)
+declare -A NAME=([main]=30s [short]=15s)
 npx remotion render src/index.ts "Paid-$cut-$fmt" "$out/master/$cut-$fmt-240.mp4" --props "{\"fps\":240,\"format\":\"$fmt\",\"cut\":\"$cut\"}" --codec h264 --crf 10 --pixel-format yuv444p --muted --concurrency ${CONCURRENCY:-6} --log error "${BROWSER[@]}"
 "$F" -v error -y -i "$out/master/$cut-$fmt-240.mp4" \
   -filter_threads 1 \

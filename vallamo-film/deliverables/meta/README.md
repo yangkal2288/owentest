@@ -5,8 +5,11 @@ white and clay, the real Vallamo UI, and vallamo.com's own type: headlines in Pl
 
 | File | What |
 |---|---|
-| `Vallamo-Meta-1080x1920-v2.mp4` | **Reels and Stories (9:16).** 30 s, 60 fps, H.264, music and soft SFX at −14 LUFS. Headlines, ALWAYS, logo and CTA stay inside Meta's safe area (clear of the top 14% and bottom 35%). |
-| `Vallamo-Meta-1080x1350-v2.mp4` | **Feed (4:5).** Laid out separately for the shorter frame, not cropped. |
+| `Ad2-AlwaysRepliesInstantly-30s-9x16-1080x1920-v3.mp4` | **Reels and Stories (9:16).** 30 s, 60 fps, H.264, music and soft SFX at −14 LUFS. Headlines, ALWAYS, logo and CTA stay inside Meta's safe area (clear of the top 14% and bottom 35%). |
+| `Ad2-AlwaysRepliesInstantly-30s-4x5-1080x1350-v3.mp4` | **Feed (4:5).** Laid out separately for the shorter frame, not cropped. |
+| `Ad2-AlwaysRepliesInstantly-15s-9x16-1080x1920-v3.mp4` / `…-15s-4x5-1080x1350-v3.mp4` | **15 s cut**, both layouts. |
+
+v3 adds the premium finish: soft lens-iris transitions, drifting depth bokeh, light sweeps on ALWAYS and the booking, and fine film grain (applied at encode). v2 files are kept for reference.
 | `cover-1080x1920.png` / `cover-1080x1350.png` | Covers: the opening question with the enquiry. |
 | `Vallamo-Meta.srt` | Captions, the brief's script. |
 | `VO-script-for-recording.md` | The script with timings, for the voice session. |
@@ -42,5 +45,5 @@ white and clay, the real Vallamo UI, and vallamo.com's own type: headlines in Pl
 ```bash
 cd videos
 node scripts/meta-pieces.mjs && node scripts/pieces-png.mjs
-REMOTION_BROWSER=/path/to/chromium scripts/render-meta.sh 916 v2   # and 45
+REMOTION_BROWSER=/path/to/chromium scripts/render-meta.sh 916 v3 30   # 916|45, then 30|15
 ```

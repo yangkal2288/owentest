@@ -6,8 +6,10 @@ Made after the reference Owen chose (a launch film where nothing sits on empty w
 
 | File | What |
 |---|---|
-| `Vallamo-PaidEnquiry-30s-1080x1350-v2.mp4` / `…-1080x1920-v2.mp4` | **Main cut**, Feed (4:5) and Reels/Stories (9:16). 30 s, 60 fps, music and restrained SFX at −14 LUFS. |
-| `Vallamo-PaidEnquiry-15s-1080x1350-v2.mp4` / `…-1080x1920-v2.mp4` | **15 s cut**, both layouts. |
+| `Ad3-YoureWithAClient-30s-4x5-1080x1350-v3.mp4` / `…-30s-9x16-1080x1920-v3.mp4` | **Main cut**, Feed (4:5) and Reels/Stories (9:16). 30 s, 60 fps, music and restrained SFX at −14 LUFS. |
+| `Ad3-YoureWithAClient-15s-4x5-1080x1350-v3.mp4` / `…-15s-9x16-1080x1920-v3.mp4` | **15 s cut**, both layouts. |
+
+v3 adds the premium finish: soft lens-iris transitions, drifting depth bokeh, light sweeps on ALWAYS and the booking, and fine film grain (applied at encode).
 | `*.srt` · `VO-script-for-recording.md` | Captions and the script with timings. |
 
 ## Main cut
@@ -38,5 +40,5 @@ Made after the reference Owen chose (a launch film where nothing sits on empty w
 ## Re-render
 
 ```bash
-cd videos && REMOTION_BROWSER=/path/to/chromium scripts/render-paid.sh main 45 v2   # main|short, 45|916
+cd videos && REMOTION_BROWSER=/path/to/chromium scripts/render-paid.sh main 45 v3   # main|short, 45|916
 ```
