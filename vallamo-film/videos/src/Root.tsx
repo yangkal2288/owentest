@@ -11,6 +11,7 @@ import { PaidAd, paidLength, type PaidProps } from "./films/paid/PaidAd";
 import { GrowthAd, growthLength, type GrowthProps } from "./films/growth/GrowthAd";
 import { MEET_FRAME_LENGTH, MeetFrame, type MeetFrameProps } from "./films/meetframe/MeetFrame";
 import { MeetReframe, type ReframeProps } from "./films/meetframe/MeetReframe";
+import { coverFilmLength, MeetCover } from "./films/meetframe/MeetCover";
 import { CineTest } from "./films/cinema/Test";
 import { HalloweenTest } from "./films/halloween/Test";
 import { HalloweenFilm, halloweenLength, type HalloweenProps } from "./films/halloween/Film";
@@ -63,6 +64,8 @@ export function Root() {
       <Composition id="Paid-short-45" component={PaidAd} width={1080} height={1350} fps={60} durationInFrames={Math.round(paidLength("short") * 60)} defaultProps={{ fps: 60, format: "45", cut: "short" } as PaidProps} calculateMetadata={paid} />
       <Composition id="Paid-short-916" component={PaidAd} width={1080} height={1920} fps={60} durationInFrames={Math.round(paidLength("short") * 60)} defaultProps={{ fps: 60, format: "916", cut: "short" } as PaidProps} calculateMetadata={paid} />
       <Composition id="Paid-short-mix" component={PaidAd} width={1080} height={1350} fps={60} durationInFrames={Math.round(paidLength("short") * 60)} defaultProps={{ fps: 60, format: "45", cut: "short", music: true, sfx: true } as PaidProps} calculateMetadata={paid} />
+      <Composition id="Cover-916" component={MeetCover} width={1080} height={1920} fps={60} durationInFrames={Math.round(coverFilmLength * 60)} defaultProps={{ fps: 60, format: "916" } as ReframeProps} calculateMetadata={({ props }: { props: ReframeProps }) => ({ fps: props.fps ?? 60, durationInFrames: Math.round(coverFilmLength * (props.fps ?? 60)) })} />
+      <Composition id="Cover-45" component={MeetCover} width={1080} height={1350} fps={60} durationInFrames={Math.round(coverFilmLength * 60)} defaultProps={{ fps: 60, format: "45" } as ReframeProps} calculateMetadata={({ props }: { props: ReframeProps }) => ({ fps: props.fps ?? 60, durationInFrames: Math.round(coverFilmLength * (props.fps ?? 60)) })} />
       <Composition id="Reframe-916" component={MeetReframe} width={1080} height={1920} fps={60} durationInFrames={Math.round(FILM_LENGTH * 60)} defaultProps={{ fps: 60, format: "916" } as ReframeProps} calculateMetadata={film} />
       <Composition id="Reframe-45" component={MeetReframe} width={1080} height={1350} fps={60} durationInFrames={Math.round(FILM_LENGTH * 60)} defaultProps={{ fps: 60, format: "45" } as ReframeProps} calculateMetadata={film} />
       <Composition id="MeetFrame-916" component={MeetFrame} width={1080} height={1920} fps={60} durationInFrames={Math.round(MEET_FRAME_LENGTH * 60)} defaultProps={{ format: "916" } as MeetFrameProps} />
