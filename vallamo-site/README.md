@@ -3,7 +3,7 @@
 | File | What changed |
 |---|---|
 | `index-a-mid-and-closing.html` | **Version A.** Only the mid-section and the closing section are new. Everything above the Nicky and Ella testimonials is untouched. |
-| `index-b-full-refresh.html` | **Version B.** Everything in A, plus cosmetic polish above it. The hero photo is replaced with a warm gradient and a faint grid, but the hero layout is unchanged. The dashboard-preview frame is crisper, and the testimonials are shown as cards. |
+| `index-b-full-refresh.html` | **Version B.** Everything in A, plus cosmetic polish above it. The hero photo is replaced with a layered warm gradient: light behind the headline, a golden glow top-right, sand top-left, a hint of sage, and a faint grain so it never bands. It runs up behind the header seamlessly. The hero layout is unchanged. The dashboard-preview frame is crisper, and the testimonials are shown as cards. |
 
 Previews are in `previews/`, with the current site included for comparison.
 
