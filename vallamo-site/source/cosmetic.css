@@ -1,0 +1,29 @@
+/* Version B only: cosmetic polish above the mid-section. The hero keeps its
+   layout exactly; only what sits behind it changes. Below it, the same
+   elements in the same places, restyled. */
+
+/* Hero background: the photo is retired here (it now lives in the closing
+   card). In its place, warm light and a fine grid that fades out. */
+body.v-home{position:relative;background:#f7f3ec}
+body.v-home:before,body.v-home:after{content:'';position:absolute;left:0;right:0;top:0;height:1080px;pointer-events:none;z-index:0}
+body.v-home:before{background:
+  radial-gradient(760px 460px at 6% -4%,#ecd9baa6,transparent 64%),
+  radial-gradient(820px 560px at 100% 6%,#e6d3b98c,transparent 62%),
+  radial-gradient(640px 320px at 52% 34%,#fffdf8b3,transparent 70%),
+  linear-gradient(180deg,#faf6ef 0,#f4ede2 58%,#f7f3ec 100%)}
+body.v-home:after{background-image:linear-gradient(90deg,#2c252010 1px,transparent 1px),linear-gradient(180deg,#2c252010 1px,transparent 1px);background-size:64px 64px;background-position:center top;
+  -webkit-mask-image:radial-gradient(ellipse 72% 64% at 50% 0%,#000 18%,transparent 78%);mask-image:radial-gradient(ellipse 72% 64% at 50% 0%,#000 18%,transparent 78%)}
+.v-home main,.v-home .v-footer{position:relative;z-index:1}
+
+/* Product preview: a crisper frame. */
+.v-home .browser-frame{border-radius:18px;border-color:#e2d6c4;box-shadow:inset 0 1px 0 #ffffffb3,0 60px 120px -56px #2c252073,0 20px 44px -30px #2c25204d}
+.v-home .browser-bar{height:42px;background:linear-gradient(#fffdf8,#f5eee3)}
+.v-home .browser-address{border-radius:8px;background:#f0e9dd}
+
+/* Testimonials: the same two columns, now as cards. */
+.v-home .trust-bar-2{max-width:920px;gap:18px;border:0;padding:12px 0 0}
+.v-home .trust-testimonial{background:#fffdf8;border:1px solid #e8e0d2;border-radius:20px;padding:24px 26px 22px;box-shadow:0 1px 2px #2c25200a,0 18px 40px -30px #2c252052}
+.v-home .trust-testimonial+.trust-testimonial{border-left:1px solid #e8e0d2}
+.v-home .trust-quote{font-size:13.5px;line-height:1.6}
+@media(max-width:760px){.v-home .trust-bar-2{gap:12px}.v-home .trust-testimonial+.trust-testimonial{border-top:1px solid #e8e0d2}}
+@media(max-width:700px){body.v-home:before,body.v-home:after{height:820px}}
