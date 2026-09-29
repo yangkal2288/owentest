@@ -8,6 +8,7 @@ import { STYLE_FRAMES, StyleFrames } from "./films/meet/style/StyleFrames";
 import { FILM_LENGTH } from "./films/meet/timeline";
 import { MetaAd, metaLength, type MetaProps } from "./films/meta/MetaAd";
 import { PaidAd, paidLength, type PaidProps } from "./films/paid/PaidAd";
+import { GrowthAd, growthLength, type GrowthProps } from "./films/growth/GrowthAd";
 import { CineTest } from "./films/cinema/Test";
 import { HalloweenTest } from "./films/halloween/Test";
 import { HalloweenFilm, halloweenLength, type HalloweenProps } from "./films/halloween/Film";
@@ -28,6 +29,11 @@ const meta = ({ props }: { props: MetaProps }) => {
 const paid = ({ props }: { props: PaidProps }) => {
   const fps = props.fps ?? 60;
   return { fps, durationInFrames: Math.round(paidLength(props.cut ?? "main") * fps) };
+};
+
+const growth = ({ props }: { props: GrowthProps }) => {
+  const fps = props.fps ?? 60;
+  return { fps, durationInFrames: Math.round(growthLength(props.cut ?? "main") * fps) };
 };
 
 const halloween = ({ props }: { props: HalloweenProps }) => {
@@ -55,6 +61,12 @@ export function Root() {
       <Composition id="Paid-short-45" component={PaidAd} width={1080} height={1350} fps={60} durationInFrames={Math.round(paidLength("short") * 60)} defaultProps={{ fps: 60, format: "45", cut: "short" } as PaidProps} calculateMetadata={paid} />
       <Composition id="Paid-short-916" component={PaidAd} width={1080} height={1920} fps={60} durationInFrames={Math.round(paidLength("short") * 60)} defaultProps={{ fps: 60, format: "916", cut: "short" } as PaidProps} calculateMetadata={paid} />
       <Composition id="Paid-short-mix" component={PaidAd} width={1080} height={1350} fps={60} durationInFrames={Math.round(paidLength("short") * 60)} defaultProps={{ fps: 60, format: "45", cut: "short", music: true, sfx: true } as PaidProps} calculateMetadata={paid} />
+      <Composition id="Growth-main-45" component={GrowthAd} width={1080} height={1350} fps={60} durationInFrames={Math.round(growthLength("main") * 60)} defaultProps={{ fps: 60, format: "45", cut: "main" } as GrowthProps} calculateMetadata={growth} />
+      <Composition id="Growth-main-916" component={GrowthAd} width={1080} height={1920} fps={60} durationInFrames={Math.round(growthLength("main") * 60)} defaultProps={{ fps: 60, format: "916", cut: "main" } as GrowthProps} calculateMetadata={growth} />
+      <Composition id="Growth-main-mix" component={GrowthAd} width={1080} height={1350} fps={60} durationInFrames={Math.round(growthLength("main") * 60)} defaultProps={{ fps: 60, format: "45", cut: "main", music: true, sfx: true } as GrowthProps} calculateMetadata={growth} />
+      <Composition id="Growth-short-45" component={GrowthAd} width={1080} height={1350} fps={60} durationInFrames={Math.round(growthLength("short") * 60)} defaultProps={{ fps: 60, format: "45", cut: "short" } as GrowthProps} calculateMetadata={growth} />
+      <Composition id="Growth-short-916" component={GrowthAd} width={1080} height={1920} fps={60} durationInFrames={Math.round(growthLength("short") * 60)} defaultProps={{ fps: 60, format: "916", cut: "short" } as GrowthProps} calculateMetadata={growth} />
+      <Composition id="Growth-short-mix" component={GrowthAd} width={1080} height={1350} fps={60} durationInFrames={Math.round(growthLength("short") * 60)} defaultProps={{ fps: 60, format: "45", cut: "short", music: true, sfx: true } as GrowthProps} calculateMetadata={growth} />
       {/* "The Booking Thief", the Halloween film (VALLAMO_HALLOWEEN_SELF_SERVE_AD_BRIEF.md): 70, 35 and 15 s, 4:5 and 9:16. */}
       <Composition id="Halloween-70-45" component={HalloweenFilm} width={1080} height={1350} fps={60} durationInFrames={Math.round(halloweenLength("70") * 60)} defaultProps={{ fps: 60, format: "45", cut: "70" } as HalloweenProps} calculateMetadata={halloween} />
       <Composition id="Halloween-70-916" component={HalloweenFilm} width={1080} height={1920} fps={60} durationInFrames={Math.round(halloweenLength("70") * 60)} defaultProps={{ fps: 60, format: "916", cut: "70" } as HalloweenProps} calculateMetadata={halloween} />

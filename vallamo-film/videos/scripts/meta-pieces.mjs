@@ -11,7 +11,7 @@ const SRC = "file://" + path.resolve("public/ui/source.html");
 const OUT = "public/ui/pieces";
 fs.mkdirSync(OUT, { recursive: true });
 const meta = JSON.parse(fs.readFileSync("src/pieces.json", "utf8"));
-for (const k of Object.keys(meta)) if (k.startsWith("m-") || k.startsWith("p-") || k.startsWith("h-")) delete meta[k];
+for (const k of Object.keys(meta)) if (/^[mphg]-/.test(k) && !k.startsWith("g-wk") && !k.startsWith("g-bk")) delete meta[k];
 
 const b = await chromium.launch({ executablePath: process.env.CHROMIUM ?? "/opt/pw-browsers/chromium-1194/chrome-linux/chrome" });
 const p = await b.newPage({ viewport: { width: 1440, height: 1400 } });
@@ -125,6 +125,13 @@ const MSGS = {
   "h-u2": ["user", "Yes, please."],
   "h-u3": ["user", "07700 900455, jess.kaur@example.com"],
   "h-i2": ["isla", "You're booked for a facial on Thursday at 3pm. A confirmation has just been sent."],
+  // The growth ad (VALLAMO_CLINIC_GROWTH_AD_BRIEF.md): one website enquiry becoming a booking.
+  "g-u1": ["user", "Is the £120 facial available this week?"],
+  "g-i1": ["isla", "Yes! The Signature Facial is £120 for 60 minutes. Thursday at 3pm is free. Would you like that?"],
+  "g-u2": ["user", "Yes, please."],
+  "g-idet": ["isla", "Lovely. Could I take your mobile number and email for the booking?"],
+  "g-u3": ["user", "07700 900512, chloe.reid@example.com"],
+  "g-i2": ["isla", "You're booked for a Signature Facial on Thursday at 3pm. A confirmation has just been sent."],
 };
 await go(SRC + "#/channels/website");
 await p.evaluate((W) => {
@@ -215,6 +222,23 @@ await p.evaluate(() => {
 });
 await piece("p-outcome", fn(`() => document.querySelector('[data-film="outcome-booked"]')`));
 await piece("p-upcoming", fn(`() => document.querySelector('[data-film="upcoming"] > :last-child')`));
+
+// The growth ad: the same real result, staged for the Signature Facial on Thursday at 3pm.
+await go("file://" + path.resolve("public/ui/snaps/inbox-sarah.html"));
+await p.addStyleTag({ content: '[data-film="outcome-booked"]{display:block!important}' });
+await p.evaluate(() => {
+  const sum = document.querySelector('[data-film="outcome-summary"]');
+  if (sum && sum.firstChild) sum.firstChild.textContent = "Website enquiry; assistant answered from the service list and booked Thursday at 3pm.";
+  const up = document.querySelector('[data-film="upcoming"] > :last-child');
+  const walker = document.createTreeWalker(up, NodeFilter.SHOW_TEXT);
+  for (let n = walker.nextNode(); n; n = walker.nextNode()) {
+    const s = n.textContent.trim();
+    if (s === "Anti-Wrinkle Consultation") n.textContent = "Signature Facial";
+    else if (s.startsWith("6:00pm")) n.textContent = "3:00pm · Dr Maya Rahman";
+  }
+});
+await piece("g-outcome", fn(`() => document.querySelector('[data-film="outcome-booked"]')`));
+await piece("g-upcoming", fn(`() => document.querySelector('[data-film="upcoming"] > :last-child')`));
 
 fs.writeFileSync("src/pieces.json", JSON.stringify(meta, null, 1));
 await b.close();

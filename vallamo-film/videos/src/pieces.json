@@ -409,6 +409,30 @@
   "w": 316,
   "h": 77
  },
+ "g-u1": {
+  "w": 316,
+  "h": 39
+ },
+ "g-i1": {
+  "w": 316,
+  "h": 77
+ },
+ "g-u2": {
+  "w": 316,
+  "h": 39
+ },
+ "g-idet": {
+  "w": 316,
+  "h": 58
+ },
+ "g-u3": {
+  "w": 316,
+  "h": 58
+ },
+ "g-i2": {
+  "w": 316,
+  "h": 77
+ },
  "m-ch-web": {
   "w": 267,
   "h": 236
@@ -444,5 +468,235 @@
  "p-upcoming": {
   "w": 263,
   "h": 54
+ },
+ "g-outcome": {
+  "w": 263,
+  "h": 70
+ },
+ "g-upcoming": {
+  "w": 263,
+  "h": 54
+ },
+ "g-wk": {
+  "w": 1114,
+  "h": 768,
+  "blocks": [
+   {
+    "id": "wk-00",
+    "who": "Emily Carter",
+    "x": 61,
+    "y": 159,
+    "w": 67,
+    "h": 29
+   },
+   {
+    "id": "wk-01",
+    "who": "Freya Morgan10:00am · Hydrafacial",
+    "x": 61,
+    "y": 191,
+    "w": 67,
+    "h": 45
+   },
+   {
+    "id": "wk-02",
+    "who": "Molly Shah11:00am · Dermal Filler Treatm",
+    "x": 61,
+    "y": 255,
+    "w": 67,
+    "h": 45
+   },
+   {
+    "id": "wk-03",
+    "who": "Grace Wood",
+    "x": 136,
+    "y": 287,
+    "w": 67,
+    "h": 29
+   },
+   {
+    "id": "wk-04",
+    "who": "Tia Hill12:00pm · Dermal Filler Treatmen",
+    "x": 61,
+    "y": 319,
+    "w": 67,
+    "h": 45
+   },
+   {
+    "id": "wk-05",
+    "who": "Leah Shah",
+    "x": 136,
+    "y": 319,
+    "w": 67,
+    "h": 29
+   },
+   {
+    "id": "wk-06",
+    "who": "Leah Carter",
+    "x": 61,
+    "y": 447,
+    "w": 67,
+    "h": 29
+   },
+   {
+    "id": "wk-07",
+    "who": "Danielle Morgan3:00pm · Profhilo",
+    "x": 61,
+    "y": 511,
+    "w": 67,
+    "h": 45
+   },
+   {
+    "id": "wk-08",
+    "who": "Tia Jones",
+    "x": 61,
+    "y": 607,
+    "w": 67,
+    "h": 29
+   },
+   {
+    "id": "wk-09",
+    "who": "Sienna Hughes",
+    "x": 136,
+    "y": 607,
+    "w": 67,
+    "h": 29
+   },
+   {
+    "id": "wk-10",
+    "who": "Megan Hall",
+    "x": 61,
+    "y": 671,
+    "w": 67,
+    "h": 29
+   },
+   {
+    "id": "wk-11",
+    "who": "Aisha Begum",
+    "x": 212,
+    "y": 351,
+    "w": 42,
+    "h": 29
+   },
+   {
+    "id": "wk-12",
+    "who": "Emily Moore",
+    "x": 212,
+    "y": 479,
+    "w": 42,
+    "h": 22
+   },
+   {
+    "id": "wk-13",
+    "who": "Grace Morgan",
+    "x": 212,
+    "y": 703,
+    "w": 42,
+    "h": 29
+   },
+   {
+    "id": "wk-14",
+    "who": "Naomi Wilson6:00pm · Profhilo",
+    "x": 262,
+    "y": 703,
+    "w": 42,
+    "h": 45
+   },
+   {
+    "id": "wk-15",
+    "who": "Lauren Shah",
+    "x": 312,
+    "y": 703,
+    "w": 42,
+    "h": 29
+   },
+   {
+    "id": "wk-16",
+    "who": "Charlotte White",
+    "x": 363,
+    "y": 255,
+    "w": 67,
+    "h": 29
+   },
+   {
+    "id": "wk-17",
+    "who": "Tia Carter",
+    "x": 363,
+    "y": 607,
+    "w": 67,
+    "h": 29
+   },
+   {
+    "id": "wk-18",
+    "who": "Samantha Walker",
+    "x": 363,
+    "y": 671,
+    "w": 67,
+    "h": 22
+   },
+   {
+    "id": "wk-19",
+    "who": "Melissa Wood",
+    "x": 438,
+    "y": 671,
+    "w": 67,
+    "h": 29
+   },
+   {
+    "id": "wk-20",
+    "who": "Megan Carter",
+    "x": 514,
+    "y": 159,
+    "w": 142,
+    "h": 29
+   },
+   {
+    "id": "wk-21",
+    "who": "Olivia Williams",
+    "x": 514,
+    "y": 319,
+    "w": 142,
+    "h": 29
+   },
+   {
+    "id": "wk-23",
+    "who": "Sarah Mitchell",
+    "x": 514,
+    "y": 703,
+    "w": 142,
+    "h": 29
+   },
+   {
+    "id": "wk-24",
+    "who": "Harriet Bell",
+    "x": 664,
+    "y": 207,
+    "w": 142,
+    "h": 29
+   },
+   {
+    "id": "wk-25",
+    "who": "Phoebe Ward",
+    "x": 815,
+    "y": 335,
+    "w": 142,
+    "h": 29
+   }
+  ]
+ },
+ "g-bk-facial": {
+  "w": 142,
+  "h": 61
+ },
+ "g-bk-fri": {
+  "w": 142,
+  "h": 45
+ },
+ "g-bk-sat": {
+  "w": 142,
+  "h": 45
+ },
+ "g-bk-wed": {
+  "w": 142,
+  "h": 61
  }
 }
