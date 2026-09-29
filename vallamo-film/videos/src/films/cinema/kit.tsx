@@ -71,6 +71,7 @@ export function World({ kind, t, blur = 7, wash = 0.55, x = 0, y = 0, zoom = 1, 
           ))}
         </div>
       </AbsoluteFill>
+      <Bokeh t={t} count={12} opacity={0.9} />
       {/* Light: bright where the words are, the world darker and warmer towards the edges. */}
       <AbsoluteFill style={{ background: `radial-gradient(ellipse 75% 60% at 50% 42%, rgba(255,255,255,${wash}) 0%, rgba(255,255,255,${wash * 0.6}) 45%, rgba(255,255,255,0) 100%)` }} />
       <AbsoluteFill style={{ background: "radial-gradient(ellipse 120% 100% at 50% 50%, rgba(0,0,0,0) 55%, rgba(60,45,30,.10) 100%)" }} />
@@ -161,4 +162,85 @@ export function Float({ t, children, sway = 1, style }: { t: number; children: R
   const ry = Math.cos(t * 0.7) * 3.5 * sway;
   const bob = Math.sin(t * 1.3) * 6 * sway;
   return <div style={{ transform: `translate3d(0, ${bob}px, 0) rotateX(${rx}deg) rotateY(${ry}deg)`, transformStyle: "preserve-3d", ...style }}>{children}</div>;
+}
+
+// ---------------------------------------------------------------- premium finishing
+
+/**
+ * A soft lens iris: the incoming shot opens through a feathered circle from (x, y), eased
+ * in and out, instead of a hard-edged wipe. Spread onto the incoming layer's style.
+ */
+export function iris(t: number, at: number, len: number, x: string, y: string, feather = 260): CSSProperties {
+  const raw = Math.min(1, Math.max(0, (t - at) / len));
+  if (raw >= 1) return {};
+  const k = raw < 0.5 ? 2 * raw * raw : 1 - Math.pow(-2 * raw + 2, 2) / 2; // ease in-out
+  const r = k * 2300;
+  const m = `radial-gradient(circle at ${x} ${y}, #000 ${Math.max(0, r - feather)}px, rgba(0,0,0,.6) ${r - feather * 0.4}px, transparent ${r}px)`;
+  return { maskImage: m, WebkitMaskImage: m };
+}
+
+/** A warm band of light that travels across the frame once, from `at`. */
+export function Sweep({ t, at, len = 0.9, strength = 0.5, angle = 105 }: { t: number; at: number; len?: number; strength?: number; angle?: number }) {
+  const u = Math.min(1, Math.max(0, (t - at) / len));
+  if (u <= 0 || u >= 1) return null;
+  return (
+    <AbsoluteFill
+      style={{
+        background: `linear-gradient(${angle}deg, transparent 38%, rgba(255,236,200,${strength}) 50%, transparent 62%)`,
+        backgroundSize: "300% 100%",
+        backgroundPosition: `${110 - 140 * ease(u)}% 0`,
+        mixBlendMode: "screen",
+        pointerEvents: "none",
+      }}
+    />
+  );
+}
+
+/** Out-of-focus specks of light drifting through the depth of the world. */
+export function Bokeh({ t, count = 14, tint = "255,240,215", opacity = 1 }: { t: number; count?: number; tint?: string; opacity?: number }) {
+  const r = (i: number, k: number) => {
+    const s = Math.sin(i * 91.7 + k * 37.3) * 43758.5453;
+    return s - Math.floor(s);
+  };
+  return (
+    <AbsoluteFill style={{ pointerEvents: "none", opacity }}>
+      {Array.from({ length: count }, (_, i) => {
+        const size = 40 + r(i, 1) * 150;
+        const depth = 0.3 + r(i, 2) * 0.7;
+        const x = ((r(i, 3) * 1300 + t * 18 * depth) % 1300) - 110;
+        const y = r(i, 4) * 2000 - 40 + Math.sin(t * 0.6 + i) * 30 * depth - t * 10 * depth;
+        return (
+          <div
+            key={i}
+            style={{
+              position: "absolute",
+              left: x,
+              top: ((y % 2000) + 2000) % 2000 - 40,
+              width: size,
+              height: size,
+              borderRadius: "50%",
+              background: `radial-gradient(circle, rgba(${tint},${0.32 * depth}) 0%, rgba(${tint},${0.14 * depth}) 45%, rgba(${tint},0) 70%)`,
+            }}
+          />
+        );
+      })}
+    </AbsoluteFill>
+  );
+}
+
+/** Fine film grain over the whole frame: premium texture, no flat digital areas. */
+export function Grain({ t, opacity = 0.05 }: { t: number; opacity?: number }) {
+  const f = Math.floor(t * 24);
+  return (
+    <AbsoluteFill
+      style={{
+        backgroundImage: `url(${staticFile("cinema/grain.png")})`,
+        backgroundSize: "512px 512px",
+        backgroundPosition: `${(f * 173) % 512}px ${(f * 311) % 512}px`,
+        opacity,
+        mixBlendMode: "overlay",
+        pointerEvents: "none",
+      }}
+    />
+  );
 }

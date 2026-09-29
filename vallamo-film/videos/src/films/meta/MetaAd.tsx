@@ -1,6 +1,7 @@
 import { AbsoluteFill, Audio, Sequence, staticFile, useCurrentFrame, useVideoConfig } from "remotion";
 
 import { FilmClock } from "../meet/motion";
+import { Grain, Sweep } from "../cinema/kit";
 import { FORMATS, FormatCtx, type Format } from "./format";
 import { End } from "./scenes/End";
 import { Lost } from "./scenes/Lost";
@@ -47,6 +48,9 @@ export function MetaAd({ format = "916", cut = "30", music = false, sfx = false 
             {t < c.product.P + 0.4 && <Lost t={t} />}
             {t > c.product.P - 0.4 && t < c.product.WIPE + 1 && <Product t={t} />}
             {t >= c.product.WIPE && <End t={t} />}
+            <Sweep t={t} at={c.product.P + 0.6} len={1.0} strength={0.4} />
+            <Sweep t={t} at={c.product.BOOKED + 0.15} len={1.0} strength={0.45} />
+            <Grain t={t} />
           </AbsoluteFill>
           {music && <Audio src={staticFile(c.music)} volume={(f) => (cut === "30" ? 0.5 : 0.5 * Math.min(1, Math.max(0, (c.length - f / fps) / 0.9)))} />}
           {sfx &&

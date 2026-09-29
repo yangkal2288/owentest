@@ -46,7 +46,7 @@ export const CUTS: Record<Cut["id"], Cut> = {
     crack: B(3, 1.6),
     shatter: B(3, 1.85),
     spend: { at: B(3, 2), price: B(3, 2.75), their: DB(4), out: B(4, 2.9) },
-    meet: { at: B(4, 3.1), out: DB(6) - 0.1 },
+    meet: { at: B(4, 2.9), out: DB(6) - 0.05 },
     always: { at: DB(6), pills: [B(6, 1.3), B(6, 1.8), B(6, 2.3)], out: DB(7) - 0.15 },
     demo: {
       at: DB(7),

@@ -4,7 +4,7 @@ import { C, FONT } from "../../../brand";
 import { mix, settle, tween } from "../../meet/motion";
 import { Logo } from "../../meet/parts";
 import { Piece, pieceSize, type PieceName } from "../../meet/Piece";
-import { Float, pushIn, SHADOW, Slam, World } from "../../cinema/kit";
+import { Float, iris, pushIn, SHADOW, Slam, Sweep, World } from "../../cinema/kit";
 import { pick, useF } from "../../meta/format";
 import { Block, ChannelPill, Widget, WIDGET_W } from "../../meta/parts";
 import { display, em } from "../../meta/type";
@@ -21,11 +21,12 @@ export function MeetClay({ t }: { t: number }) {
   const m = useCut().meet!;
   const s = F.type;
   const mid = pick(F, 760, 640);
-  const open = tween(t, m.at, 0.5);
-  const logo = settle(t, m.at + 0.3, 11);
-  const out = tween(t, m.out - 0.3, 0.35);
+  // The wordmark is already arriving as the clay opens, and leaves just as the white iris opens.
+  const open = tween(t, m.at, 0.45);
+  const logo = settle(t, m.at + 0.08, 11);
+  const out = tween(t, m.out - 0.18, 0.3);
   return (
-    <AbsoluteFill style={{ clipPath: `circle(${open * 1500}px at 540px ${mid}px)` }}>
+    <AbsoluteFill style={{ ...iris(t, m.at, 0.55, "50%", `${(mid / F.H) * 100}%`), opacity: Math.min(1, open * 3) }}>
       <AbsoluteFill style={{ background: `radial-gradient(ellipse 90% 70% at 50% ${(mid / F.H) * 100}%, #B48D60 0%, ${C.clay} 45%, #8C6A43 100%)` }} />
       {/* A slow light across the field. */}
       <AbsoluteFill style={{ background: `linear-gradient(105deg, transparent 30%, rgba(255,240,215,.16) 50%, transparent 70%)`, backgroundSize: "300% 100%", backgroundPosition: `${mix(110, -30, tween(t, m.at + 0.4, 2.6))}% 0` }} />
@@ -60,7 +61,8 @@ export function Always({ t }: { t: number }) {
   const mid = pick(F, 760, 640);
   const out = tween(t, a.out, 0.28);
   return (
-    <AbsoluteFill style={{ ...pushIn(t, a.at - 0.05) }}>
+    // A white iris opens from the centre of the clay.
+    <AbsoluteFill style={{ ...iris(t, a.at - 0.22, 0.6, "50%", `${(mid / F.H) * 100}%`), transform: `scale(${1.08 - 0.08 * settle(t, a.at - 0.22, 10)})` }}>
       <World kind="inbox" t={t} blur={9} wash={0.62} zoom={1.1} spin={-12} />
       <div style={{ position: "absolute", left: 0, right: 0, top: mid - pick(F, 250, 230), textAlign: "center", opacity: 1 - out, filter: out > 0 ? `blur(${out * 22}px)` : undefined, transform: `scale(${1 + out * out * 0.8})` }}>
         <div style={{ ...display(pick(F, 116, 120)), lineHeight: 1.04, whiteSpace: "nowrap" }}>
@@ -98,6 +100,7 @@ export function Always({ t }: { t: number }) {
           })}
         </div>
       </div>
+      <Sweep t={t} at={a.at + 0.5} len={1.0} strength={0.45} />
     </AbsoluteFill>
   );
 }
@@ -195,6 +198,7 @@ export function Demo({ t }: { t: number }) {
           </div>
         </div>
       )}
+      <Sweep t={t} at={d.booked + 0.15} len={1.0} strength={0.5} />
     </AbsoluteFill>
   );
 }

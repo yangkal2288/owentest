@@ -7,7 +7,7 @@ import { type Msg, Widget, WIDGET_W } from "../parts";
 import { BEAT, useMetaCut } from "../timeline";
 import { display, em } from "../type";
 import { RESULT_CENTRE } from "./Product";
-import { World } from "../../cinema/kit";
+import { iris, World } from "../../cinema/kit";
 
 /**
  * 21.3–30 s · "Stop losing business to competitors. See Vallamo on your website in
@@ -35,7 +35,7 @@ export function End({ t }: { t: number }) {
   const s = F.type;
   const o = RESULT_CENTRE(F);
   const clay = tween(t, WIPE, 0.42);
-  const white = tween(t, WIPE + 0.18, 0.42);
+  const white = tween(t, WIPE + 0.09, 0.42);
   const cta = settle(t, CTA, 13);
   const beat = t > URL ? Math.exp(-(((t - URL) % BEAT) / BEAT) * 5) : 0;
   const peek = settle(t, OFFER + 0.1, 8);
@@ -44,8 +44,9 @@ export function End({ t }: { t: number }) {
   const top = (tall: number, feed: number) => pick(F, tall, feed);
   return (
     <AbsoluteFill>
-      <AbsoluteFill style={{ background: C.clay, clipPath: `circle(${clay * 2400}px at ${o.x}px ${o.y}px)` }} />
-      <AbsoluteFill style={{ background: "#FFFFFF", clipPath: `circle(${white * 2400}px at ${o.x}px ${o.y}px)`, overflow: "hidden" }}>
+      {/* A soft clay lens iris from the booking, the close following through it. */}
+      <AbsoluteFill style={{ background: `radial-gradient(circle at ${o.x}px ${o.y}px, #C49A69 0%, ${C.clay} 40%, #8C6A43 100%)`, ...iris(t, WIPE, 0.6, `${o.x}px`, `${o.y}px`, 320), opacity: clay > 0 ? 1 : 0 }} />
+      <AbsoluteFill style={{ background: "#FFFFFF", ...iris(t, WIPE + 0.16, 0.6, `${o.x}px`, `${o.y}px`, 320), opacity: white > 0 ? 1 : 0, overflow: "hidden" }}>
         <World kind="week" t={t} blur={14} wash={0.82} zoom={1.2} spin={-10} tilt={55} />
         {/* The real widget, as it sits on a clinic's website. */}
         <div

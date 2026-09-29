@@ -90,8 +90,8 @@ export function Story({ t }: { t: number }) {
     <AbsoluteFill style={{ overflow: "hidden" }}>
       {/* The worlds. */}
       <World kind="week" t={t} blur={6 + spike * 24} zoom={1 + 0.02 * t} opacity={1 - swap} />
-      {swap > 0 && <World kind="inbox" t={t} blur={8 + spike * 24 + 10 * tween(t, cut.shatter, 0.3)} wash={0.55 + 0.3 * tween(t, cut.shatter, 0.4)} zoom={1.05 + 0.015 * t + 0.08 * lean} opacity={swap * (1 - tween(t, sp.out, 0.3))} />}
-      <AbsoluteFill style={{ background: "#FFFFFF", opacity: 0.35 * tween(t, cut.shatter, 0.3) * (1 - spendOut) }} />
+      {swap > 0 && <World kind="inbox" t={t} blur={8 + spike * 24 + 10 * tween(t, cut.shatter, 0.3)} wash={0.55 + 0.3 * tween(t, cut.shatter, 0.4)} zoom={1.05 + 0.015 * t + 0.08 * lean} opacity={swap} />}
+      <AbsoluteFill style={{ background: "#FFFFFF", opacity: 0.35 * tween(t, cut.shatter, 0.3) }} />
       <AbsoluteFill style={{ background: DEEP, opacity: 0.14 * flash }} />
 
       <AbsoluteFill style={{ transform: `translate3d(${knock * 0.4}px, ${knock}px, 0)` }}>

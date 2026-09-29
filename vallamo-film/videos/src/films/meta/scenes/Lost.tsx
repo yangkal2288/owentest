@@ -135,9 +135,9 @@ export function Lost({ t }: { t: number }) {
                   opacity: 0.4 + 0.6 * roll,
                 }}
               >
-                {n}
+                {Math.max(1, n)}
               </div>
-              <div style={display(124 * s)}>{n === 1 ? "minute" : "minutes"}</div>
+              <div style={display(124 * s)}>{n <= 1 ? "minute" : "minutes"}</div>
             </div>
             <div style={{ ...display(58 * s), color: C.ink2, lineHeight: 1.15, marginTop: 8 * s, ...blurIn(t, 5.0, null, 14) }}>
               for a reply before
