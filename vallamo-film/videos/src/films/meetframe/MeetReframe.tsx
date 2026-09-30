@@ -12,7 +12,7 @@ import EDGE from "./edge.json";
  * into the film's own background colour (edge.json, measured per frame from the final film),
  * so no edge ever shows. Picture only: the final film's mix is laid back on in the encode.
  */
-export type ReframeProps = { fps?: number; format?: "916" | "45" };
+export type ReframeProps = { fps?: number; format?: "916" | "45" | "11" };
 
 type Rect = [x: number, y: number, w: number, h: number]; // in the film's 1920 x 1080 space
 type Layout = { from: number; panes: Rect[]; cut?: boolean };
@@ -50,16 +50,26 @@ const FORMAT = {
   // `focus`: where a single framing centres (9:16: the middle of the area Meta's overlays leave clear).
   "916": { W: 1080, H: 1920, top: 270, bottom: 1880, gap: 36, margin: 24, focus: 780 },
   "45": { W: 1080, H: 1350, top: 40, bottom: 1310, gap: 28, margin: 24, focus: 675 },
+  // Square: short, so stacked shots keep the headline full size and the product gives way first.
+  "11": { W: 1080, H: 1080, top: 30, bottom: 1050, gap: 20, margin: 24, focus: 540, headFirst: true },
 };
 const FEATHER = 70;
 
 /** Place a layout's panes: each fills the width, stacked, scaled down together if they don't fit. */
-function place(layout: Layout, f: (typeof FORMAT)["916"]) {
+function place(layout: Layout, f: { W: number; top: number; bottom: number; gap: number; margin: number; focus: number; headFirst?: boolean }) {
   const maxW = f.W - f.margin * 2;
   const avail = f.bottom - f.top - f.gap * (layout.panes.length - 1);
   let k = layout.panes.map(([, , w]) => maxW / w);
   const total = layout.panes.reduce((s, [, , , h], i) => s + h * k[i], 0);
-  if (total > avail) k = k.map((v) => (v * avail) / total);
+  if (total > avail && f.headFirst && layout.panes.length > 1) {
+    // The headline pane keeps its size; the others shrink (to half at most) to make room.
+    const head = layout.panes[0][3] * k[0];
+    const rest = total - head;
+    const want = Math.max(0.5, (avail - head) / rest);
+    k = k.map((v, i) => (i === 0 ? v : v * want));
+  }
+  const total2 = layout.panes.reduce((s, [, , , h], i) => s + h * k[i], 0);
+  if (total2 > avail) k = k.map((v) => (v * avail) / total2);
   const used = layout.panes.reduce((s, [, , , h], i) => s + h * k[i], 0) + f.gap * (layout.panes.length - 1);
   let y = layout.panes.length === 1 ? Math.max(f.top, Math.min(f.bottom - used, f.focus - used / 2)) : f.top + (f.bottom - f.top - used) / 2;
   return layout.panes.map((r, i) => {

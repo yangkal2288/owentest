@@ -5,7 +5,7 @@ import { FILM_LENGTH } from "../meet/timeline";
 import { MeetReframe } from "./MeetReframe";
 
 /** "x" is the original 16:9 film itself; "916" and "45" are the reframed tall versions. */
-export type CoverProps = { fps?: number; format?: "916" | "45" | "x" };
+export type CoverProps = { fps?: number; format?: "916" | "45" | "11" | "x" };
 
 /**
  * The reframed film with its cover built in, as one file: the first frame is the cover (the
