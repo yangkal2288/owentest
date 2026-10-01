@@ -1,5 +1,5 @@
 import type { CSSProperties, ReactNode } from "react";
-import { AbsoluteFill } from "remotion";
+import { AbsoluteFill, Img, staticFile } from "remotion";
 
 import { C, FONT } from "../../brand";
 import { Logo } from "../meet/parts";
@@ -47,6 +47,9 @@ function Chip({ x, y, children, gold = false, style }: { x: number; y: number; c
 
 const Bolt = ({ c = C.clay }: { c?: string }) => (
   <svg width={30} height={30} viewBox="0 0 24 24" fill={c}><path d="M13 2 4 14h7l-1 8 9-12h-7z" /></svg>
+);
+const Moon = () => (
+  <svg width={28} height={28} viewBox="0 0 24 24" fill={C.clay}><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z" /></svg>
 );
 const Check = ({ c = "#FFFFFF" }: { c?: string }) => (
   <svg width={30} height={30} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth={3} strokeLinecap="round" strokeLinejoin="round"><path d="m5 12 5 5 9-10" /></svg>
@@ -120,51 +123,75 @@ function HandledScreen() {
   );
 }
 
-// The verb, and the site's own line for it (vallamo.com).
+/** A capture from the live demo (vallamo.com/demo), drawn at its css size times `k`. */
+function Demo({ name, w, h, k, x, y, shadow = true, style }: { name: string; w: number; h: number; k: number; x: number; y: number; shadow?: boolean; style?: CSSProperties }) {
+  return (
+    <>
+      {shadow && <div style={{ position: "absolute", left: x - 30, top: y + h * k - 34, width: w * k + 60, height: 70, borderRadius: "50%", background: "rgba(44,37,32,.26)", filter: "blur(26px)" }} />}
+      <Img src={staticFile(`ui/demo/${name}.png`)} style={{ position: "absolute", left: x, top: y, width: w * k, height: h * k, ...style }} />
+    </>
+  );
+}
+// The live demo's captures, css px (3x PNGs in public/ui/demo, scripts/demo-captures.mjs).
+const D = { phone: { w: 380, h: 568 }, inbox: { w: 320, h: 718 }, diary: { w: 300, h: 534 }, handover: { w: 1114, h: 268 } };
+
+// The verb, and the demo's own line for it (vallamo.com/demo).
 const PINS = {
-  answers: { verb: "answers", line: "From your own information, in seconds.", screen: <AnswersScreen /> },
-  books: { verb: "books", line: "Into the calendar you already run.", screen: <BooksScreen /> },
-  handled: { verb: "handles", line: "And hands over the moment it matters.", screen: <HandledScreen /> },
+  answers: {
+    verb: "answers",
+    line: "Every enquiry, answered in seconds. Even at 1:23am.",
+    art: (
+      <>
+        <Demo name="phone-chat" {...D.phone} k={1.5} x={255} y={330} />
+        <Chip x={40} y={560}><Moon />Sunday, 1:23am</Chip>
+        <Chip x={640} y={1010} gold><Bolt c="#FFFFFF" />Answered instantly</Chip>
+      </>
+    ),
+  },
+  books: {
+    verb: "books",
+    line: "Booked in 90 seconds, while you were closed.",
+    art: (
+      <>
+        <Demo name="diary" {...D.diary} k={1.45} x={22} y={420} style={{ borderRadius: 26, boxShadow: SHADOW.card }} shadow={false} />
+        <Demo name="phone-booked" {...D.phone} k={1.5} x={455} y={330} />
+        <Chip x={70} y={1215} gold><Check />Straight into the diary</Chip>
+      </>
+    ),
+  },
+  handled: {
+    verb: "handles",
+    line: "Every channel, one inbox. And it hands over when it matters.",
+    art: (
+      <>
+        <Phone>
+          <StatusBar />
+          <Img src={staticFile("ui/demo/inbox.png")} style={{ position: "absolute", left: 0, top: 70, width: SCREEN.w, height: (SCREEN.w / D.inbox.w) * D.inbox.h }} />
+        </Phone>
+        <Chip x={330} y={1240} style={{ gap: 10 }}>
+          {(["m-ch-web", "m-ch-wa", "m-ch-ig"] as PieceName[]).map((c) => <ChannelIcon key={c} card={c} size={40} />)}
+          <span style={{ marginLeft: 6 }}>One inbox</span>
+        </Chip>
+        <Demo name="handover" {...D.handover} k={0.84} x={72} y={985} style={{ borderRadius: 18, boxShadow: SHADOW.lift }} shadow={false} />
+      </>
+    ),
+  },
 };
 
 export function Pin({ which = "answers" }: PinProps) {
   const p = PINS[which];
   return (
     <AbsoluteFill style={{ background: C.canvas, overflow: "hidden" }}>
-      {/* the title: "Vallamo" in ink, the verb in clay Playfair italic, as vallamo.com sets "Handled by Vallamo." */}
-      <div style={{ position: "absolute", left: 0, right: 0, top: 96, textAlign: "center", whiteSpace: "nowrap", lineHeight: 1 }}>
-        <span style={{ fontFamily: FONT.sans, fontWeight: 700, fontSize: 104, letterSpacing: "-0.035em", color: C.ink }}>Vallamo </span>
-        <span style={{ fontFamily: serif, fontStyle: "italic", fontWeight: 500, fontSize: 118, letterSpacing: "-0.01em", color: C.clay }}>{p.verb}</span>
-        <span style={{ display: "inline-block", width: 22, height: 22, marginLeft: 6, borderRadius: "50%", background: C.clay }} />
+      {/* the title: the Vallamo wordmark, then the verb in Playfair, as the demo sets its headline */}
+      <div style={{ position: "absolute", left: 0, right: 0, top: 86, display: "flex", justifyContent: "center", alignItems: "flex-end", gap: 26 }}>
+        <Logo file="vallamo-wordmark" w={330} h={107} />
+        <div style={{ fontFamily: serif, fontWeight: 500, fontSize: 112, lineHeight: 0.86, letterSpacing: "-0.03em", color: C.ink, whiteSpace: "nowrap" }}>
+          {p.verb}
+          <span style={{ display: "inline-block", width: 20, height: 20, marginLeft: 6, borderRadius: "50%", background: C.clay }} />
+        </div>
       </div>
-      <div style={{ position: "absolute", left: 0, right: 0, top: 232, textAlign: "center", fontFamily: FONT.sans, fontWeight: 500, fontSize: 34, letterSpacing: "-0.01em", color: C.ink2 }}>{p.line}</div>
-      <Phone>{p.screen}</Phone>
-      {which === "answers" && (
-        <>
-          <Chip x={40} y={1070}><Bolt />Replied instantly</Chip>
-          <Chip x={560} y={930} gold><Check />From your price list</Chip>
-        </>
-      )}
-      {which === "books" && (
-        <>
-          <Chip x={560} y={1170} gold>
-            <span style={{ fontFamily: serif, fontWeight: 600, fontSize: 36 }}>£120</span> appointment
-          </Chip>
-          <Chip x={580} y={720}><Check c={C.clay} />Booked in the diary</Chip>
-        </>
-      )}
-      {which === "handled" && (
-        <>
-          <Chip x={610} y={440} style={{ gap: 10 }}>
-            {(["m-ch-web", "m-ch-wa", "m-ch-ig"] as PieceName[]).map((c) => <ChannelIcon key={c} card={c} size={40} />)}
-            <span style={{ marginLeft: 6 }}>One inbox</span>
-          </Chip>
-          <div style={{ position: "absolute", left: 300, top: 1000, width: 740, borderRadius: 22, background: C.paper, boxShadow: SHADOW.lift, overflow: "hidden" }}>
-            <Piece name="handover" w={740} />
-          </div>
-          <Chip x={300} y={1236}><Check c={C.clay} />Hands over when it matters</Chip>
-        </>
-      )}
+      <div style={{ position: "absolute", left: 60, right: 60, top: 232, textAlign: "center", fontFamily: FONT.sans, fontWeight: 500, fontSize: 32, letterSpacing: "-0.01em", color: C.ink2 }}>{p.line}</div>
+      {p.art}
       {/* the mark, quietly */}
       <div style={{ position: "absolute", right: 46, bottom: 40, opacity: 0.85 }}>
         <Logo file="vallamo-mark" w={56} h={56} color={C.clay} />
