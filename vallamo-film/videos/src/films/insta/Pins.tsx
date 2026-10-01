@@ -182,15 +182,15 @@ export function Pin({ which = "answers" }: PinProps) {
   const p = PINS[which];
   return (
     <AbsoluteFill style={{ background: C.canvas, overflow: "hidden" }}>
-      {/* the title: the Vallamo wordmark, then the verb in Playfair, as the demo sets its headline */}
-      <div style={{ position: "absolute", left: 0, right: 0, top: 86, display: "flex", justifyContent: "center", alignItems: "flex-end", gap: 26 }}>
-        <Logo file="vallamo-wordmark" w={330} h={107} />
-        <div style={{ fontFamily: serif, fontWeight: 500, fontSize: 112, lineHeight: 0.86, letterSpacing: "-0.03em", color: C.ink, whiteSpace: "nowrap" }}>
-          {p.verb}
-          <span style={{ display: "inline-block", width: 20, height: 20, marginLeft: 6, borderRadius: "50%", background: C.clay }} />
-        </div>
+      {/* the title, stacked: the Vallamo wordmark as the signature, the verb set large under it */}
+      <div style={{ position: "absolute", left: 0, right: 0, top: 40, display: "flex", justifyContent: "center" }}>
+        <Logo file="vallamo-wordmark" w={236} h={77} />
       </div>
-      <div style={{ position: "absolute", left: 60, right: 60, top: 232, textAlign: "center", fontFamily: FONT.sans, fontWeight: 500, fontSize: 32, letterSpacing: "-0.01em", color: C.ink2 }}>{p.line}</div>
+      <div style={{ position: "absolute", left: 0, right: 0, top: 116, textAlign: "center", fontFamily: serif, fontWeight: 500, fontSize: 108, lineHeight: 1, letterSpacing: "-0.03em", color: C.ink, whiteSpace: "nowrap" }}>
+        {p.verb}
+        <span style={{ display: "inline-block", width: 19, height: 19, marginLeft: 5, borderRadius: "50%", background: C.clay }} />
+      </div>
+      <div style={{ position: "absolute", left: 60, right: 60, top: 250, textAlign: "center", fontFamily: FONT.sans, fontWeight: 500, fontSize: 30, letterSpacing: "-0.01em", color: C.ink2 }}>{p.line}</div>
       {p.art}
       {/* the mark, quietly */}
       <div style={{ position: "absolute", right: 46, bottom: 40, opacity: 0.85 }}>
