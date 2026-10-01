@@ -133,7 +133,7 @@ function Demo({ name, w, h, k, x, y, shadow = true, style }: { name: string; w: 
   );
 }
 // The live demo's captures, css px (3x PNGs in public/ui/demo, scripts/demo-captures.mjs).
-const D = { phone: { w: 380, h: 568 }, inbox: { w: 320, h: 718 }, diary: { w: 300, h: 534 }, handover: { w: 1114, h: 268 } };
+const D = { phone: { w: 380, h: 568 }, inbox: { w: 320, h: 718 }, diary: { w: 300, h: 520 }, handover: { w: 1114, h: 268 } };
 
 // The verb, and the demo's own line for it (vallamo.com/demo).
 const PINS = {
