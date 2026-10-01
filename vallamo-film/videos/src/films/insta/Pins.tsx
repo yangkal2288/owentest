@@ -10,33 +10,36 @@ import { ChannelIcon, Widget, WIDGET_W } from "../meta/parts";
 
 /**
  * Vallamo's three pinned Instagram posts (1080 x 1350): one word, one phone, the real product.
- * ANSWERS. (the website chat replying) · BOOKS. (the appointment in the diary) · HANDLED. (every
- * channel in one inbox, and a handover when it matters). The same clay field, type and phone on
- * all three, so the top row of the grid reads as one wall.
+ * Vallamo answers. (the website chat replying) · Vallamo books. (the appointment in the diary) ·
+ * Vallamo handles. (every
+ * channel in one inbox, and a handover when it matters). Brand rules (DESIGN.md, BRAND.md): Vallamo's
+ * warm white, ink headline, the clay Playfair italic accent, real UI, floor shadows; one wall of three.
  */
 export type PinProps = { which?: "answers" | "books" | "handled" };
 
-const CREAM = "#FFF8EE";
 const serif = '"Playfair Display", Georgia, serif';
-const PH = { x: 270, y: 300, w: 540, h: 1000, bezel: 14 };
+const PH = { x: 270, y: 330, w: 540, h: 980, bezel: 14 };
 const SCREEN = { w: PH.w - PH.bezel * 2, h: PH.h - PH.bezel * 2 };
 
 function Phone({ children }: { children: ReactNode }) {
   return (
-    <div style={{ position: "absolute", left: PH.x, top: PH.y, width: PH.w, height: PH.h, borderRadius: 84, background: "linear-gradient(160deg, #3A302A 0%, #1B1613 40%, #120E0C 100%)", boxShadow: "0 2px 0 1px rgba(255,255,255,.06) inset, 0 40px 90px -20px rgba(40,25,10,.55), 0 120px 160px -60px rgba(40,25,10,.5)" }}>
+    <>
+    <div style={{ position: "absolute", left: PH.x - 40, top: PH.y + PH.h - 30, width: PH.w + 80, height: 70, borderRadius: "50%", background: "rgba(44,37,32,.28)", filter: "blur(26px)" }} />
+    <div style={{ position: "absolute", left: PH.x, top: PH.y, width: PH.w, height: PH.h, borderRadius: 84, background: "#1F1A17", boxShadow: "0 0 0 1.5px #3A322C inset" }}>
       <div style={{ position: "absolute", left: PH.bezel, top: PH.bezel, width: SCREEN.w, height: SCREEN.h, borderRadius: 70, overflow: "hidden", background: C.paper }}>
         {children}
         {/* the island */}
         <div style={{ position: "absolute", left: (SCREEN.w - 150) / 2, top: 18, width: 150, height: 40, borderRadius: 20, background: "#0E0B09" }} />
       </div>
     </div>
+    </>
   );
 }
 
 /** A floating callout chip over the phone, like the product's own pills. */
 function Chip({ x, y, children, gold = false, style }: { x: number; y: number; children: ReactNode; gold?: boolean; style?: CSSProperties }) {
   return (
-    <div style={{ position: "absolute", left: x, top: y, display: "flex", alignItems: "center", gap: 14, height: 74, padding: "0 30px 0 22px", borderRadius: 999, background: gold ? `linear-gradient(135deg, #BE9760 0%, ${C.clay} 55%, #86653F 100%)` : C.paper, color: gold ? "#FFFFFF" : C.ink, border: gold ? "none" : `1.5px solid ${C.line}`, boxShadow: SHADOW.lift, fontFamily: FONT.sans, fontWeight: 650, fontSize: 30, letterSpacing: "-0.01em", whiteSpace: "nowrap", ...style }}>
+    <div style={{ position: "absolute", left: x, top: y, display: "flex", alignItems: "center", gap: 14, height: 74, padding: "0 30px 0 22px", borderRadius: 999, background: gold ? C.clay : C.paper, color: gold ? "#FFFFFF" : C.ink, border: gold ? "none" : `1.5px solid ${C.line}`, boxShadow: SHADOW.card, fontFamily: FONT.sans, fontWeight: 650, fontSize: 30, letterSpacing: "-0.01em", whiteSpace: "nowrap", ...style }}>
       {children}
     </div>
   );
@@ -117,23 +120,24 @@ function HandledScreen() {
   );
 }
 
+// The verb, and the site's own line for it (vallamo.com).
 const PINS = {
-  answers: { title: "ANSWERS", screen: <AnswersScreen /> },
-  books: { title: "BOOKS", screen: <BooksScreen /> },
-  handled: { title: "HANDLED", screen: <HandledScreen /> },
+  answers: { verb: "answers", line: "From your own information, in seconds.", screen: <AnswersScreen /> },
+  books: { verb: "books", line: "Into the calendar you already run.", screen: <BooksScreen /> },
+  handled: { verb: "handles", line: "And hands over the moment it matters.", screen: <HandledScreen /> },
 };
 
 export function Pin({ which = "answers" }: PinProps) {
   const p = PINS[which];
   return (
-    <AbsoluteFill style={{ background: `radial-gradient(ellipse 85% 70% at 50% 42%, #BE9A6C 0%, ${C.clay} 48%, #87663F 100%)`, overflow: "hidden" }}>
-      {/* soft light behind the phone */}
-      <AbsoluteFill style={{ background: "radial-gradient(circle at 50% 62%, rgba(255,236,205,.35) 0%, rgba(255,236,205,0) 45%)" }} />
-      {/* the title */}
-      <div style={{ position: "absolute", left: 0, right: 0, top: 92, textAlign: "center", fontFamily: serif, fontWeight: 500, fontSize: 132, lineHeight: 1, letterSpacing: "0.01em", color: CREAM }}>
-        {p.title}
-        <span style={{ display: "inline-block", width: 26, height: 26, marginLeft: 8, borderRadius: "50%", background: CREAM }} />
+    <AbsoluteFill style={{ background: C.canvas, overflow: "hidden" }}>
+      {/* the title: "Vallamo" in ink, the verb in clay Playfair italic, as vallamo.com sets "Handled by Vallamo." */}
+      <div style={{ position: "absolute", left: 0, right: 0, top: 96, textAlign: "center", whiteSpace: "nowrap", lineHeight: 1 }}>
+        <span style={{ fontFamily: FONT.sans, fontWeight: 700, fontSize: 104, letterSpacing: "-0.035em", color: C.ink }}>Vallamo </span>
+        <span style={{ fontFamily: serif, fontStyle: "italic", fontWeight: 500, fontSize: 118, letterSpacing: "-0.01em", color: C.clay }}>{p.verb}</span>
+        <span style={{ display: "inline-block", width: 22, height: 22, marginLeft: 6, borderRadius: "50%", background: C.clay }} />
       </div>
+      <div style={{ position: "absolute", left: 0, right: 0, top: 232, textAlign: "center", fontFamily: FONT.sans, fontWeight: 500, fontSize: 34, letterSpacing: "-0.01em", color: C.ink2 }}>{p.line}</div>
       <Phone>{p.screen}</Phone>
       {which === "answers" && (
         <>
@@ -152,18 +156,18 @@ export function Pin({ which = "answers" }: PinProps) {
       {which === "handled" && (
         <>
           <Chip x={610} y={440} style={{ gap: 10 }}>
-            {(["m-ch-wa", "m-ch-ig", "m-ch-web"] as PieceName[]).map((c) => <ChannelIcon key={c} card={c} size={40} />)}
+            {(["m-ch-web", "m-ch-wa", "m-ch-ig"] as PieceName[]).map((c) => <ChannelIcon key={c} card={c} size={40} />)}
             <span style={{ marginLeft: 6 }}>One inbox</span>
           </Chip>
           <div style={{ position: "absolute", left: 300, top: 1000, width: 740, borderRadius: 22, background: C.paper, boxShadow: SHADOW.lift, overflow: "hidden" }}>
             <Piece name="handover" w={740} />
           </div>
-          <Chip x={40} y={910}><Check c={C.clay} />Hands over when it matters</Chip>
+          <Chip x={300} y={1236}><Check c={C.clay} />Hands over when it matters</Chip>
         </>
       )}
       {/* the mark, quietly */}
       <div style={{ position: "absolute", right: 46, bottom: 40, opacity: 0.85 }}>
-        <Logo file="vallamo-mark" w={56} h={56} color={CREAM} />
+        <Logo file="vallamo-mark" w={56} h={56} color={C.clay} />
       </div>
     </AbsoluteFill>
   );
