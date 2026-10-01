@@ -161,26 +161,9 @@ function Frame({ s }: { s: Story }) {
 
 // ---------------------------------------------------------------- the last card of every set
 
+/** The last card: the ask, with the rest of the screen left clear for Instagram's link sticker. */
 function BookCard({ kicker, title, body }: { kicker: string; title: ReactNode; body: ReactNode }): Story {
-  return {
-    kicker,
-    title,
-    body,
-    artAlign: "start",
-    art: (
-      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", width: "100%", marginTop: 30 }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 22, height: 132, padding: "0 60px", borderRadius: 999, background: C.clay, boxShadow: SHADOW.lift, fontFamily: FONT.sans, fontWeight: 700, fontSize: 52, letterSpacing: "-0.02em", color: "#FFFFFF" }}>
-          Book a demo
-          <svg width={46} height={46} viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" strokeWidth={2.6} strokeLinecap="round" strokeLinejoin="round"><path d="M7 17 17 7M8 7h9v9" /></svg>
-        </div>
-        <div style={{ marginTop: 34, fontFamily: FONT.sans, fontWeight: 600, fontSize: 32, color: C.ink3 }}>vallamo.com/book-a-demo</div>
-        {/* room for Instagram's link sticker, pointed to */}
-        <svg width={60} height={110} viewBox="0 0 60 110" style={{ marginTop: 40 }} fill="none" stroke={C.clay} strokeWidth={4} strokeLinecap="round" strokeLinejoin="round">
-          <path d="M30 4v96M10 80l20 22 20-22" />
-        </svg>
-      </div>
-    ),
-  };
+  return { kicker, title, body };
 }
 
 // ---------------------------------------------------------------- About
