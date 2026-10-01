@@ -37,7 +37,7 @@ function Phone({ children }: { children: ReactNode }) {
 }
 
 /** A floating callout chip over the phone, like the product's own pills. */
-function Chip({ x, y, children, gold = false, style }: { x: number; y: number; children: ReactNode; gold?: boolean; style?: CSSProperties }) {
+export function Chip({ x, y, children, gold = false, style }: { x: number; y: number; children: ReactNode; gold?: boolean; style?: CSSProperties }) {
   return (
     <div style={{ position: "absolute", left: x, top: y, display: "flex", alignItems: "center", gap: 14, height: 74, padding: "0 30px 0 22px", borderRadius: 999, background: gold ? C.clay : C.paper, color: gold ? "#FFFFFF" : C.ink, border: gold ? "none" : `1.5px solid ${C.line}`, boxShadow: SHADOW.card, fontFamily: FONT.sans, fontWeight: 650, fontSize: 30, letterSpacing: "-0.01em", whiteSpace: "nowrap", ...style }}>
       {children}
@@ -45,18 +45,18 @@ function Chip({ x, y, children, gold = false, style }: { x: number; y: number; c
   );
 }
 
-const Bolt = ({ c = C.clay }: { c?: string }) => (
+export const Bolt = ({ c = C.clay }: { c?: string }) => (
   <svg width={30} height={30} viewBox="0 0 24 24" fill={c}><path d="M13 2 4 14h7l-1 8 9-12h-7z" /></svg>
 );
-const Moon = () => (
+export const Moon = () => (
   <svg width={28} height={28} viewBox="0 0 24 24" fill={C.clay}><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z" /></svg>
 );
-const Check = ({ c = "#FFFFFF" }: { c?: string }) => (
+export const Check = ({ c = "#FFFFFF" }: { c?: string }) => (
   <svg width={30} height={30} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth={3} strokeLinecap="round" strokeLinejoin="round"><path d="m5 12 5 5 9-10" /></svg>
 );
 
 /** A status bar, so the screen reads as a phone. */
-function StatusBar({ dark = false }: { dark?: boolean }) {
+export function StatusBar({ dark = false }: { dark?: boolean }) {
   return (
     <div style={{ position: "absolute", left: 0, right: 0, top: 0, height: 76, display: "flex", alignItems: "center", justifyContent: "space-between", padding: "8px 52px 0", fontFamily: FONT.sans, fontWeight: 650, fontSize: 24, color: dark ? "#FFFFFF" : C.ink, zIndex: 2 }}>
       <span>9:41</span>
@@ -124,7 +124,7 @@ function HandledScreen() {
 }
 
 /** A capture from the live demo (vallamo.com/demo), drawn at its css size times `k`. */
-function Demo({ name, w, h, k, x, y, shadow = true, style }: { name: string; w: number; h: number; k: number; x: number; y: number; shadow?: boolean; style?: CSSProperties }) {
+export function Demo({ name, w, h, k, x, y, shadow = true, style }: { name: string; w: number; h: number; k: number; x: number; y: number; shadow?: boolean; style?: CSSProperties }) {
   return (
     <>
       {shadow && <div style={{ position: "absolute", left: x - 30, top: y + h * k - 34, width: w * k + 60, height: 70, borderRadius: "50%", background: "rgba(44,37,32,.26)", filter: "blur(26px)" }} />}
@@ -133,7 +133,7 @@ function Demo({ name, w, h, k, x, y, shadow = true, style }: { name: string; w: 
   );
 }
 // The live demo's captures, css px (3x PNGs in public/ui/demo, scripts/demo-captures.mjs).
-const D = { phone: { w: 380, h: 568 }, inbox: { w: 320, h: 718 }, diary: { w: 300, h: 520 }, handover: { w: 1114, h: 268 } };
+export const D = { phone: { w: 380, h: 568 }, inbox: { w: 320, h: 718 }, diary: { w: 300, h: 520 }, handover: { w: 1114, h: 268 } };
 
 // The verb, and the demo's own line for it (vallamo.com/demo).
 const PINS = {

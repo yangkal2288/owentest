@@ -10,6 +10,7 @@ import { MetaAd, metaLength, type MetaProps } from "./films/meta/MetaAd";
 import { PaidAd, paidLength, type PaidProps } from "./films/paid/PaidAd";
 import { GrowthAd, growthLength, type GrowthProps } from "./films/growth/GrowthAd";
 import { Pin, type PinProps } from "./films/insta/Pins";
+import { Highlight, Story, type HighlightProps, type StoryProps } from "./films/insta/Stories";
 import { MEET_FRAME_LENGTH, MeetFrame, type MeetFrameProps } from "./films/meetframe/MeetFrame";
 import { MeetReframe, type ReframeProps } from "./films/meetframe/MeetReframe";
 import { coverFilmLength, MeetCover, type CoverProps } from "./films/meetframe/MeetCover";
@@ -66,6 +67,8 @@ export function Root() {
       <Composition id="Paid-short-916" component={PaidAd} width={1080} height={1920} fps={60} durationInFrames={Math.round(paidLength("short") * 60)} defaultProps={{ fps: 60, format: "916", cut: "short" } as PaidProps} calculateMetadata={paid} />
       <Composition id="Paid-short-mix" component={PaidAd} width={1080} height={1350} fps={60} durationInFrames={Math.round(paidLength("short") * 60)} defaultProps={{ fps: 60, format: "45", cut: "short", music: true, sfx: true } as PaidProps} calculateMetadata={paid} />
       <Composition id="Pin" component={Pin} width={1080} height={1350} fps={30} durationInFrames={1} defaultProps={{ which: "answers" } as PinProps} />
+      <Composition id="Story" component={Story} width={1080} height={1920} fps={30} durationInFrames={1} defaultProps={{ set: "about", i: 0 } as StoryProps} />
+      <Composition id="Highlight" component={Highlight} width={1080} height={1920} fps={30} durationInFrames={1} defaultProps={{ which: "about" } as HighlightProps} />
       <Composition id="Cover-x" component={MeetCover} width={1920} height={1080} fps={60} durationInFrames={Math.round(coverFilmLength * 60)} defaultProps={{ fps: 60, format: "x" } as CoverProps} calculateMetadata={({ props }: { props: CoverProps }) => ({ fps: props.fps ?? 60, durationInFrames: Math.round(coverFilmLength * (props.fps ?? 60)) })} />
       <Composition id="Cover-11" component={MeetCover} width={1080} height={1080} fps={60} durationInFrames={Math.round(coverFilmLength * 60)} defaultProps={{ fps: 60, format: "11" } as CoverProps} calculateMetadata={({ props }: { props: CoverProps }) => ({ fps: props.fps ?? 60, durationInFrames: Math.round(coverFilmLength * (props.fps ?? 60)) })} />
       <Composition id="Cover-916" component={MeetCover} width={1080} height={1920} fps={60} durationInFrames={Math.round(coverFilmLength * 60)} defaultProps={{ fps: 60, format: "916" } as CoverProps} calculateMetadata={({ props }: { props: CoverProps }) => ({ fps: props.fps ?? 60, durationInFrames: Math.round(coverFilmLength * (props.fps ?? 60)) })} />
