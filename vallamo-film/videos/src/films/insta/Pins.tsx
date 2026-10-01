@@ -170,11 +170,12 @@ const PINS = {
         </Phone>
         {/* One inbox: a selling point, so it gets the big clay pill. */}
         <div style={{ position: "absolute", left: 0, right: 0, top: 1214, display: "flex", justifyContent: "center" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 16, height: 112, padding: "0 46px 0 26px", borderRadius: 999, background: C.clay, boxShadow: SHADOW.lift, fontFamily: FONT.sans, fontWeight: 700, fontSize: 50, letterSpacing: "-0.02em", color: "#FFFFFF", whiteSpace: "nowrap" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 14, height: 112, padding: "0 44px 0 26px", borderRadius: 999, background: C.clay, boxShadow: SHADOW.lift, fontFamily: FONT.sans, fontWeight: 700, fontSize: 44, letterSpacing: "-0.02em", color: "#FFFFFF", whiteSpace: "nowrap" }}>
             {(["m-ch-web", "m-ch-wa", "m-ch-ig"] as PieceName[]).map((c) => (
-              <div key={c} style={{ borderRadius: 16, boxShadow: "0 0 0 3px rgba(255,255,255,.9)" }}><ChannelIcon card={c} size={60} /></div>
+              <div key={c} style={{ borderRadius: 16, boxShadow: "0 0 0 3px rgba(255,255,255,.9)" }}><ChannelIcon card={c} size={54} /></div>
             ))}
-            <span style={{ marginLeft: 8 }}>One inbox</span>
+            <span style={{ marginLeft: 8 }}>One inbox.</span>
+            <span style={{ fontFamily: FONT.serif, fontStyle: "italic", fontWeight: 500, fontSize: 50, letterSpacing: "-0.01em" }}>One calendar.</span>
           </div>
         </div>
         <Demo name="handover" {...D.handover} k={0.84} x={72} y={950} style={{ borderRadius: 18, boxShadow: SHADOW.lift }} shadow={false} />
