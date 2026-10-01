@@ -168,11 +168,16 @@ const PINS = {
           <StatusBar />
           <Img src={staticFile("ui/demo/inbox.png")} style={{ position: "absolute", left: 0, top: 70, width: SCREEN.w, height: (SCREEN.w / D.inbox.w) * D.inbox.h }} />
         </Phone>
-        <Chip x={330} y={1240} style={{ gap: 10 }}>
-          {(["m-ch-web", "m-ch-wa", "m-ch-ig"] as PieceName[]).map((c) => <ChannelIcon key={c} card={c} size={40} />)}
-          <span style={{ marginLeft: 6 }}>One inbox</span>
-        </Chip>
-        <Demo name="handover" {...D.handover} k={0.84} x={72} y={985} style={{ borderRadius: 18, boxShadow: SHADOW.lift }} shadow={false} />
+        {/* One inbox: a selling point, so it gets the big clay pill. */}
+        <div style={{ position: "absolute", left: 0, right: 0, top: 1214, display: "flex", justifyContent: "center" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 16, height: 112, padding: "0 46px 0 26px", borderRadius: 999, background: C.clay, boxShadow: SHADOW.lift, fontFamily: FONT.sans, fontWeight: 700, fontSize: 50, letterSpacing: "-0.02em", color: "#FFFFFF", whiteSpace: "nowrap" }}>
+            {(["m-ch-web", "m-ch-wa", "m-ch-ig"] as PieceName[]).map((c) => (
+              <div key={c} style={{ borderRadius: 16, boxShadow: "0 0 0 3px rgba(255,255,255,.9)" }}><ChannelIcon card={c} size={60} /></div>
+            ))}
+            <span style={{ marginLeft: 8 }}>One inbox</span>
+          </div>
+        </div>
+        <Demo name="handover" {...D.handover} k={0.84} x={72} y={950} style={{ borderRadius: 18, boxShadow: SHADOW.lift }} shadow={false} />
       </>
     ),
   },
