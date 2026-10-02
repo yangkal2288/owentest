@@ -54,15 +54,15 @@ export const WEEK = {
 export const slotY = (h: number) => WEEK.hour0 + 1 + (h - 9) * WEEK.hour;
 
 /**
- * A window onto the real week view (g-wk), Wednesday to Friday (to `x1`), `from` to `to` o'clock, framed
+ * A window onto the real week view (`piece`: g-wk, or the untouched week), Wednesday to Friday (to `x1`), `from` to `to` o'clock, framed
  * as the app's card: hour labels, day header, the body. `k` is px per css px. Children are drawn
  * in the body's coordinates (css px of the piece, so a block at the piece's x/y lands on its slot).
  */
-export function DiaryView({ k, from, to, x0 = WEEK.cols.Wed, x1 = WEEK.cols.Sat, children, style }: { k: number; from: number; to: number; x0?: number; x1?: number; children?: ReactNode; style?: CSSProperties }) {
+export function DiaryView({ k, from, to, x0 = WEEK.cols.Wed, x1 = WEEK.cols.Sat, piece = "g-wk", children, style }: { k: number; from: number; to: number; x0?: number; x1?: number; piece?: "g-wk" | "week"; children?: ReactNode; style?: CSSProperties }) {
   const y0 = WEEK.hour0 + (from - 9) * WEEK.hour;
   const y1 = WEEK.hour0 + (to - 9) * WEEK.hour;
-  const size = pieceSize("g-wk");
-  const img = (dx: number, dy: number) => <Img src={staticFile("ui/pieces/png/g-wk.png")} style={{ position: "absolute", left: -dx * k, top: -dy * k, width: size.w * k, height: size.h * k, maxWidth: "none" }} />;
+  const size = pieceSize(piece);
+  const img = (dx: number, dy: number) => <Img src={staticFile(`ui/pieces/png/${piece}.png`)} style={{ position: "absolute", left: -dx * k, top: -dy * k, width: size.w * k, height: size.h * k, maxWidth: "none" }} />;
   const headH = (WEEK.head[1] - WEEK.head[0]) * k;
   const bodyW = (x1 - x0) * k;
   const labW = WEEK.labels * k;

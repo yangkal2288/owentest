@@ -17,6 +17,7 @@ import { coverFilmLength, MeetCover, type CoverProps } from "./films/meetframe/M
 import { CineTest } from "./films/cinema/Test";
 import { HalloweenTest } from "./films/halloween/Test";
 import { HalloweenFilm, halloweenLength, type HalloweenProps } from "./films/halloween/Film";
+import { FounderEnd, founderLengths, FounderLowerThird, FounderPreview, FounderShots, type FounderProps } from "./films/founder/Founder";
 
 // "Meet Vallamo", the X film: one 1920x1080 composition. `fps` is a prop so
 // scripts/render-film.sh can render the 240 fps master for motion blur.
@@ -44,6 +45,11 @@ const growth = ({ props }: { props: GrowthProps }) => {
 const halloween = ({ props }: { props: HalloweenProps }) => {
   const fps = props.fps ?? 60;
   return { fps, durationInFrames: Math.round(halloweenLength(props.cut ?? "70") * fps) };
+};
+
+const founder = (length: number) => ({ props }: { props: FounderProps }) => {
+  const fps = props.fps ?? 60;
+  return { fps, durationInFrames: Math.round(length * fps) };
 };
 
 export function Root() {
@@ -93,6 +99,12 @@ export function Root() {
       <Composition id="Halloween-15-45" component={HalloweenFilm} width={1080} height={1350} fps={60} durationInFrames={Math.round(halloweenLength("15") * 60)} defaultProps={{ fps: 60, format: "45", cut: "15" } as HalloweenProps} calculateMetadata={halloween} />
       <Composition id="Halloween-15-916" component={HalloweenFilm} width={1080} height={1920} fps={60} durationInFrames={Math.round(halloweenLength("15") * 60)} defaultProps={{ fps: 60, format: "916", cut: "15" } as HalloweenProps} calculateMetadata={halloween} />
       <Composition id="Halloween-15-mix" component={HalloweenFilm} width={1080} height={1350} fps={60} durationInFrames={Math.round(halloweenLength("15") * 60)} defaultProps={{ fps: 60, format: "45", cut: "15", music: true, sfx: true } as HalloweenProps} calculateMetadata={halloween} />
+      {/* The founder ad (Owen on camera): the product shots for scenes 2 to 4, the end card, Owen's lower third (alpha), and a preview of the whole ad with Owen as slates. 9:16. */}
+      <Composition id="Founder-shots" component={FounderShots} width={1080} height={1920} fps={60} durationInFrames={Math.round(founderLengths.shots * 60)} defaultProps={{ fps: 60 } as FounderProps} calculateMetadata={founder(founderLengths.shots)} />
+      <Composition id="Founder-shots-sfx" component={FounderShots} width={1080} height={1920} fps={60} durationInFrames={Math.round(founderLengths.shots * 60)} defaultProps={{ fps: 60, sfx: true } as FounderProps} calculateMetadata={founder(founderLengths.shots)} />
+      <Composition id="Founder-end" component={FounderEnd} width={1080} height={1920} fps={60} durationInFrames={Math.round(founderLengths.end * 60)} defaultProps={{ fps: 60 } as FounderProps} calculateMetadata={founder(founderLengths.end)} />
+      <Composition id="Founder-lower-third" component={FounderLowerThird} width={1080} height={1920} fps={60} durationInFrames={Math.round(founderLengths.lowerThird * 60)} defaultProps={{ fps: 60 } as FounderProps} calculateMetadata={founder(founderLengths.lowerThird)} />
+      <Composition id="Founder-preview" component={FounderPreview} width={1080} height={1920} fps={30} durationInFrames={Math.round(founderLengths.preview * 30)} defaultProps={{ fps: 30, sfx: true } as FounderProps} calculateMetadata={founder(founderLengths.preview)} />
       <Composition id="Halloween-test" component={HalloweenTest} width={1080} height={1920} fps={60} durationInFrames={60} />
       <Composition id="Cine-test" component={CineTest} width={1080} height={1350} fps={60} durationInFrames={60} />
       {/* Scene previews, one per shot. */}
